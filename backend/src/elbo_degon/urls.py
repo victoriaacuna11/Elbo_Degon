@@ -18,5 +18,4 @@ urlpatterns = [
     path('rest/', include('api.urls')),
     path('rest/x', get_data),
     path('rest/l', data_2),
-
 ]
