@@ -14,7 +14,8 @@ from .models import  (Employee,
                      Provider,
                      Membership,
                      MonthEmployee,
-                     Zone)
+                     Zone,
+                     Tax)
 
 
 from rest_framework import serializers
@@ -88,4 +89,9 @@ class MonthEmployeeSerializer(serializers.ModelSerializer):
 class ZoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Zone
+        fields= '__all__'
+
+class TaxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tax
         fields= '__all__'

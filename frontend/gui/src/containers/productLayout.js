@@ -15,13 +15,19 @@ const ProductLayout = props => {
           defaultSelectedKeys={[]}
           style={{ lineHeight: "64px" }}
         >
-          <Menu.Item key="1">
-            <Link to="/prov">Proveedores</Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/">Productos</Link>
-          </Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
+          <Menu.Item key="1"><Link to="/prov">Proveedores</Link></Menu.Item>
+          <Menu.Item key="2"><Link to="/">Productos</Link></Menu.Item>
+          <Menu.Item key="3"><Link to="/">Lotes</Link></Menu.Item>
+          <Menu.Item key="4"><Link to="/bill">Facturas</Link></Menu.Item>
+          <Menu.Item key="5"><Link to="/delivery">Deliverys</Link></Menu.Item>
+          <Menu.Item key="6"><Link to="/">Pick Ups</Link></Menu.Item>
+          <Menu.Item key="7"><Link to="/">Pagos</Link></Menu.Item>
+          <Menu.Item key="8"><Link to="/">Zonas</Link></Menu.Item>
+          <Menu.Item key="9"><Link to="/">Catergorías</Link></Menu.Item>
+          <Menu.Item key="10"><Link to="/">Tasas de cambio</Link></Menu.Item>
+          <Menu.Item key="11"><Link to="/">Locales</Link></Menu.Item>
+          <Menu.Item key="12"><Link to="/">Empleados</Link></Menu.Item>
+          <Menu.Item key="13"><Link to="/memp">Empleados del Mes</Link></Menu.Item>
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px" }}>

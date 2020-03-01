@@ -258,11 +258,30 @@ class Employee(models.Model):
 #-----------------------------------------------------------------------------
 
 class MonthEmployee(models.Model):
+
+    MONTHS=[
+        ('Enero','Enero'),
+        ('Febrero','Febrero'),
+        ('Marzo','Marzo'),
+        ('Abril','Abril'),
+        ('Mayo','Mayo'),
+        ('Junio','Junio'),
+        ('Julio','Julio'),
+        ('Agosto','Agosto'),
+        ('Septiembre','Septiembre'),
+        ('Octubre','Octubre'),
+        ('Noviembre','Noviembre'),
+        ('Diciembre','Diciembre'),
+    ]
+
     employee=models.ForeignKey('Employee',on_delete=models.CASCADE)
-    month=models.CharField(max_length=20)
-    year=models.IntegerField()
+    month=models.CharField(max_length=20, choices=MONTHS, default='Enero')
+    year=models.IntegerField(default=2020)
     # atributo de si se toma en cuenta en la base de datos
     availible=models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.employee.name + ' (' + self.month+ ' '+ str(self.year)+')'
 
 #-----------------------------------------------------------------------------
 
@@ -278,3 +297,11 @@ class Zone(models.Model):
     
 
 #-----------------------------------------------------------------------------
+
+class Tax(models.Model):
+    tax = models.FloatField()
+    date = models.DateField(auto_now_add=True)
+    is_Active=models.BooleanField(default=True)
+
+    def __str__(self):
+        return str(self.tax) + ' (' + self.date.strftime("%d-%b-%Y")+')'

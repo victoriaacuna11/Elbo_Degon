@@ -26,7 +26,9 @@ from .models import  (Employee,
                      Provider,
                      Membership,
                      MonthEmployee,
-                     Zone)
+                     Zone,
+                     Tax)
+
 from .serializers import  (EmployeeSerializer,
                            ProductSerializer,
                            ProductBatchSerializer,
@@ -43,7 +45,8 @@ from .serializers import  (EmployeeSerializer,
                            ProviderSerializer,
                            MembershipSerializer,
                            MonthEmployeeSerializer,
-                           ZoneSerializer)            
+                           ZoneSerializer,
+                           TaxSerializer)            
 
 # Create your views here.
 
@@ -122,6 +125,9 @@ class MonthEmployeeView(viewsets.ModelViewSet):
 class ZoneView(viewsets.ModelViewSet):
     queryset=Zone.objects.all()
     serializer_class=ZoneSerializer
+class TaxView(viewsets.ModelViewSet):
+    queryset=Tax.objects.all()
+    serializer_class=TaxSerializer
 
 
 
