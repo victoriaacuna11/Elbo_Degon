@@ -59,10 +59,15 @@ class ModifyPForm extends React.Component {
 
   handleChangeAvailable = (event, productID) => {
     const name = this.state.currProd.product_name;
-    const pasillo = this.state.currProd.pasillo;
+    const pasillo = this.state.currProd.hall;
     const category = this.state.currProd.category;
     const provider = this.state.currProd.provider;
-    const availible = this.state.currProd.availible;
+    const availible = !this.state.currProd.availible;
+    console.log(name);
+    console.log(pasillo);
+    console.log(category);
+    console.log(provider);
+    console.log(availible);
 
     return axios
       .put(`http://127.0.0.1:8000/rest/prod/${productID}/`, {
