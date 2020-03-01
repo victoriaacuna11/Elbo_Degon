@@ -45,6 +45,6 @@ router.register(r'memp',MonthEmployeeView,basename='monthemployee')
 router.register(r'zone',ZoneView,basename='zone')
 router.register(r'tax',TaxView,basename='tax')
 router.register(r'j',Product_Category,basename='pc')
-#router.register(r'x',get_data,basename='jaja')
+
 
 urlpatterns = router.urls

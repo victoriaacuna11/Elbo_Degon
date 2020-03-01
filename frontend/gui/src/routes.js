@@ -12,6 +12,7 @@ import CurrencyExchangeList from './containers/CurrencyExchangesListView';
 import CategoryList from './containers/CategoryListView';
 import ZoneList from './containers/ZoneListView';
 import PaymentList from './containers/PaymentListView';
+import AdminData from "./components/querys"
 
 const BaseRouter = () => (
   <div>
@@ -28,6 +29,7 @@ const BaseRouter = () => (
     <Route exact path="/zone" component={ZoneList}/>
     <Route exact path="/pay" component={PaymentList}/>
     
+    <Route exact path="/admin_info" component={AdminData} />
   </div>
 );
 
