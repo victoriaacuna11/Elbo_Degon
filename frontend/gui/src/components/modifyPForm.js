@@ -5,16 +5,8 @@ import axios from "axios";
 const { Option } = Select;
 
 const layout = {
-  labelCol: {
-    span: 11
-  }
-};
-
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16
-  }
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 }
 };
 
 function onChange(value) {
@@ -65,6 +57,31 @@ class ModifyPForm extends React.Component {
     });
   }
 
+  handleChangeAvailable = (event, productID) => {
+    const name = this.state.currProd.product_name;
+    const pasillo = this.state.currProd.pasillo;
+    const category = this.state.currProd.category;
+    const provider = this.state.currProd.provider;
+    const availible = this.state.currProd.availible;
+
+    return axios
+      .put(`http://127.0.0.1:8000/rest/prod/${productID}/`, {
+        provider: provider,
+        product_name: name,
+        category: category,
+        hall: pasillo,
+        availible: availible
+      })
+      .then(res => console.log(res))
+      .catch(error => console.error(error));
+  };
+
+  showMessage = () => {
+    return this.state.currProd.availible === false
+      ? "Habilitar"
+      : "Deshabilitar";
+  };
+
   handleFormSubmit = (event, requestType, productID) => {
     //event.preventDefault();
     const name = event.Nombre;
@@ -105,123 +122,144 @@ class ModifyPForm extends React.Component {
 
   render() {
     return (
-      <Form
-        {...layout}
-        ref={this.formRef}
-        name="control-ref"
-        onFinish={event =>
-          this.handleFormSubmit(
-            event,
-            this.props.requestType,
-            this.props.productID
-          )
-        }
-      >
-        <Form.Item
-          name="Nombre"
-          rules={[
-            {
-              required: true
-            }
-          ]}
-          label="Nombre"
-          key={this.state.currProd.product_name}
+      <>
+        <Form
+          {...layout}
+          ref={this.formRef}
+          name="control-ref"
+          onFinish={event =>
+            this.handleFormSubmit(
+              event,
+              this.props.requestType,
+              this.props.productID
+            )
+          }
         >
-          <Input name="name" placeholder={this.state.currProd.product_name} />
-        </Form.Item>
-
-        <Form.Item
-          name="Pasillo"
-          label="Pasillo"
-          rules={[
-            {
-              type: "number",
-              required: true,
-              min: 1,
-              max: 20
-            }
-          ]}
-          key={this.state.currProd.hall}
-        >
-          <InputNumber
-            placeholder={this.state.currProd.hall}
-            onChange={onChange}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="Proveedor"
-          label="Proveedor"
-          rules={[
-            {
-              required: true
-            }
-          ]}
-          key={this.state.currProd.provider}
-        >
-          <Select
-            placeholder={this.state.currProd.provider}
-            name="provider"
-            allowClear
+          <Form.Item
+            name="Nombre"
+            rules={[
+              {
+                required: true
+              }
+            ]}
+            label="Nombre"
+            key={this.state.currProd.product_name}
           >
-            {this.state.providers.map(provs => (
-              <Option value={provs.id} key={provs.name}>
-                {provs.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+            <Input
+              name="name"
+              defaultValue={this.state.currProd.product_name}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="categoria"
-          label="Categoria"
-          rules={[
-            {
-              required: true
-            }
-          ]}
-          key={this.state.currProd.category}
-        >
-          <Select
-            placeholder={this.state.currProd.provider}
-            name="category"
-            allowClear
+          <Form.Item
+            name="Pasillo"
+            label="Pasillo"
+            rules={[
+              {
+                type: "number",
+                required: true,
+                min: 1,
+                max: 20
+              }
+            ]}
+            key={this.state.currProd.hall}
           >
-            {this.state.category.map(cats => (
-              <Option value={cats.id} key={cats.name}>
-                {cats.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+            <InputNumber
+              placeholder={this.state.currProd.hall}
+              onChange={onChange}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="Available"
-          label="Available"
-          rules={[
-            {
-              required: true
-            }
-          ]}
-          key={this.state.currProd.availible}
-        >
-          <Select
-            placeholder={this.state.currProd.availible}
-            name="availible"
-            allowClear
+          <Form.Item
+            name="Proveedor"
+            label="Proveedor"
+            rules={[
+              {
+                required: true
+              }
+            ]}
+            key={this.state.currProd.provider}
           >
-            <Option value={true}>True</Option>
-            <Option value={false}>False</Option>
-          </Select>
-        </Form.Item>
+            <Select
+              placeholder={this.state.currProd.provider}
+              name="provider"
+              allowClear
+            >
+              {this.state.providers.map(provs => (
+                <Option value={provs.id} key={provs.name}>
+                  {provs.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
 
-        <br />
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {this.props.buttonText}
+          <Form.Item
+            name="categoria"
+            label="Categoria"
+            rules={[
+              {
+                required: true
+              }
+            ]}
+            key={this.state.currProd.category}
+          >
+            <Select
+              placeholder={this.state.currProd.category}
+              name="category"
+              allowClear
+            >
+              {this.state.category.map(cats => (
+                <Option value={cats.id} key={cats.name}>
+                  {cats.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="Available"
+            label="Available"
+            rules={[
+              {
+                required: true
+              }
+            ]}
+            key={this.state.currProd.availible}
+          >
+            <Select
+              defaultValue={this.state.currProd.availible}
+              name="availible"
+              placeholder="Elige una opcion"
+              allowClear
+            >
+              <Option value={true}>True</Option>
+              <Option value={false}>False</Option>
+            </Select>
+          </Form.Item>
+
+          <br />
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              wrapperCol={{ ...layout.wrapperCol, offset: 8 }}
+            >
+              {this.props.buttonText}
+            </Button>
+          </Form.Item>
+
+          <Button
+            type="primary"
+            htmlType="button"
+            wrapperCol={{ ...layout.wrapperCol, offset: 8 }}
+            onClick={event =>
+              this.handleChangeAvailable(event, this.props.productID)
+            }
+          >
+            {this.showMessage()}
           </Button>
-        </Form.Item>
-      </Form>
+        </Form>
+      </>
     );
   }
 }
