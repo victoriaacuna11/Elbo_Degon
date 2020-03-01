@@ -25,8 +25,8 @@ const ProductLayout = props => {
           <Menu.Item key="8"><Link to="/">Zonas</Link></Menu.Item>
           <Menu.Item key="9"><Link to="/">Catergorías</Link></Menu.Item>
           <Menu.Item key="10"><Link to="/">Tasas de cambio</Link></Menu.Item>
-          <Menu.Item key="11"><Link to="/">Locales</Link></Menu.Item>
-          <Menu.Item key="12"><Link to="/">Empleados</Link></Menu.Item>
+          <Menu.Item key="11"><Link to="/local">Locales</Link></Menu.Item>
+          <Menu.Item key="12"><Link to="/emp">Empleados</Link></Menu.Item>
           <Menu.Item key="13"><Link to="/memp">Empleados del Mes</Link></Menu.Item>
         </Menu>
       </Header>
