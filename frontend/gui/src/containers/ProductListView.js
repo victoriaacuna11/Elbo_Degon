@@ -13,13 +13,14 @@ class ProductList extends React.Component {
       this.setState({
         products: res.data
       });
+      console.log(this.state.products);
     });
   }
 
   render() {
     return (
       <>
-        <Productss data={this.state.products} />
+        <Productss data={this.state.products} loading={false} hasMore={true} />
         <br />
         <h2>Crear un producto</h2>
         <PForm requestType="post" productID={null} buttonText="Crear" />

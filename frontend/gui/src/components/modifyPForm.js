@@ -21,7 +21,7 @@ function onChange(value) {
   console.log("changed", value);
 }
 
-class PForm extends React.Component {
+class ModifyPForm extends React.Component {
   formRef = React.createRef();
 
   onFinish = values => {
@@ -72,6 +72,7 @@ class PForm extends React.Component {
     const category = event.categoria;
     const provider = event.Proveedor;
     const availible = event.Available;
+
     console.log(requestType);
 
     switch (requestType) {
@@ -126,11 +127,7 @@ class PForm extends React.Component {
           label="Nombre"
           key={this.state.currProd.product_name}
         >
-          <Input
-            name="name"
-            defaultValue={this.state.currProd.product_name}
-            placeholder="Nombre del producto"
-          />
+          <Input name="name" placeholder={this.state.currProd.product_name} />
         </Form.Item>
 
         <Form.Item
@@ -147,16 +144,9 @@ class PForm extends React.Component {
           key={this.state.currProd.hall}
         >
           <InputNumber
-            defaultValue={this.state.currProd.hall}
+            placeholder={this.state.currProd.hall}
             onChange={onChange}
-            placeholder="Nro del pasillo"
           />
-          {/* <InputNumber
-            disabled={true}
-            defaultValue={this.state.currProd.hall}
-            onChange={onChange}
-            placeholder="Nro del pasillo"
-          /> */}
         </Form.Item>
 
         <Form.Item
@@ -170,9 +160,8 @@ class PForm extends React.Component {
           key={this.state.currProd.provider}
         >
           <Select
-            defaultValue={this.state.currProd.provider}
+            placeholder={this.state.currProd.provider}
             name="provider"
-            placeholder="Selecciona un proveedor"
             allowClear
           >
             {this.state.providers.map(provs => (
@@ -194,9 +183,8 @@ class PForm extends React.Component {
           key={this.state.currProd.category}
         >
           <Select
-            defaultValue={this.state.currProd.provider}
+            placeholder={this.state.currProd.provider}
             name="category"
-            placeholder="Selecciona una categoria"
             allowClear
           >
             {this.state.category.map(cats => (
@@ -218,9 +206,8 @@ class PForm extends React.Component {
           key={this.state.currProd.availible}
         >
           <Select
-            defaultValue={this.state.currProd.availible}
+            placeholder={this.state.currProd.availible}
             name="availible"
-            placeholder="Elige una opcion"
             allowClear
           >
             <Option value={true}>True</Option>
@@ -239,4 +226,4 @@ class PForm extends React.Component {
   }
 }
 
-export default PForm;
+export default ModifyPForm;

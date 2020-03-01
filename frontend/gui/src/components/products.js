@@ -3,6 +3,7 @@ import { List } from "antd";
 import InfiniteScroll from "react-infinite-scroller";
 
 const Productss = props => {
+  console.log(props.data);
   return (
     <div className="demo-infinite-container">
       <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>

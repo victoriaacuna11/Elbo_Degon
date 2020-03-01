@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Card } from "antd";
-import PForm from "../components/productForm";
+import ModifyPForm from "../components/modifyPForm";
 
 class ProductDetail extends React.Component {
   state = {
@@ -32,7 +32,7 @@ class ProductDetail extends React.Component {
         </Card>
         <br />
         <h2>Modificar Producto:</h2>
-        <PForm
+        <ModifyPForm
           requestType="put"
           productID={this.props.match.params.productID}
           buttonText="Modificar"
