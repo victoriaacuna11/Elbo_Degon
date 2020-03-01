@@ -3,15 +3,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import BaseRouter from "./routes";
 import "./App.css";
 import "antd/dist/antd.css";
-import ProductLayout from "./containers/productLayout";
+import Layout from "./containers/Layout";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <ProductLayout>
+        <Layout>
           <BaseRouter />
-        </ProductLayout>
+        </Layout>
       </Router>
     </div>
   );

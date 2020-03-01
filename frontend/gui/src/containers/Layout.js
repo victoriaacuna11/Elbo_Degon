@@ -21,10 +21,10 @@ const ProductLayout = props => {
           <Menu.Item key="4"><Link to="/bill">Facturas</Link></Menu.Item>
           <Menu.Item key="5"><Link to="/delivery">Deliverys</Link></Menu.Item>
           <Menu.Item key="6"><Link to="/">Pick Ups</Link></Menu.Item>
-          <Menu.Item key="7"><Link to="/">Pagos</Link></Menu.Item>
-          <Menu.Item key="8"><Link to="/">Zonas</Link></Menu.Item>
-          <Menu.Item key="9"><Link to="/">Catergorías</Link></Menu.Item>
-          <Menu.Item key="10"><Link to="/">Tasas de cambio</Link></Menu.Item>
+          <Menu.Item key="7"><Link to="/pay">Pagos</Link></Menu.Item>
+          <Menu.Item key="8"><Link to="/zone">Zonas</Link></Menu.Item>
+          <Menu.Item key="9"><Link to="/category">Catergorías</Link></Menu.Item>
+          <Menu.Item key="10"><Link to="/currency">Tasas de cambio</Link></Menu.Item>
           <Menu.Item key="11"><Link to="/local">Locales</Link></Menu.Item>
           <Menu.Item key="12"><Link to="/emp">Empleados</Link></Menu.Item>
           <Menu.Item key="13"><Link to="/memp">Empleados del Mes</Link></Menu.Item>
