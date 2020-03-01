@@ -15,7 +15,8 @@ from .models import  (Employee,
                      Provider,
                      Membership,
                      MonthEmployee,
-                     Zone)
+                     Zone,
+                     Tax)
 
 
 
@@ -37,5 +38,5 @@ admin.site.register(MonthEmployee)
 admin.site.register(Zone)
 admin.site.register(Payment)
 admin.site.register(Payment_Bill)
-
+admin.site.register(Tax)
 

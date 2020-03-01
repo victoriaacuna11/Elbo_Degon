@@ -83,11 +83,11 @@ DATABASES = {
         'NAME': 'Elbo_Degon_DB',
         'USER': 'root',
         # PASSWORD VICS:
-        #'PASSWORD': 'Coiverde1.',
+        'PASSWORD': 'Coiverde1.',
         # PASSWORD ROMEL:
         # 'PASSWORD': 'paprika011209',
         # PASSWORD WIL:
-        'PASSWORD': 'Buepinene-0022',
+        # 'PASSWORD': 'Buepinene-0022',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -139,3 +139,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny'
     ]
 }
+
+CORS_ORIGIN_ALLOW_ALL = True 
