@@ -121,7 +121,6 @@ class Payments extends React.Component {
                           Cliente CI: {this.getClientCI(this.getClientID(this.getBillID(item.id, this.state.payment_bill_relationships), this.state.bills), this.state.clients)} -  
                           Total Factura: {this.getTotal(this.state.tax, this.getSubtotal(this.getBillID(item.id, this.state.payment_bill_relationships), this.state.bills))}$ - 
                           Habilitado: {this.getHabilidado(item.availible)}
-                      
                       </a>}
                     />
                   </List.Item>
