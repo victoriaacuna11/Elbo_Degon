@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import Productss from "../components/products";
-import PForm from "../components/productForm";
+import Productss from "../../components/productComponents/products";
+import PForm from "../../components/productComponents/productForm";
 
 class ProductList extends React.Component {
   state = {
@@ -22,8 +22,8 @@ class ProductList extends React.Component {
       <>
         <Productss data={this.state.products} loading={false} hasMore={true} />
         <br />
-        <h2>Crear un producto</h2>
-        <PForm requestType="post" productID={null} buttonText="Crear" />
+        <h2 style={{ marginLeft: 650 }}>Crear un producto</h2>
+        <PForm productID={null} />
       </>
     );
   }
