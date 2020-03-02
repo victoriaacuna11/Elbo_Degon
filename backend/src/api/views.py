@@ -935,3 +935,26 @@ def top_meses(request):
 
     return JsonResponse(data)
 
+
+def query_vic(request, payment):
+
+    ced=[]
+    print(payment)
+
+    q=Payment.objects.values( 'payment_bill__bill__client__ci' ).filter(id=payment)
+
+
+    for x in q:
+        
+        ced.append(x['payment_bill__bill__client__ci'])
+    
+
+
+    data={
+
+        'data':ced
+    }
+
+    return JsonResponse(data)
+
+    
