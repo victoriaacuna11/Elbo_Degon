@@ -5,9 +5,8 @@ import axios from "axios";
 const { Option } = Select;
 
 const layout = {
-  labelCol: {
-    span: 11
-  }
+  labelCol: { span: 6 },
+  wrapperCol: { span: 14 }
 };
 
 class PForm extends React.Component {

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Card } from "antd";
+import ModifyProvForm from "../../components/providerComponents/modifyProviderForm";
 
 class ProviderDetail extends React.Component {
   state = {
@@ -27,6 +28,9 @@ class ProviderDetail extends React.Component {
           <p>Direccion: {this.state.provider.address}</p>
           <p>E-mail: {this.state.provider.email}</p>
         </Card>
+        <br />
+        <h2 style={{ marginLeft: 650 }}>Modificar Proveedor:</h2>
+        <ModifyProvForm providerID={this.props.match.params.providerID} />
       </>
     );
   }

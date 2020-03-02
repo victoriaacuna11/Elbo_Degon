@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Providers from "../../components/providerComponents/providers";
+import ProvForm from "../../components/providerComponents/providerForm";
 
 class ProviderList extends React.Component {
   state = {
@@ -16,7 +17,14 @@ class ProviderList extends React.Component {
   }
 
   render() {
-    return <Providers data={this.state.providers} />;
+    return (
+      <>
+        <Providers data={this.state.providers} />
+        <br />
+        <h2 style={{ marginLeft: 650 }}>Crear un proveedor</h2>
+        <ProvForm />
+      </>
+    );
   }
 }
 
