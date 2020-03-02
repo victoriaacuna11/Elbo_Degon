@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Providers from "../components/providers";
+import Providers from "../../components/providerComponents/providers";
 
 class ProviderList extends React.Component {
   state = {
