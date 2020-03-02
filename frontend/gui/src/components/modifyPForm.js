@@ -224,11 +224,6 @@ class ModifyPForm extends React.Component {
           <Form.Item
             name="Available"
             label="Available"
-            rules={[
-              {
-                required: true
-              }
-            ]}
             key={this.state.currProd.availible}
           >
             <Select
@@ -236,6 +231,7 @@ class ModifyPForm extends React.Component {
               name="availible"
               placeholder="Elige una opcion"
               allowClear
+              disabled
             >
               <Option value={true}>True</Option>
               <Option value={false}>False</Option>
