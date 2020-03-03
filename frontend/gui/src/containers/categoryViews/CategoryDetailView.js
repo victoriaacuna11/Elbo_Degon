@@ -19,7 +19,7 @@ class CategoryDetail extends React.Component {
   }
 
   isAvailable = () => {
-    return (this.state.employee.availible = true ? "Si" : "No");
+    return this.state.category.availible === true ? "Si" : "No";
   };
 
   render() {

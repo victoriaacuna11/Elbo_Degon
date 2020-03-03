@@ -17,7 +17,7 @@ class ProviderDetail extends React.Component {
   }
 
   isAvailable = () => {
-    return (this.state.employee.availible = true ? "Si" : "No");
+    return this.state.provider.availible === true ? "Si" : "No";
   };
 
   render() {

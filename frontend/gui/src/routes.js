@@ -8,12 +8,13 @@ import BillList from "./containers/BillListView";
 import MonthEmployeeList from "./containers/MonthEmployeeListView";
 import EmployeeList from "./containers/employeesViews/EmployeesListView";
 import EmployeeDetail from "./containers/employeesViews/EmployeeDetailView";
-import LocalList from "./containers/LocalListView";
+import LocalList from "./containers/LocalViews/LocalListView";
 import CurrencyExchangeList from "./containers/CurrencyExchangesListView";
 import CategoryList from "./containers/categoryViews/CategoryListView";
 import CategoryDetail from "./containers/categoryViews/CategoryDetailView";
 import ZoneList from "./containers/ZoneListView";
 import PaymentList from "./containers/PaymentListView";
+import LocalDetail from "./containers/LocalViews/LocalDetailView";
 
 const BaseRouter = () => (
   <div>
@@ -25,9 +26,10 @@ const BaseRouter = () => (
     <Route exact path="/category/:categoryID" component={CategoryDetail} />
     <Route exact path="/emp" component={EmployeeList} />
     <Route exact path="/emp/:employeeID" component={EmployeeDetail} />
+    <Route exact path="/local" component={LocalList} />
+    <Route exact path="/local/:localID" component={LocalDetail} />
     <Route exact path="/bill" component={BillList} />
     <Route exact path="/memp" component={MonthEmployeeList} />
-    <Route exact path="/local" component={LocalList} />
     <Route exact path="/currency" component={CurrencyExchangeList} />
     <Route exact path="/zone" component={ZoneList} />
     <Route exact path="/pay" component={PaymentList} />
