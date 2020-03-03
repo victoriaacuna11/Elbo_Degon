@@ -40,7 +40,7 @@ const ProductLayout = props => {
             <Link to="/zone">Zonas</Link>
           </Menu.Item>
           <Menu.Item key="9">
-            <Link to="/category">Catergorías</Link>
+            <Link to="/category">Categorías</Link>
           </Menu.Item>
           <Menu.Item key="10">
             <Link to="/currency">Tasas de cambio</Link>

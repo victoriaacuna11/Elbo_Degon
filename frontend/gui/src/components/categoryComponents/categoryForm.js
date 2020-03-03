@@ -9,30 +9,45 @@ const layout = {
   wrapperCol: { span: 14 }
 };
 
-class ProvForm extends React.Component {
+class CatForm extends React.Component {
   formRef = React.createRef();
 
   onReset = () => {
     this.formRef.current.resetFields();
   };
 
+  //   //estado con un array de proveedores y de categorias
+  //   state = {
+  //     providers: [],
+  //     category: []
+  //   };
+
+  //   //me trae todos los proveedores y las categorias de la DB para poder mostrarlos en un dropdown en el form
+  //   componentDidMount() {
+  //     axios.get("http://127.0.0.1:8000/rest/prov/").then(res => {
+  //       this.setState({
+  //         providers: res.data
+  //       });
+  //       console.log(this.state.providers);
+  //     });
+
+  //     axios.get("http://127.0.0.1:8000/rest/category/").then(ras => {
+  //       this.setState({
+  //         category: ras.data
+  //       });
+  //       console.log(this.state.category);
+  //     });
+  //   }
+
   //recibo los datos del form y hago un post (crear) en los productos en restframework
   handleFormSubmit = event => {
     //event.preventDefault();
     const name = event.Nombre;
-    const main_phone = event.MPhone;
-    const phone = event.OPhone;
-    const address = event.Address;
-    const email = event.Email;
     const availible = event.Available;
 
     axios
-      .post("http://127.0.0.1:8000/rest/prov/", {
+      .post("http://127.0.0.1:8000/rest/category/", {
         name: name,
-        main_phone: main_phone,
-        phone: phone,
-        address: address,
-        email: email,
         availible: availible
       })
       .then(res => console.log(res))
@@ -49,35 +64,7 @@ class ProvForm extends React.Component {
         onFinish={event => this.handleFormSubmit(event)}
       >
         <Form.Item name="Nombre" rules={[{ required: true }]} label="Nombre">
-          <Input name="name" placeholder="Nombre del proveedor" />
-        </Form.Item>
-
-        <Form.Item
-          name="MPhone"
-          label="Telefono Principal"
-          rules={[{ type: "number", required: true, min: 4100000000 }]}
-        >
-          <InputNumber placeholder="Telefono principal" />
-        </Form.Item>
-
-        <Form.Item
-          name="OPhone"
-          label="Otro telefono"
-          rules={[{ type: "number", required: true, min: 4100000000 }]}
-        >
-          <InputNumber placeholder="Telefono alterno" />
-        </Form.Item>
-
-        <Form.Item
-          name="Address"
-          rules={[{ required: true }]}
-          label="Direccion"
-        >
-          <Input name="address" placeholder="Escribe la direccion" />
-        </Form.Item>
-
-        <Form.Item name="Email" rules={[{ required: true }]} label="Email">
-          <Input name="email" placeholder="Escribe la direccion" />
+          <Input name="name" placeholder="Nombre de la categoria" />
         </Form.Item>
 
         <Form.Item
@@ -92,12 +79,7 @@ class ProvForm extends React.Component {
         </Form.Item>
 
         <br />
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{ marginLeft: 650 }}
-          wrapperCol={{ ...layout.wrapperCol, offset: 8 }}
-        >
+        <Button type="primary" htmlType="submit" style={{ marginLeft: 650 }}>
           Crear
         </Button>
         <br />
@@ -107,4 +89,4 @@ class ProvForm extends React.Component {
   }
 }
 
-export default ProvForm;
+export default CatForm;

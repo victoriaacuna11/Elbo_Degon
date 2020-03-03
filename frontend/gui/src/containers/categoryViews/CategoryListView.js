@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import Categories from "../components/categories";
+import Categories from "../../components/categoryComponents/categories";
+import CatForm from "../../components/categoryComponents/categoryForm";
 
 class CategoryList extends React.Component {
   state = {
@@ -20,8 +21,8 @@ class CategoryList extends React.Component {
       <>
         <Categories data={this.state.categories} />
         <br />
-        {/* <h2>Crear un producto</h2>
-          <PForm requestType="post" productID={null} buttonText="Crear" /> */}
+        <h2>Crear una Categoria</h2>
+        <CatForm productID={null} />
       </>
     );
   }
