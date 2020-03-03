@@ -98,6 +98,12 @@ class ModifyPForm extends React.Component {
       : "rgba(233,5,5,0.5)";
   };
 
+  //metodo para obtener solo aquellos objetos que tengan el available en true
+  getTheAvailables = arrToCheck => {
+    const arrAvailables = arrToCheck.filter(x => x.availible === true);
+    return arrAvailables;
+  };
+
   render() {
     return (
       <>
@@ -143,7 +149,7 @@ class ModifyPForm extends React.Component {
               name="provider"
               allowClear
             >
-              {this.state.providers.map(provs => (
+              {this.getTheAvailables(this.state.providers).map(provs => (
                 <Option value={provs.id} key={provs.name}>
                   {provs.name}
                 </Option>
@@ -162,7 +168,7 @@ class ModifyPForm extends React.Component {
               name="category"
               allowClear
             >
-              {this.state.category.map(cats => (
+              {this.getTheAvailables(this.state.category).map(cats => (
                 <Option value={cats.id} key={cats.name}>
                   {cats.name}
                 </Option>

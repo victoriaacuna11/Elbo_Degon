@@ -16,29 +16,6 @@ class ZForm extends React.Component {
     this.formRef.current.resetFields();
   };
 
-  //   //estado con un array de proveedores y de categorias
-  //   state = {
-  //     providers: [],
-  //     category: []
-  //   };
-
-  //   //me trae todos los proveedores y las categorias de la DB para poder mostrarlos en un dropdown en el form
-  //   componentDidMount() {
-  //     axios.get("http://127.0.0.1:8000/rest/prov/").then(res => {
-  //       this.setState({
-  //         providers: res.data
-  //       });
-  //       console.log(this.state.providers);
-  //     });
-
-  //     axios.get("http://127.0.0.1:8000/rest/category/").then(ras => {
-  //       this.setState({
-  //         category: ras.data
-  //       });
-  //       console.log(this.state.category);
-  //     });
-  //   }
-
   //recibo los datos del form y hago un post (crear) en los productos en restframework
   handleFormSubmit = event => {
     //event.preventDefault();
@@ -56,6 +33,12 @@ class ZForm extends React.Component {
       .catch(error => console.err(error));
     return window.location.reload(false);
   };
+
+  // //metodo para obtener solo aquellos objetos que tengan el available en true
+  // getTheAvailables = arrToCheck => {
+  //   const arrAvailables = arrToCheck.filter(x => x.availible === true);
+  //   return arrAvailables;
+  // };
 
   render() {
     return (

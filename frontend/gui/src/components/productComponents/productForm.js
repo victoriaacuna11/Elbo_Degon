@@ -61,6 +61,12 @@ class PForm extends React.Component {
     return window.location.reload(false);
   };
 
+  //metodo para obtener solo aquellos objetos que tengan el available en true
+  getTheAvailables = arrToCheck => {
+    const arrAvailables = arrToCheck.filter(x => x.availible === true);
+    return arrAvailables;
+  };
+
   render() {
     return (
       <Form
@@ -91,7 +97,7 @@ class PForm extends React.Component {
             placeholder="Selecciona un proveedor"
             allowClear
           >
-            {this.state.providers.map(provs => (
+            {this.getTheAvailables(this.state.providers).map(provs => (
               <Option value={provs.id} key={provs.name}>
                 {provs.name}
               </Option>
@@ -109,7 +115,7 @@ class PForm extends React.Component {
             placeholder="Selecciona una categoria"
             allowClear
           >
-            {this.state.category.map(cats => (
+            {this.getTheAvailables(this.state.category).map(cats => (
               <Option value={cats.id} key={cats.name}>
                 {cats.name}
               </Option>

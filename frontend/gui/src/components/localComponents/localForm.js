@@ -70,9 +70,14 @@ class LocalForm extends React.Component {
 
   getManagers = () => {
     const arrManagers = this.state.employees.filter(x => x.job_id == "Gerente");
-    console.log(arrManagers);
-    return arrManagers;
+    const managersAv = arrManagers.filter(x => x.availible === true);
+    return managersAv;
   };
+
+  // getTheAvailables = arrToCheck => {
+  //   const arrAvailables = arrToCheck.filter(x => x.availible === true);
+  //   return arrAvailables;
+  // };
 
   render() {
     return (

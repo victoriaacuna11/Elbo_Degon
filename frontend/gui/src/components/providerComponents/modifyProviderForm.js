@@ -32,18 +32,6 @@ class ModifyProvForm extends React.Component {
           currProv: res.data
         });
       });
-
-    // axios.get("http://127.0.0.1:8000/rest/prov/").then(res => {
-    //   this.setState({
-    //     providers: res.data
-    //   });
-    // });
-
-    // axios.get("http://127.0.0.1:8000/rest/category/").then(ras => {
-    //   this.setState({
-    //     category: ras.data
-    //   });
-    // });
   }
 
   //metodo para el boton de habilitar y deshabilitar. Pone en availible el valor contrario al que tenia y refresca
@@ -100,6 +88,12 @@ class ModifyProvForm extends React.Component {
       ? "rgba(11,226,8,0.5)"
       : "rgba(233,5,5,0.5)";
   };
+
+  //metodo para obtener solo aquellos objetos que tengan el available en true
+  // getTheAvailables = arrToCheck => {
+  //   const arrAvailables = arrToCheck.filter(x => x.availible === true);
+  //   return arrAvailables;
+  // };
 
   render() {
     return (

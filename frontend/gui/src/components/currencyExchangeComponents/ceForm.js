@@ -39,6 +39,12 @@ class CeForm extends React.Component {
     return window.location.reload(false);
   };
 
+  // //metodo para obtener solo aquellos objetos que tengan el available en true
+  // getTheAvailables = arrToCheck => {
+  //   const arrAvailables = arrToCheck.filter(x => x.availible === true);
+  //   return arrAvailables;
+  // };
+
   render() {
     return (
       <Form

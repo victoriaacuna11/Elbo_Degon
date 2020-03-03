@@ -1,7 +1,6 @@
 import React from "react";
-import { Form, Input, Button, Select, InputNumber, TimePicker } from "antd";
+import { Form, Input, Button, Select, InputNumber, Radio } from "antd";
 import axios from "axios";
-import moment from "moment";
 
 const { Option } = Select;
 
@@ -10,11 +9,7 @@ const layout = {
   wrapperCol: { span: 16 }
 };
 
-function onChange(time, timeString) {
-  console.log(time, timeString);
-}
-
-class ModifyLocForm extends React.Component {
+class ModifyMEForm extends React.Component {
   formRef = React.createRef();
 
   onReset = () => {
@@ -23,17 +18,17 @@ class ModifyLocForm extends React.Component {
 
   state = {
     employees: [],
-    currLoc: {}
+    currMemp: {}
   };
 
   //Me traigo los proveedores, las categorias, y todos los datos del producto en el cual
   //estoy metido
   componentDidMount() {
     axios
-      .get(`http://127.0.0.1:8000/rest/local/${this.props.localID}`)
+      .get(`http://127.0.0.1:8000/rest/memp/${this.props.employeeID}`)
       .then(res => {
         this.setState({
-          currLoc: res.data
+          currMemp: res.data
         });
       });
 
@@ -41,19 +36,17 @@ class ModifyLocForm extends React.Component {
       this.setState({
         employees: res.data
       });
-      console.log(this.state.employees);
     });
   }
 
   //metodo para el boton de habilitar y deshabilitar. Pone en availible el valor contrario al que tenia y refresca
-  handleChangeAvailable = (event, localID) => {
+  handleChangeAvailable = (event, employeeID) => {
     axios
-      .put(`http://127.0.0.1:8000/rest/local/${localID}/`, {
-        address: this.state.currLoc.address,
-        opening_time: this.state.currLoc.opening_time,
-        closing_time: this.state.currLoc.closing_time,
-        manager: this.state.currLoc.manager,
-        availible: !this.state.currLoc.availible
+      .put(`http://127.0.0.1:8000/rest/memp/${employeeID}/`, {
+        employee: this.state.currMemp.employee,
+        month: this.state.currMemp.month,
+        year: this.state.currMemp.year,
+        availible: !this.state.currMemp.availible
       })
       .then(res => console.log(res))
       .catch(error => console.error(error));
@@ -63,51 +56,42 @@ class ModifyLocForm extends React.Component {
 
   //Para cambiar el mensaje del boton de habilitar y deshabilitar
   showMessage = () => {
-    return this.state.currLoc.availible === false
+    return this.state.currMemp.availible === false
       ? "Habilitar"
       : "Deshabilitar";
   };
 
   //toma los valores del form y hace un put (modificar) en el producto en el que esta metido
-  handleFormSubmit = (event, localID) => {
+  handleFormSubmit = (event, employeeID) => {
     //event.preventDefault();
-    const address = event.Address;
-    const opening_time = moment(event.Abre).format("HH:mm:ss");
-    const closing_time = moment(event.Cierra).format("HH:mm:ss");
-    const manager = event.Gerencia;
+    const employee = event.Empleado;
+    const month = event.Mes;
+    const year = event.Year;
     const availible = event.Available;
 
     axios
-      .put(`http://127.0.0.1:8000/rest/local/${localID}/`, {
-        address: address,
-        opening_time: opening_time,
-        closing_time: closing_time,
-        manager: manager,
+      .put(`http://127.0.0.1:8000/rest/memp/${employeeID}/`, {
+        employee: employee,
+        month: month,
+        year: year,
         availible: availible
       })
       .then(res => console.log(res))
-      .catch(error => console.error(error));
+      .catch(error => console.err(error));
     return window.location.reload(false);
   };
 
   //Cambiar el color del boton (pura carpinteria papa)
   colorStatus = () => {
-    return this.state.currLoc.availible === false
+    return this.state.currMemp.availible === false
       ? "rgba(11,226,8,0.5)"
       : "rgba(233,5,5,0.5)";
   };
 
-  getManagers = () => {
-    const arrManagers = this.state.employees.filter(x => x.job_id == "Gerente");
-    const managersAv = arrManagers.filter(x => x.availible === true);
-    return managersAv;
+  getTheAvailables = arrToCheck => {
+    const arrAvailables = arrToCheck.filter(x => x.availible === true);
+    return arrAvailables;
   };
-
-  // //metodo para obtener solo aquellos objetos que tengan el available en true
-  // getTheAvailables = arrToCheck => {
-  //   const arrAvailables = arrToCheck.filter(x => x.availible === true);
-  //   return arrAvailables;
-  // };
 
   render() {
     return (
@@ -116,69 +100,73 @@ class ModifyLocForm extends React.Component {
           {...layout}
           ref={this.formRef}
           name="control-ref"
-          onFinish={event => this.handleFormSubmit(event, this.props.localID)}
+          onFinish={event =>
+            this.handleFormSubmit(event, this.props.employeeID)
+          }
         >
           <Form.Item
-            name="Address"
+            name="Empleado"
+            label="Empleado"
             rules={[{ required: true }]}
-            label="Direccion"
-            key={this.state.currLoc.address}
-          >
-            <Input name="address" placeholder={this.state.currLoc.address} />
-          </Form.Item>
-
-          <Form.Item
-            name="Abre"
-            label="Hora de apertura"
-            key={this.state.currLoc.opening_time}
-          >
-            <TimePicker
-              name="abre"
-              onChange={onChange}
-              placeholder={this.state.currLoc.opening_time}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="Cierra"
-            label="Hors de cierre"
-            key={this.state.currLoc.closing_time}
-          >
-            <TimePicker
-              name="cierra"
-              onChange={onChange}
-              placeholder={this.state.currLoc.closing_time}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="Gerencia"
-            label="Gerente"
-            rules={[{ required: true }]}
-            key={this.state.currLoc.manager}
+            key={this.state.currMemp.employee}
           >
             <Select
-              name="gerente"
-              placeholder={this.state.currLoc.manager}
+              name="empleado"
+              placeholder={this.state.currMemp.employee}
               allowClear
             >
-              {this.getManagers().map(x => (
-                <Option value={x.id} key={x.name + x.last_name}>
-                  {x.name}
+              {this.getTheAvailables(this.state.employees).map(emp => (
+                <Option value={emp.id} key={emp.name}>
+                  {emp.name}
                 </Option>
               ))}
             </Select>
           </Form.Item>
 
           <Form.Item
-            name="Available"
-            label="Available"
-            key={this.state.currLoc.availible}
+            name="Mes"
+            label="Mes"
+            rules={[{ required: true }]}
+            key={this.state.currMemp.month}
           >
             <Select
+              name="mes"
+              placeholder={this.state.currMemp.month}
+              allowClear
+            >
+              <Option value="Enero">Enero</Option>
+              <Option value="Febrero">Febrero</Option>
+              <Option value="Marzo">Marzo</Option>
+              <Option value="Abril">Abril</Option>
+              <Option value="Mayo">Mayo</Option>
+              <Option value="Junio">Junio</Option>
+              <Option value="Julio">Julio</Option>
+              <Option value="Agosto">Agosto</Option>
+              <Option value="Septiembre">Septiembre</Option>
+              <Option value="Octubre">Octubre</Option>
+              <Option value="Noviembre">Noviembre</Option>
+              <Option value="Diciembre">Diciembre</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="Year"
+            label="Año"
+            rules={[{ type: "number", required: true, min: 2019 }]}
+            key={this.state.currMemp.year}
+          >
+            <InputNumber placeholder={this.state.currMemp.year} />
+          </Form.Item>
+
+          <Form.Item
+            name="Available"
+            label="Available"
+            key={this.state.currMemp.availible}
+          >
+            <Select
+              defaultValue={this.state.currMemp.availible}
               name="availible"
               placeholder="Elige una opcion"
-              defaultValue={this.state.currLoc.availible}
               allowClear
               disabled
             >
@@ -212,7 +200,7 @@ class ModifyLocForm extends React.Component {
               htmlType="button"
               wrapperCol={{ ...layout.wrapperCol, offset: 8 }}
               onClick={event =>
-                this.handleChangeAvailable(event, this.props.localID)
+                this.handleChangeAvailable(event, this.props.employeeID)
               }
             >
               {this.showMessage()}
@@ -226,4 +214,4 @@ class ModifyLocForm extends React.Component {
   }
 }
 
-export default ModifyLocForm;
+export default ModifyMEForm;
