@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { List } from "antd";
-import InfiniteScroll from "react-infinite-scroller";
+import { List} from "antd";
 import { fixControlledValue } from "antd/lib/input/Input";
+
 
 class Bills extends React.Component {
 
@@ -42,11 +42,10 @@ class Bills extends React.Component {
         console.log(this.state.tax)
       });
     }
+
       render(){
-        
         return (
           <div className="demo-infinite-container">
-            <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>
               <h2>Facturas</h2>
               <List
                 dataSource={this.props.data}
@@ -59,9 +58,9 @@ class Bills extends React.Component {
                     />
                   </List.Item>
                 )}
-              ></List>
-            </InfiniteScroll>
-          </div>
+              >
+            </List>
+        </div>
         );
       };
     } 

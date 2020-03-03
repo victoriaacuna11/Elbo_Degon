@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Bills from "../components/bills";
-
+import CreateBillForm from "../components/createBillForm";
 
 class BillList extends React.Component {
     state = {
@@ -15,14 +15,16 @@ class BillList extends React.Component {
         });
       });
     }
-  
+
     render() {
       return (
         <>
-          <Bills data={this.state.bills}/>
+          <Bills 
+          data={this.state.bills}
+          />
           <br />
-          {/* <h2>Crear un producto</h2>
-          <PForm requestType="post" productID={null} buttonText="Crear" /> */}
+          <h2>Crear una factura</h2>
+          <CreateBillForm requestType="post" productID={null} buttonText="Crear" />
         </>
       );
     }
