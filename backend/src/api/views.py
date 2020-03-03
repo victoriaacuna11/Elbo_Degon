@@ -936,25 +936,119 @@ def top_meses(request):
     return JsonResponse(data)
 
 
-def query_vic(request, payment):
+def query_vic(request):
 
+    ids=[]
     ced=[]
-    print(payment)
+    tot=[]
 
-    q=Payment.objects.values( 'payment_bill__bill__client__ci' ).filter(id=payment)
-
+    q=Payment.objects.values( 'id','payment_bill__bill__client__ci', 'payment_bill__bill__subtotal' )
+    tax=Tax.objects.values('tax').filter(is_Active=True)
+    
+    t=(tax[0]['tax'])
 
     for x in q:
-        
+        ids.append(x['id'])
         ced.append(x['payment_bill__bill__client__ci'])
-    
+        tot.append(x['payment_bill__bill__subtotal'])
 
+    j=[]
+
+    for x in range(len(ced)):
+        q=tot[x]*t+tot[x]
+
+        k={'id':ids[x], 'cedula':ced[x],'total':q}
+        j.append(k)
 
     data={
 
-        'data':ced
+        'data':j
     }
 
     return JsonResponse(data)
+
+
+def vista_pickup(request):
+    
+    ids=[]
+    ci=[]
+    date=[]
+
+    q=PickUp.objects.values('id', 'bill_id__client__ci','bill_id__date_time')
+
+    for x in q:
+        ids.append(x['id'])
+        ci.append(x['bill_id__client__ci'])
+        date.append(x['bill_id__date_time'])
+
+    data_p=[]
+
+    for x in range(len(ids)):
+
+        k={'id':ids[x], 'ci':ci[x], 'date':date[x] }
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+def vista_delivery(request):
+
+    ids=[]
+    ci=[]
+    date=[]
+
+    q=PickUp.objects.values('id', 'bill_id__client__ci','bill_id__date_time')
+
+    for x in q:
+        ids.append(x['id'])
+        ci.append(x['bill_id__client__ci'])
+        date.append(x['bill_id__date_time'])
+
+    data_p=[]
+
+    for x in range(len(ids)):
+
+        k={'id':ids[x], 'ci':ci[x], 'date':date[x] }
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+def vista_lotes(request):
+
+    ids=[]
+    prod=[]
+    f_exp=[]
+    f_elab=[]
+
+    q=ProductBatch.objects.values('id', 'product__product_name', 'expiration_date', 'elaboration_date')
+
+    for x in q:
+        ids.append(x['id'])
+        prod.append(x['product__product_name'])
+        f_exp.append(x['expiration_date'])
+        f_elab.append(x['elaboration_date'])
+    
+    data_batch=[]
+
+    for x in range(len(ids)):
+        k={'id':ids[x],'product':prod[x],'exp':f_exp[x], 'elab':f_elab[x]}
+        data_batch.append(k)
+    
+    data={
+        'data':data_batch
+    }
+
+    return JsonResponse(data)
+
+
+
+
 
     
