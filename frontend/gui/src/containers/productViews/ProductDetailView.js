@@ -38,6 +38,10 @@ class ProductDetail extends React.Component {
     });
   }
 
+  isAvailable = () => {
+    return (this.state.employee.availible = true ? "Si" : "No");
+  };
+
   render() {
     return (
       <>
@@ -54,6 +58,7 @@ class ProductDetail extends React.Component {
             Categoria: {this.state.category.name} ({this.state.category.id})
           </p>
           <p>Pasillo: {this.state.product.hall}</p>
+          <p>Habilitado: {this.isAvailable()}</p>
         </Card>
         <br />
         <h2 style={{ marginLeft: 650 }}>Modificar Producto:</h2>

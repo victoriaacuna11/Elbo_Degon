@@ -55,7 +55,9 @@ class ProvForm extends React.Component {
         <Form.Item
           name="MPhone"
           label="Telefono Principal"
-          rules={[{ type: "number", required: true, min: 4100000000 }]}
+          rules={[
+            { type: "number", required: true, min: 4100000000, max: 4270000000 }
+          ]}
         >
           <InputNumber placeholder="Telefono principal" />
         </Form.Item>
@@ -63,7 +65,9 @@ class ProvForm extends React.Component {
         <Form.Item
           name="OPhone"
           label="Otro telefono"
-          rules={[{ type: "number", required: true, min: 4100000000 }]}
+          rules={[
+            { type: "number", required: true, min: 4100000000, max: 4270000000 }
+          ]}
         >
           <InputNumber placeholder="Telefono alterno" />
         </Form.Item>

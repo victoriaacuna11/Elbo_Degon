@@ -16,6 +16,10 @@ class ProviderDetail extends React.Component {
     });
   }
 
+  isAvailable = () => {
+    return (this.state.employee.availible = true ? "Si" : "No");
+  };
+
   render() {
     return (
       <>
@@ -27,6 +31,7 @@ class ProviderDetail extends React.Component {
           <p>Otro telefono: {this.state.provider.phone}</p>
           <p>Direccion: {this.state.provider.address}</p>
           <p>E-mail: {this.state.provider.email}</p>
+          <p>Habilitado: {this.isAvailable()}</p>
         </Card>
         <br />
         <h2 style={{ marginLeft: 650 }}>Modificar Proveedor:</h2>

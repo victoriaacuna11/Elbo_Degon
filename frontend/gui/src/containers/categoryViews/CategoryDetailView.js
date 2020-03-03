@@ -18,13 +18,19 @@ class CategoryDetail extends React.Component {
     });
   }
 
+  isAvailable = () => {
+    return (this.state.employee.availible = true ? "Si" : "No");
+  };
+
   render() {
     return (
       <>
-        <h2>Producto:</h2>
+        <h2>Categoria:</h2>
         <Card
           title={this.state.category.name + " (" + this.state.category.id + ")"}
-        ></Card>
+        >
+          <p>Habilitado: {this.isAvailable()}</p>
+        </Card>
         <br />
         <h2 style={{ marginLeft: 650 }}>Modificar Categoria:</h2>
         <ModifyCatForm categoryID={this.props.match.params.categoryID} />

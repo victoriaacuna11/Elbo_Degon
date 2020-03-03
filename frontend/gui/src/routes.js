@@ -6,7 +6,8 @@ import ProviderList from "./containers/providerViews/ProviderListView";
 import ProviderDetail from "./containers/providerViews/ProviderDetailView";
 import BillList from "./containers/BillListView";
 import MonthEmployeeList from "./containers/MonthEmployeeListView";
-import EmployeeList from "./containers/EmployeesListView";
+import EmployeeList from "./containers/employeesViews/EmployeesListView";
+import EmployeeDetail from "./containers/employeesViews/EmployeeDetailView";
 import LocalList from "./containers/LocalListView";
 import CurrencyExchangeList from "./containers/CurrencyExchangesListView";
 import CategoryList from "./containers/categoryViews/CategoryListView";
@@ -22,9 +23,10 @@ const BaseRouter = () => (
     <Route exact path="/prod/:productID" component={ProductDetail} />
     <Route exact path="/category" component={CategoryList} />
     <Route exact path="/category/:categoryID" component={CategoryDetail} />
+    <Route exact path="/emp" component={EmployeeList} />
+    <Route exact path="/emp/:employeeID" component={EmployeeDetail} />
     <Route exact path="/bill" component={BillList} />
     <Route exact path="/memp" component={MonthEmployeeList} />
-    <Route exact path="/emp" component={EmployeeList} />
     <Route exact path="/local" component={LocalList} />
     <Route exact path="/currency" component={CurrencyExchangeList} />
     <Route exact path="/zone" component={ZoneList} />
