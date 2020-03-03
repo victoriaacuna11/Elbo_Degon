@@ -14,6 +14,9 @@ import ListaTopProveedores from "./querys/top_prov";
 import ListaTopVentasxMes from "./querys/month_cant";
 
 
+
+
+
 class AdminData extends React.Component{
 
 
@@ -59,7 +62,21 @@ class AdminData extends React.Component{
         prov:[],
 
         meses:[],
+        
 
+
+
+        cat:[],
+        category:'',
+
+        nam:[],
+        name:'',
+        
+        s:[],
+        start:'',
+        
+        e:[],
+        end:'',
         
     }
 
@@ -209,10 +226,24 @@ class AdminData extends React.Component{
      });
 
 
-     
-     
+    //  axios.get("http://127.0.0.1:8000/rest/top_meses").then(res => {
+    //   this.setState({
+
+    //       mes:res.data.data
+        
+    //   });
+    //   //console.log(this.state.mes)
+
+
+    //  });
+
+
+    
+
 
      }
+
+     
 
     render(){
         return(
@@ -260,20 +291,13 @@ class AdminData extends React.Component{
             <ListaTopProveedores data={this.state.prov} />
 
             <ListaTopVentasxMes data={this.state.mes} />
+          
 
 
 
-
-
-            </>
-        
-      
            
-
+            </>
         )
-
-
-
     }
 
 

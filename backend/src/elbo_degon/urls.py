@@ -33,5 +33,8 @@ urlpatterns = [
     path('rest/vista_delivery', vista_delivery),
     path('rest/vista_lotes', vista_lotes),
     path('rest/vista_pickup', vista_pickup),
+    path('rest/cate/<cate>', prod_cat),
+    path('rest/name/<name>', prod_name),
+    path('rest/date/<start>/<end>', dates_top),
     
 ]

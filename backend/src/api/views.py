@@ -224,7 +224,7 @@ def top5(request):
         k={ 'id':x+1 ,'name':l[x], 'cant':s[x] }
         #print(k)
         r.append(k)
-        print(r)
+        #print(r)
 
 
 
@@ -1047,6 +1047,75 @@ def vista_lotes(request):
 
     return JsonResponse(data)
 
+
+def prod_cat(request,cate):
+    
+    ids=[]
+    prod=[]
+    q=Product.objects.values('id','product_name').filter(category__name__icontains=cate)
+
+    for x in q:
+        prod.append(x['product_name'])
+        ids.append(x['id'])
+    data_p=[]
+
+    for x in range(len(ids)):
+        k={'id':ids[x],'product':prod[x]}
+        data_p.append(k)
+
+
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+
+def prod_name(request,name):
+
+    prod=[]
+    q=Product.objects.values('id','product_name').filter(product_name__icontains=name)
+
+    for x in q:
+        prod.append(x['product_name'])
+        ids.append(x['id'])
+
+    data_p=[]
+    
+    for x in range(len(ids)):
+        k={'id':ids[x],'product':prod[x]}
+        data_p.append(k)
+
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+
+##mas ventas en este periodo de tiempo
+def dates_top(request,start,end):
+
+    prod=[]
+    cant=[]
+
+    q=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__range=[start,end]).annotate(e=Sum('quantity')).order_by('-e')[0:5]
+
+    for x in q:
+        prod.append(x['batch__product__product_name'])
+        cant.append(x['e'])
+    
+    data_p=[]
+
+    for x in range(len(prod)):
+        k={'product':prod[x],'cant':cant[x]}
+        data_p.append(k)
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
 
 
 

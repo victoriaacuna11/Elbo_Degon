@@ -17,6 +17,7 @@ import DeliveryListView from "./containers/DeliveryListView"
 import PickupListView from "./containers/PickupListView"
 import BatchListView from "./containers/Batch.ListView"
 
+
 const BaseRouter = () => (
   <div>
     <Route exact path="/prov" component={ProviderList} />
@@ -36,6 +37,12 @@ const BaseRouter = () => (
     <Route exact path="/delivery" component={DeliveryListView} />
     <Route exact path="/pickup" component={PickupListView} />
     <Route exact path="/lotes" component={BatchListView} />
+
+
+
+
+
+    
   </div>
 );
 
