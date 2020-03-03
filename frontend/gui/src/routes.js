@@ -9,7 +9,8 @@ import MonthEmployeeList from "./containers/MonthEmployeeListView";
 import EmployeeList from "./containers/employeesViews/EmployeesListView";
 import EmployeeDetail from "./containers/employeesViews/EmployeeDetailView";
 import LocalList from "./containers/LocalViews/LocalListView";
-import CurrencyExchangeList from "./containers/CurrencyExchangesListView";
+import CurrencyExchangesList from "./containers/currencyExchangeViews/CeListView";
+import CurrencyExchangeDetail from "./containers/currencyExchangeViews/CeDetailView";
 import CategoryList from "./containers/categoryViews/CategoryListView";
 import CategoryDetail from "./containers/categoryViews/CategoryDetailView";
 import ZoneList from "./containers/zoneViews/ZoneListView";
@@ -31,9 +32,14 @@ const BaseRouter = () => (
     <Route exact path="/local/:localID" component={LocalDetail} />
     <Route exact path="/zone" component={ZoneList} />
     <Route exact path="/zone/:zoneID" component={ZoneDetail} />
+    <Route exact path="/currency" component={CurrencyExchangesList} />
+    <Route
+      exact
+      path="/currency/:currencyID"
+      component={CurrencyExchangeDetail}
+    />
     <Route exact path="/bill" component={BillList} />
     <Route exact path="/memp" component={MonthEmployeeList} />
-    <Route exact path="/currency" component={CurrencyExchangeList} />
     <Route exact path="/pay" component={PaymentList} />
   </div>
 );
