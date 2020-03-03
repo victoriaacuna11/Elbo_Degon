@@ -936,23 +936,71 @@ def top_meses(request):
     return JsonResponse(data)
 
 
-def query_vic(request, payment):
+def query_pay_tot_ci(request):
 
     ced=[]
-    print(payment)
+    tot=[]
+    payID=[]
+    # print(payment)
 
-    q=Payment.objects.values( 'payment_bill__bill__client__ci' ).filter(id=payment)
+    q=Payment.objects.values( 'payment_bill__bill__client__ci', 'payment_bill__bill__subtotal', 'id' )
+    tax=Tax.objects.values('tax').filter(is_Active=True)
+
+    t=(tax[0]['tax'])
 
 
     for x in q:
         
         ced.append(x['payment_bill__bill__client__ci'])
+        tot.append(x['payment_bill__bill__subtotal'])
+        payID.append(x['id'])
     
+    j=[]
+
+    for x in range(len(ced)):
+        q=(tot[x]*t)+tot[x]
+        k={'cedula': ced[x], 'total':q, 'id': payID[x]}
+        j.append(k)
 
 
     data={
 
-        'data':ced
+        'data':j
+    }
+
+    return JsonResponse(data)
+
+
+def query_Bill_Client(request):
+
+    ced=[]
+    billid=[]
+    tot=[]
+    # print(payment)
+
+    q=Bill.objects.values('client__ci', 'id', 'subtotal' )
+    tax=Tax.objects.values('tax').filter(is_Active=True)
+
+    t=(tax[0]['tax'])
+
+
+    for x in q:
+        
+        ced.append(x['client__ci'])
+        billid.append(x['id'])
+        tot.append(x['subtotal'])
+    
+    j=[]
+
+    for x in range(len(ced)):
+        q=(tot[x]*t)+tot[x]
+        k={'cedula': ced[x], 'id': billid[x], 'total': q}
+        j.append(k)
+
+
+    data={
+
+        'data':j
     }
 
     return JsonResponse(data)

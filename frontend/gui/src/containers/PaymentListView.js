@@ -28,7 +28,7 @@ class PaymentList extends React.Component {
     render() {
       return (
         <>
-          <Payments payments={this.state.payments}/>
+          <Payments data={this.state.payments}/>
           <br />
           {/* <h2>Crear un producto</h2>
           <PForm requestType="post" productID={null} buttonText="Crear" /> */}
