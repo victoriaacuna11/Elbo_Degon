@@ -4,22 +4,31 @@ import Payments from "../components/payments";
 
 
 class PaymentList extends React.Component {
-    state = {
-      payments: [],
-    };
+    
+
+    constructor(props){
+      super(props);
+
+      this.state = {
+        payments: [],
+      };
+
+    }
 
     componentDidMount() {
-      axios.get("http://127.0.0.1:8000/rest/pay/").then(res => {
+      axios.get("http://localhost:8000/rest/pay/").then(res => {
         this.setState({
+          ...this.state,
             payments: res.data
         });
+        
       });
     }
   
     render() {
       return (
         <>
-          <Payments data={this.state.payments}/>
+          <Payments payments={this.state.payments}/>
           <br />
           {/* <h2>Crear un producto</h2>
           <PForm requestType="post" productID={null} buttonText="Crear" /> */}

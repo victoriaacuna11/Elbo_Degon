@@ -12,6 +12,11 @@ import CurrencyExchangeList from './containers/CurrencyExchangesListView';
 import CategoryList from './containers/CategoryListView';
 import ZoneList from './containers/ZoneListView';
 import PaymentList from './containers/PaymentListView';
+import AdminData from "./components/querys"
+import DeliveryListView from "./containers/DeliveryListView"
+import PickupListView from "./containers/PickupListView"
+import BatchListView from "./containers/Batch.ListView"
+
 
 const BaseRouter = () => (
   <div>
@@ -27,6 +32,16 @@ const BaseRouter = () => (
     <Route exact path="/category" component={CategoryList}/>
     <Route exact path="/zone" component={ZoneList}/>
     <Route exact path="/pay" component={PaymentList}/>
+    
+    <Route exact path="/admin_info" component={AdminData} />
+    <Route exact path="/delivery" component={DeliveryListView} />
+    <Route exact path="/pickup" component={PickupListView} />
+    <Route exact path="/lotes" component={BatchListView} />
+
+
+
+
+
     
   </div>
 );
