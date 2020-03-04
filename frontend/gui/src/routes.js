@@ -20,6 +20,7 @@ import SearchListVies from "./containers/SearchCatList"
 import SearchCatList from "./containers/SearchCatList";
 import SearchNameList from "./containers/SearchNameList";
 import RangeDateList from "./containers/RangeDateList";
+import Charts from "./containers/AdminInfoChats";
 
 
 const BaseRouter = () => (
@@ -49,6 +50,10 @@ const BaseRouter = () => (
     <Route exact path="/admin_info/cate/:category" component={SearchCatList} />
     <Route exact path="/admin_info/name/:name" component={SearchNameList} />
     <Route exact path="/admin_info/dates/:start/:end" component={RangeDateList} />
+
+
+
+    <Route exact path="/admin_info/charts" component={Charts} />
 
 
 

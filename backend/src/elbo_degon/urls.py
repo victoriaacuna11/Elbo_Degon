@@ -39,6 +39,6 @@ urlpatterns = [
     path('rest/query_vic2', query_vic2),
     #especial graficas
     path('rest/cant_bills_fest', cant_bills_fest),
-   # path('rest/cant_bill_genero', cant_bill_genero),
+    path('rest/cant_bill_genero', cant_bill_genero),
     
 ]

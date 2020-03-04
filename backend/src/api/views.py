@@ -616,25 +616,24 @@ def top_genero(request):
 
     return JsonResponse(data)
 
-# def cant_bill_genero(request):
+def cant_bill_genero(request):
 
-#     hom=BillProduct.objects.all().filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Hombre", bill_id__client__availible=True,  bill_id__availible=True, availible=True).count
-#     muj=BillProduct.objects.all().filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Mujer", bill_id__client__availible=True,  bill_id__availible=True, availible=True).count
-#     otr=BillProduct.objects.all().filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Otro", bill_id__client__availible=True,  bill_id__availible=True, availible=True).count
-
-#     #print(h)
+    hom=BillProduct.objects.all().filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Hombre", bill_id__client__availible=True,  bill_id__availible=True, availible=True).count()
+    muj=BillProduct.objects.all().filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Mujer", bill_id__client__availible=True,  bill_id__availible=True, availible=True).count()
+    otr=BillProduct.objects.all().filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Otro", bill_id__client__availible=True,  bill_id__availible=True, availible=True).count()
 
 
 
 
-#     data={
-#         'hombres':hom,
-#         'mujeres':muj,
-#         'otros':otr,
-#     }
+
+    data={
+        'hombres':hom,
+        'mujeres':muj,
+        'otros':otr,
+    }
     
 
-#     return JsonResponse(data)
+    return JsonResponse(data)
 
 
 
