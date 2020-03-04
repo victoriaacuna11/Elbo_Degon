@@ -936,11 +936,16 @@ def top_meses(request):
     return JsonResponse(data)
 
 
+<<<<<<< HEAD
 def query_vic(request):
+=======
+def query_pay_tot_ci(request):
+>>>>>>> listsViews-vic2
 
     ids=[]
     ced=[]
     tot=[]
+<<<<<<< HEAD
 
     q=Payment.objects.values( 'id','payment_bill__bill__client__ci', 'payment_bill__bill__subtotal' )
     tax=Tax.objects.values('tax').filter(is_Active=True)
@@ -1002,6 +1007,15 @@ def query_wilfredo(request):
     date=[]
     deli=[]
     loc=[]
+=======
+    payID=[]
+    # print(payment)
+
+    q=Payment.objects.values( 'payment_bill__bill__client__ci', 'payment_bill__bill__subtotal', 'id' )
+    tax=Tax.objects.values('tax').filter(is_Active=True)
+
+    t=(tax[0]['tax'])
+>>>>>>> listsViews-vic2
 
     q=PickUp.objects.values('id', 'bill_id__client__name','delivered','local__address', 'bill_id__date_time')
 
@@ -1040,6 +1054,7 @@ def vista_delivery(request):
         date.append(x['bill_id__date_time'])
         ava.append(x['availible'])
         
+<<<<<<< HEAD
 
     data_p=[]
 
@@ -1053,6 +1068,18 @@ def vista_delivery(request):
     }
 
     return JsonResponse(data)
+=======
+        ced.append(x['payment_bill__bill__client__ci'])
+        tot.append(x['payment_bill__bill__subtotal'])
+        payID.append(x['id'])
+    
+    j=[]
+
+    for x in range(len(ced)):
+        q=(tot[x]*t)+tot[x]
+        k={'cedula': ced[x], 'total':q, 'id': payID[x]}
+        j.append(k)
+>>>>>>> listsViews-vic2
 
 def vista_lotes(request):
 
@@ -1179,6 +1206,7 @@ def qwill2(request):
 
     data={
         'data':data_c
+        'data':j
     }
 
     return JsonResponse(data)
@@ -1186,5 +1214,82 @@ def qwill2(request):
 
 
 
+def query_Bill_Client(request):
+
+    ced=[]
+    billid=[]
+    tot=[]
+    # print(payment)
+
+    q=Bill.objects.values('client__ci', 'id', 'subtotal' )
+    tax=Tax.objects.values('tax').filter(is_Active=True)
+
+    t=(tax[0]['tax'])
+
+
+    for x in q:
+        
+        ced.append(x['client__ci'])
+        billid.append(x['id'])
+        tot.append(x['subtotal'])
+    
+    j=[]
+
+    for x in range(len(ced)):
+        q=(tot[x]*t)+tot[x]
+        k={'cedula': ced[x], 'id': billid[x], 'total': q}
+        j.append(k)
+
+
+    data={
+
+        'data':j
+    }
+
+    return JsonResponse(data)
+
+
+# def query_Bill(request):
+
+#     clients=[]
+#     products=[]
+#     batch=[]
+
+
+#     clientData=Clients.objects.value('id', 'ci')
+#     productData=Products.objects.value('id', 'nombre', 'ProductBatch_id').filter(id=)
+
+
+#     ced=[]
+#     billid=[]
+#     tot=[]
+#     # print(payment)
+
+#     q=Bill.objects.values('client__ci', 'id', 'subtotal' )
+#     tax=Tax.objects.values('tax').filter(is_Active=True)
+
+#     t=(tax[0]['tax'])
+
+
+#     for x in q:
+        
+#         ced.append(x['client__ci'])
+#         billid.append(x['id'])
+#         tot.append(x['subtotal'])
+    
+#     j=[]
+
+#     for x in range(len(ced)):
+#         q=(tot[x]*t)+tot[x]
+#         k={'cedula': ced[x], 'id': billid[x], 'total': q}
+#         j.append(k)
+
+
+#     data={
+
+#         'data':j
+#     }
+
+#     return JsonResponse(data)
 
     

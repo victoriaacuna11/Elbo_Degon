@@ -28,7 +28,7 @@ from rest_framework.routers import DefaultRouter
 router= DefaultRouter()
 router.register(r'emp',EmployeeView,basename='employees')
 router.register(r'prod',ProductView,basename='product')
-router.register(r'pbatch',ProductBatchView,basename='prpductbatch')
+router.register(r'pbatch',ProductBatchView,basename='productbatch')
 router.register(r'category',CategoryView,basename='category')
 router.register(r'currency',CurrencyExchangeView,basename='currency')
 router.register(r'bill',BillView,basename='bill')

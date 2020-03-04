@@ -86,7 +86,7 @@ DATABASES = {
         #'PASSWORD': 'Coiverde1.',
         # PASSWORD ROMEL:
         #'PASSWORD': 'paprika011209',
-        # PASSWORD WIL:
+        # PASSWORD WIL:    
         'PASSWORD': 'Buepinene-0022',
         'HOST': 'localhost',
         'PORT': '3306',
