@@ -31,7 +31,7 @@ const ProductLayout = props => {
             <Link to="/delivery">Deliverys</Link>
           </Menu.Item>
           <Menu.Item key="6">
-            <Link to="/">Pick Ups</Link>
+            <Link to="/pickup">Pick Ups</Link>
           </Menu.Item>
           <Menu.Item key="7">
             <Link to="/pay">Pagos</Link>

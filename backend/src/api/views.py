@@ -993,6 +993,35 @@ def vista_pickup(request):
     }
 
     return JsonResponse(data)
+def query_wilfredo(request):
+    
+    ids=[]
+    ci=[]
+    date=[]
+    deli=[]
+    loc=[]
+
+    q=PickUp.objects.values('id', 'bill_id__client__name','delivered','local__address', 'bill_id__date_time')
+
+    for x in q:
+        ids.append(x['id'])
+        ci.append(x['bill_id__client__name'])
+        date.append(x['bill_id__date_time'])
+        deli.append(x['delivered'])
+        loc.append(x['local__address'])
+
+    data_p=[]
+
+    for x in range(len(ids)):
+
+        k={'id':ids[x], 'ci':ci[x], 'date':date[x] , 'local':loc[x], 'deli':deli[x]}
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
 
 def vista_delivery(request):
 
@@ -1116,6 +1145,7 @@ def dates_top(request,start,end):
     }
 
     return JsonResponse(data)
+
 
 
 
