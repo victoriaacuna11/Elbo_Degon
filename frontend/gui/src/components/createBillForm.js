@@ -3,6 +3,7 @@ import { Form, Input, Button, Select, InputNumber, TimePicker} from "antd";
 import moment from 'moment';
 import axios from "axios";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import FormItem from "antd/lib/form/FormItem";
 
 
 function onChange(value) {
@@ -53,18 +54,22 @@ const tailLayout = {
   }
 };
 
+
+
 const { Option } = Select;
 
 // function onChange(value) {
 //   console.log("changed", value);
 // }
 
+
+
 class CreateBillForm extends React.Component {
   formRef = React.createRef();
 
-  onFinish = values => {
-    console.log(values);
-  };
+  // onFinish = values => {
+  //   console.log(values);
+  // };
 
   onReset = () => {
     this.formRef.current.resetFields();
@@ -77,12 +82,13 @@ class CreateBillForm extends React.Component {
       products: [],
       productBatchs: [],
       categories: [],
-      productsByCategory: [],
+      // productsByCategory: [],
       hasDelivery: false,
       zones: [],
       locals: [],
       hasProducts: false,
       productsSelected:[],
+      quantitiesSelected:[],
 
       currentBill: {},
 
@@ -138,9 +144,38 @@ class CreateBillForm extends React.Component {
     });
     this.setState({
       ...this.state,
-      hasDelivery: false
+      hasDelivery: true
     })
   }
+
+  handleProductAdd = (value, index) => {
+    this.state.productsSelected[index] = value;
+
+    this.setState({
+      ...this.state,
+      productsSelected: this.state.productsSelected
+    })
+  }
+
+  handleRemove(index){
+    this.state.productsSelected.splice(index,1);
+    this.state.quantitiesSelected.splice(index,1);
+    this.setState({
+      ...this.state,
+      quantitiesSelected: this.state.quantitiesSelected,
+      productsSelected: this.state.productsSelected
+    })
+  }
+
+  handleQuantityAdd = (value, index) => {
+    this.state.quantitiesSelected[index] = value;
+
+    this.setState({
+      ...this.state,
+      quantitiesSelected: this.state.quantitiesSelected
+    })
+  }
+
 
   handleFormSubmit = (event) => {
       // event.preventDefault();
@@ -156,30 +191,42 @@ class CreateBillForm extends React.Component {
       }
       i = (i + 1);
     }
-    if(found){
-      const time = moment(event.time).format("HH:mm");
-      const delivery = event.hasDelivery;
-      // console.log(clientID);
-      // console.log(this.state.hasDelivery)
-      // console.log(time);
-      // console.log(delivery);
-      if(delivery){
-        const zoneID = event.zone;
-        const addressID = event.address;
-        console.log(zoneID)
-        console.log(addressID)
-      } else {
-        const localID = event.local;
-        console.log(localID)
-      }
-      
-      
-    } else {
-      alert('La cédula que introdujo no está registrada. Por favor, regístrese primero como cliente.')
-    }
     
+    if(this.state.hasProducts){
+      if(found){
+        const time = moment(event.time).format("HH:mm");
+        const delivery = event.hasDelivery;
+        // console.log(clientID);
+        // console.log(this.state.hasDelivery)
+        // console.log(time);
+        // console.log(delivery);
+        if(delivery){
+          const zoneID = event.zone;
+          const addressID = event.address;
+          const products = this.state.productsSelected;
+          const quantities = this.state.quantitiesSelected;
+          console.log(products); 
+          console.log(quantities);
+          // console.log('DELIVERY')
+          // console.log(zoneID)
+          // console.log(addressID)
+        } else {
+          const localID = event.local;
+          // console.log('LOCAL')
+          // console.log(localID)
+        }
+      } else {
+        alert('La cédula que introdujo no está registrada. Por favor, regístrese primero como cliente.')
+      }
+  }else {
+    alert('No ha agregado ningún producto.')
+  }
       
   }
+
+  onFinish = values => {
+    console.log('Received values of form:', values);
+  }; 
 
   handleDelivery = value => {
     //  console.log(value);
@@ -197,6 +244,12 @@ class CreateBillForm extends React.Component {
       
    }
 
+  // handleAddProduct = value => {
+  //   this.setState({
+  //     ...this.setState.actualProd = 
+  //   })
+  // }
+  
   
   render() {
     return (
@@ -204,11 +257,8 @@ class CreateBillForm extends React.Component {
       {...layout}
       ref={this.formRef}
       name="form"
-      onFinish={event =>
-        this.handleFormSubmit(
-          event, this.state.clients
-          )
-        }
+      onFinish={this.handleFormSubmit}
+      // onFinish={this.onFinish}
         >
         <Form.Item
           name="clientCI"
@@ -226,66 +276,66 @@ class CreateBillForm extends React.Component {
 
         {/* PRODUCTOS */}
 
-        <Form.List name="products" >
-          {(fields, { add, remove }) => {
+        <Form.List name="formProducts" >
+          { (fields, { add, remove }) => {
             return (
               <div>
                 <h3>Productos</h3>
                 {fields.map((field, index) => (
+                  <div key={'div'+field.key}>
                   <Form.Item
                     {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
                     label={index === 0 ? '':''}
                     required={true}
-                    key={field.key}
-                    
+                    key={'product.'+field.key}
+                    // name={'product.'+field.key}
                   >
-                    <Form.Item
-                      {...field}
-                      validateTrigger={['onChange', 'onBlur']}
-                      rules={[
-                        {
-                          required: true,
-                          whitespace: true,
-                          message: "Por favor, agregue un producto o elimine este item.",
-                        },
-                      ]}
-                      noStyle
-                    >
-                        <Select
-                          style={{ width: 200 }}
-                          placeholder="Seleccione su producto"
-                          name="productName"
-                          optionFilterProp="children"
-                          onSearch={onSearch}
-                          showSearch
-                          filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                          }
-                          >
-                          {this.state.productsByCategory.map(prod => (
-                            <Option value={prod.id} key={prod.id}>
-                              {prod.product_name}
-                            </Option>
-                          ))}
-                        </Select>
-                        <br/><br/>
-                        <InputNumber
-                          name="quantity"
-                          onChange={onChange}
-                          placeholder="Cantidad del producto"
-                          style={{width:200}}
-                          min={1} max={10}
-                        />
-                      </Form.Item>
-                      {fields.length > 1 ? (
-                      <MinusCircleOutlined
-                          className="dynamic-delete-button"
-                          onClick={() => {
-                            remove(field.name);
-                          }}
-                      />
-                      ) : null}
+                    <Select 
+                      onChange={(value) => this.handleProductAdd(value,index)}
+                      style={{width:200}}
+                      placeholder="Seleccione su producto"
+                      // name="productName"
+                      optionFilterProp="children"
+                      onSearch={onSearch}
+                      showSearch
+                      filterOption={(input, option) =>
+                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                      }
+                      // key={'product.'+field.key}
+                      >
+                      {this.state.productsByCategory.map(prod => (
+                        <Option value={prod.id} key={prod.id}>
+                          {prod.product_name} (Precio)$
+                        </Option>
+                      ))}
+                    </Select>
                   </Form.Item>
+                    <Form.Item
+                      {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                      label={index === 0 ? '':''}
+                      required={true}
+                      key={'quantity.'+field.key}
+                      // name={'quantity.'+field.key}
+                      >
+                      <InputNumber
+                        // name="quantity"
+                        placeholder="Cantidad del producto"
+                        style={{width:200}}
+                        min={1} max={10}
+                        onChange={(value) => this.handleQuantityAdd(value,index)}
+                        // key={'quantity.'+field.key}
+                      />
+                    </Form.Item>
+                    {fields.length > 1 ? (
+                    <MinusCircleOutlined
+                        className="dynamic-delete-button"
+                        onClick={() => {
+                          remove(field.name);
+                          this.handleRemove(index)
+                        }}
+                    />
+                    ) : null}
+                  </div>
                 ))}
                 <Form.Item>
                   <Button
@@ -355,7 +405,7 @@ class CreateBillForm extends React.Component {
                   allowClear
                   >
                   {this.state.zones.map(zone => (
-                    <Option value={zone.id} key={zone.product_name}>
+                    <Option value={zone.id} key={'zone.'+zone.id}>
                       {zone.name}
                     </Option>
                   ))}
