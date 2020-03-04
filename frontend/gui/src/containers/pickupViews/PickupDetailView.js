@@ -64,6 +64,7 @@ class PickupDetail extends React.Component {
           }
         >
           <p>Factura: {this.state.pickup.bill_id}</p>
+          <p>Subtotal: {this.state.bill.subtotal}</p>
           <p>Nombre del cliente: {this.state.finalP.ci}</p>
           <p>Fecha: {this.state.finalP.date}</p>
           <p>Hora de pickup: {this.state.pickup.pick_up_time}</p>

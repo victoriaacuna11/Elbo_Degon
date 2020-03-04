@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Delivery from "../components/delivery";
+import Delivery from "../../components/deliveryComponents/delivery";
 
 class DeliveryListView extends React.Component {
   state = {

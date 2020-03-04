@@ -19,7 +19,8 @@ import PaymentList from "./containers/PaymentListView";
 import LocalDetail from "./containers/LocalViews/LocalDetailView";
 import ZoneDetail from "./containers/zoneViews/ZoneDetailView";
 import AdminData from "./components/querys";
-import DeliveryListView from "./components/querys";
+import DeliveryListView from "./containers/deliveryViews/DeliveryListView";
+import DeliveryDetail from "./containers/deliveryViews/DeliveryDetailView";
 import PickupListView from "./containers/pickupViews/PickupListView";
 import BatchListView from "./containers/BatchViews/BatchListView";
 import BatchDetail from "./containers/BatchViews/BatchDetailView";
@@ -33,6 +34,7 @@ const BaseRouter = () => (
     <Route exact path="/prod/:productID" component={ProductDetail} />
     <Route exact path="/admin_info" component={AdminData} />
     <Route exact path="/delivery" component={DeliveryListView} />
+    <Route exact path="/delivery/:deliveryID" component={DeliveryDetail} />
     <Route exact path="/pickup" component={PickupListView} />
     <Route exact path="/pickup/:pickupID" component={PickupDetail} />
     <Route exact path="/lotes" component={BatchListView} />

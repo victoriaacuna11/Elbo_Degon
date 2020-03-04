@@ -1,9 +1,41 @@
+// import React from "react";
+// import { List } from "antd";
+// import InfiniteScroll from "react-infinite-scroller";
+
+// const Deliverys = props => {
+//   //console.log(props.data);
+
+//   return (
+//     <div className="demo-infinite-container">
+//       <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>
+//         <h2>Deliverys</h2>
+//         <List
+//           dataSource={props.data}
+//           renderItem={item => (
+//             <List.Item key={item.id}>
+//               <List.Item.Meta
+//                 title={
+//                   <p>
+//                     {" "}
+//                     CI: {item.ci}------- fecha: {item.date}{" "}
+//                   </p>
+//                 }
+//               />
+//             </List.Item>
+//           )}
+//         ></List>
+//       </InfiniteScroll>
+//     </div>
+//   );
+// };
+// export default Deliverys;
+
 import React from "react";
 import { List, message, Spin } from "antd";
 
 import InfiniteScroll from "react-infinite-scroller";
 
-class Lotes extends React.Component {
+class Deliverys extends React.Component {
   state = {
     data: this.props.data,
     loading: false,
@@ -50,7 +82,7 @@ class Lotes extends React.Component {
   render() {
     return (
       <>
-        <h2>Lotes:</h2>
+        <h2>Delivery's:</h2>
         <div className="demo-infinite-container">
           <InfiniteScroll
             initialLoad={false}
@@ -65,11 +97,10 @@ class Lotes extends React.Component {
                 <List.Item key={item.id}>
                   <List.Item.Meta
                     title={
-                      <a href={`lotes/${item.id}`}>
+                      <a href={`delivery/${item.id}`}>
                         <p>
                           {" "}
-                          {item.product}---(elaborado):{item.elab}---(vence):
-                          {item.exp}{" "}
+                          CI: {item.ci}------- fecha: {item.date}{" "}
                         </p>
                       </a>
                     }
@@ -101,4 +132,4 @@ class Lotes extends React.Component {
   }
 }
 
-export default Lotes;
+export default Deliverys;

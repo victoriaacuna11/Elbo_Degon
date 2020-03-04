@@ -1032,7 +1032,7 @@ def vista_delivery(request):
     date=[]
     ava=[]
 
-    q=PickUp.objects.values('id', 'bill_id__client__ci','bill_id__date_time','availible')
+    q=Delivery.objects.values('id', 'bill_id__client__ci','bill_id__date_time','availible')
 
     for x in q:
         ids.append(x['id'])
