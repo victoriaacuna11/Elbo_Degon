@@ -57,6 +57,8 @@ class CreatePaymentForm extends React.Component {
    };
   }
   
+
+  // Métodos para tomar los valores del form iterativo.
   handleAmountCash = (value, index) => {
     this.state.amountCash[index] = value;
 
@@ -146,6 +148,7 @@ class CreatePaymentForm extends React.Component {
   
   handleFormSubmit = () => {
       var paymentsCash = [];
+      // Construye el objeto payment y lo agrega al vector de payments de efectivo.
       this.state.currencyCash.forEach((item, index) => {
           const payment = {
             payment_method: 'Efectivo',
@@ -158,6 +161,7 @@ class CreatePaymentForm extends React.Component {
           paymentsCash.push(payment);
       })
       var paymentsOnline = [];
+      // Construye el objeto payment y lo agrega al vector de payments de online.
       this.state.currencyOnline.forEach((item, index) => {
         const payment = {
           payment_method: 'Online',
@@ -187,9 +191,7 @@ class CreatePaymentForm extends React.Component {
             {...layout}
             ref={this.formRef}
             name="formCash"
-            onFinish={this.handleFormSubmit}
             >
-                
             <Form.List name="formPaymentsCash" >
             { (fields, { add, remove }) => {
                 return (
@@ -263,18 +265,12 @@ class CreatePaymentForm extends React.Component {
                     )
                 }}
             </Form.List>
-            {/* <FormItem>
-            <Button type="primary" htmlType="submit" style={{width:200}}>
-                {this.props.buttonText}
-            </Button>
-            </FormItem>  */}
         </Form>
         
         <Form
             {...layout}
             ref={this.formRef}
             name="formOnline"
-            onFinish={this.handleFormSubmit}
             >
             <Form.List name="formPaymentsOnline" >
             { (fields, { add, remove }) => {
@@ -366,11 +362,6 @@ class CreatePaymentForm extends React.Component {
                 )
             }}
             </Form.List>
-            {/* <FormItem>
-            <Button type="primary" htmlType="submit" style={{width:200}}>
-            {this.props.buttonText}
-            </Button>
-            </FormItem>  */}
         </Form>
         <Button type="primary" htmlType="submit" style={{width:200}} onClick={this.handleFormSubmit}>
             Pagar
@@ -382,44 +373,3 @@ class CreatePaymentForm extends React.Component {
     
 export default CreatePaymentForm;
 
-
-// {({ getFieldValue }) => {
-//     return getFieldValue({index}) == true ? ( 
-//         <div>
-//             {/* DATOS CUENTA ONLINE */}
-//             <h3>Pago Online</h3>
-//             {/* DIRECCIÓN */}
-//             <Form.Item label="Nro. de cuenta" rules={[{ required: true }]}>
-//                 <Input placeholder="Introduzca el número de cuenta"
-//                     style={{width:200}}
-//                     allowClear/>
-//             </Form.Item>
-//             <Form.Item label="Titular de la cuenta" rules={[{ required: true }]}>
-//                 <Input placeholder="Titular de la cuenta"
-//                     style={{width:200}}
-//                     allowClear/>
-//             </Form.Item>
-//         </div>
-//     ) : null }}
-
-
-{/* <Form.Item
-                                {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                                label={index === 0 ? '':''}
-                                required={true}
-                                key={'product.'+field.key}
-                                name={index}
-                            >
-                                <Select 
-                                onChange={this.handleIsOnline}
-                                style={{width:200}}
-                                placeholder="Forma de pago"
-                                >
-                                    <Option value={false} key={'payMethod.'+field.key}>
-                                        Efectivo
-                                    </Option>
-                                    <Option value={true} key={'payMethod.'+field.key}>
-                                        Online
-                                    </Option>
-                                </Select>
-                            </Form.Item>  */}
