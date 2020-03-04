@@ -22,7 +22,7 @@ const ProductLayout = props => {
             <Link to="/prod">Productos</Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to="/">Lotes</Link>
+            <Link to="/lotes">Lotes</Link>
           </Menu.Item>
           <Menu.Item key="4">
             <Link to="/bill">Facturas</Link>

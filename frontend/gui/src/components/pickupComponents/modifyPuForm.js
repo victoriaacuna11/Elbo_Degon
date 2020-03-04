@@ -95,7 +95,7 @@ class ModifyPuForm extends React.Component {
       })
       .then(res => console.log(res))
       .catch(error => console.error(error));
-    //return window.location.reload(false);
+    return window.location.reload(false);
   };
 
   //Cambiar el color del boton (pura carpinteria papa)

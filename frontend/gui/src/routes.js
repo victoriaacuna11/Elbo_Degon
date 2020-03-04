@@ -21,7 +21,8 @@ import ZoneDetail from "./containers/zoneViews/ZoneDetailView";
 import AdminData from "./components/querys";
 import DeliveryListView from "./components/querys";
 import PickupListView from "./containers/pickupViews/PickupListView";
-import BatchListView from "./components/querys";
+import BatchListView from "./containers/BatchViews/BatchListView";
+import BatchDetail from "./containers/BatchViews/BatchDetailView";
 import PickupDetail from "./containers/pickupViews/PickupDetailView";
 
 const BaseRouter = () => (
@@ -30,12 +31,12 @@ const BaseRouter = () => (
     <Route exact path="/prov/:providerID" component={ProviderDetail} />
     <Route exact path="/prod" component={ProductList} />
     <Route exact path="/prod/:productID" component={ProductDetail} />
-    <Route exact path="/prov/:providerID" component={ProviderDetail} />
     <Route exact path="/admin_info" component={AdminData} />
     <Route exact path="/delivery" component={DeliveryListView} />
     <Route exact path="/pickup" component={PickupListView} />
     <Route exact path="/pickup/:pickupID" component={PickupDetail} />
     <Route exact path="/lotes" component={BatchListView} />
+    <Route exact path="/lotes/:batchID" component={BatchDetail} />
     <Route exact path="/category" component={CategoryList} />
     <Route exact path="/category/:categoryID" component={CategoryDetail} />
     <Route exact path="/emp" component={EmployeeList} />

@@ -973,19 +973,21 @@ def vista_pickup(request):
     ids=[]
     ci=[]
     date=[]
+    ava=[]
 
-    q=PickUp.objects.values('id', 'bill_id__client__ci','bill_id__date_time')
+    q=PickUp.objects.values('id', 'bill_id__client__ci','bill_id__date_time','availible')
 
     for x in q:
         ids.append(x['id'])
         ci.append(x['bill_id__client__ci'])
         date.append(x['bill_id__date_time'])
+        ava.append(x['availible'])
 
     data_p=[]
 
     for x in range(len(ids)):
 
-        k={'id':ids[x], 'ci':ci[x], 'date':date[x] }
+        k={'id':ids[x], 'ci':ci[x], 'date':date[x] ,'availible':ava[x] }
         data_p.append(k)
     
     data={
@@ -1028,19 +1030,22 @@ def vista_delivery(request):
     ids=[]
     ci=[]
     date=[]
+    ava=[]
 
-    q=PickUp.objects.values('id', 'bill_id__client__ci','bill_id__date_time')
+    q=PickUp.objects.values('id', 'bill_id__client__ci','bill_id__date_time','availible')
 
     for x in q:
         ids.append(x['id'])
         ci.append(x['bill_id__client__ci'])
         date.append(x['bill_id__date_time'])
+        ava.append(x['availible'])
+        
 
     data_p=[]
 
     for x in range(len(ids)):
 
-        k={'id':ids[x], 'ci':ci[x], 'date':date[x] }
+        k={'id':ids[x], 'ci':ci[x], 'date':date[x],'availible':ava[x] }
         data_p.append(k)
     
     data={
@@ -1055,19 +1060,22 @@ def vista_lotes(request):
     prod=[]
     f_exp=[]
     f_elab=[]
+    ava=[]
 
-    q=ProductBatch.objects.values('id', 'product__product_name', 'expiration_date', 'elaboration_date')
+    q=ProductBatch.objects.values('id', 'product__product_name', 'expiration_date', 'elaboration_date', 'availible')
 
     for x in q:
         ids.append(x['id'])
         prod.append(x['product__product_name'])
         f_exp.append(x['expiration_date'])
         f_elab.append(x['elaboration_date'])
+        ava.append(x['availible'])
+        
     
     data_batch=[]
 
     for x in range(len(ids)):
-        k={'id':ids[x],'product':prod[x],'exp':f_exp[x], 'elab':f_elab[x]}
+        k={'id':ids[x],'product':prod[x],'exp':f_exp[x], 'elab':f_elab[x], 'availible':ava[x]  }
         data_batch.append(k)
     
     data={

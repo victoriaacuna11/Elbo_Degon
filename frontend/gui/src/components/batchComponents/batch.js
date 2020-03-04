@@ -1,9 +1,40 @@
+// import React from "react";
+// import { List } from "antd";
+// import InfiniteScroll from "react-infinite-scroller";
+
+// const Lotes = props => {
+//   return (
+//     <div className="demo-infinite-container">
+//       <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>
+//         <h2>Lotes</h2>
+//         <List
+//           dataSource={props.data}
+//           renderItem={item => (
+//             <List.Item key={item.id}>
+//               <List.Item.Meta
+//                 title={
+//                   <p>
+//                     {" "}
+//                     {item.product}---(elaborado):{item.elab}---(vence):
+//                     {item.exp}{" "}
+//                   </p>
+//                 }
+//               />
+//             </List.Item>
+//           )}
+//         ></List>
+//       </InfiniteScroll>
+//     </div>
+//   );
+// };
+// export default Lotes;
+
 import React from "react";
 import { List, message, Spin } from "antd";
 
 import InfiniteScroll from "react-infinite-scroller";
 
-class Pickup extends React.Component {
+class Lotes extends React.Component {
   state = {
     data: this.props.data,
     loading: false,
@@ -50,7 +81,7 @@ class Pickup extends React.Component {
   render() {
     return (
       <>
-        <h2>Pick-ups:</h2>
+        <h2>Lotes:</h2>
         <div className="demo-infinite-container">
           <InfiniteScroll
             initialLoad={false}
@@ -65,11 +96,11 @@ class Pickup extends React.Component {
                 <List.Item key={item.id}>
                   <List.Item.Meta
                     title={
-                      <a href={`pickup/${item.id}`}>
-                        {" "}
+                      <a href={`lotes/${item.id}`}>
                         <p>
                           {" "}
-                          CI: {item.ci}------- fecha: {item.date}{" "}
+                          {item.product}---(elaborado):{item.elab}---(vence):
+                          {item.exp}{" "}
                         </p>
                       </a>
                     }
@@ -101,4 +132,4 @@ class Pickup extends React.Component {
   }
 }
 
-export default Pickup;
+export default Lotes;
