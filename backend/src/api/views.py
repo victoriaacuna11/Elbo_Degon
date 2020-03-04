@@ -1072,7 +1072,7 @@ def prod_cat(request,cate):
 
 
 def prod_name(request,name):
-
+    ids=[]
     prod=[]
     q=Product.objects.values('id','product_name').filter(product_name__icontains=name)
 
@@ -1109,15 +1109,12 @@ def dates_top(request,start,end):
     data_p=[]
 
     for x in range(len(prod)):
-        k={'product':prod[x],'cant':cant[x]}
+        k={ 'id':x+1, 'product':prod[x],'cant':cant[x]}
         data_p.append(k)
     data={
         'data':data_p
     }
 
     return JsonResponse(data)
-
-
-
 
     

@@ -2,20 +2,20 @@ import React from "react";
 import { List } from "antd";
 import InfiniteScroll from "react-infinite-scroller";
 
-const ListaTopPM = props => {
+const P_S_N = props => {
     
     //console.log(props.data);
 
   return (
     <div className="demo-infinite-container">
       <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>
-        <h2>TOP 5 PRODUCTOS COMPRADOS POR MIEMBROS:</h2>
+        <h2>TOP 5 CLIENTES:</h2>
         <List
-          dataSource={props.data}
+          dataSource={props.data.data}
           renderItem={item => (
             <List.Item key={item.id}>
               <List.Item.Meta
-                title= {<p> {item.id}°   {item.name}---Cantidad: {item.cant} </p>  }
+                title= {<p> {item.product} </p>  }
                
               />
             </List.Item>
@@ -25,6 +25,4 @@ const ListaTopPM = props => {
     </div>
   );
 };
-
-
-export default ListaTopPM;
+export default P_S_N;

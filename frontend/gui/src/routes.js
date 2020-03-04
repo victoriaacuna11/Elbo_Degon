@@ -16,6 +16,10 @@ import AdminData from "./components/querys"
 import DeliveryListView from "./containers/DeliveryListView"
 import PickupListView from "./containers/PickupListView"
 import BatchListView from "./containers/Batch.ListView"
+import SearchListVies from "./containers/SearchCatList"
+import SearchCatList from "./containers/SearchCatList";
+import SearchNameList from "./containers/SearchNameList";
+import RangeDateList from "./containers/RangeDateList";
 
 
 const BaseRouter = () => (
@@ -37,6 +41,18 @@ const BaseRouter = () => (
     <Route exact path="/delivery" component={DeliveryListView} />
     <Route exact path="/pickup" component={PickupListView} />
     <Route exact path="/lotes" component={BatchListView} />
+
+
+
+
+
+    <Route exact path="/admin_info/cate/:category" component={SearchCatList} />
+    <Route exact path="/admin_info/name/:name" component={SearchNameList} />
+    <Route exact path="/admin_info/dates/:start/:end" component={RangeDateList} />
+
+
+
+    
 
 
 

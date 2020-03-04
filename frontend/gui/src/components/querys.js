@@ -12,6 +12,9 @@ import ListaTopDelivery from "./querys/best_del";
 import ListaTopFestividades from "./querys/top_fest";
 import ListaTopProveedores from "./querys/top_prov";
 import ListaTopVentasxMes from "./querys/month_cant";
+import SearchCategoryForm from "./querys/search_cat";
+import SearchNameForm from "./querys/search_name";
+import DateRangeForm from "./querys/date_range";
 
 
 
@@ -293,9 +296,15 @@ class AdminData extends React.Component{
             <ListaTopVentasxMes data={this.state.mes} />
           
 
-
-
-           
+            <br></br>
+            <br></br>
+            <SearchCategoryForm  />
+            <br></br>
+            <br></br>
+            <SearchNameForm />
+            <br></br>
+            <br></br>
+           <DateRangeForm/>
             </>
         )
     }
