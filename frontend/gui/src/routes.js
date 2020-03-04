@@ -25,6 +25,8 @@ import PickupListView from "./containers/pickupViews/PickupListView";
 import BatchListView from "./containers/BatchViews/BatchListView";
 import BatchDetail from "./containers/BatchViews/BatchDetailView";
 import PickupDetail from "./containers/pickupViews/PickupDetailView";
+import ClientList from "./containers/clientViews/clientListView";
+import ClientDetail from "./containers/clientViews/clientDetailView";
 
 const BaseRouter = () => (
   <div>
@@ -32,7 +34,6 @@ const BaseRouter = () => (
     <Route exact path="/prov/:providerID" component={ProviderDetail} />
     <Route exact path="/prod" component={ProductList} />
     <Route exact path="/prod/:productID" component={ProductDetail} />
-    <Route exact path="/admin_info" component={AdminData} />
     <Route exact path="/delivery" component={DeliveryListView} />
     <Route exact path="/delivery/:deliveryID" component={DeliveryDetail} />
     <Route exact path="/pickup" component={PickupListView} />
@@ -55,9 +56,13 @@ const BaseRouter = () => (
     />
     <Route exact path="/memp" component={MonthEmployeeList} />
     <Route exact path="/memp/:employeeID" component={MEDetail} />
+    <Route exact path="/client" component={ClientList} />
+    <Route exact path="/client/:clientID" component={ClientDetail} />
+
     <Route exact path="/bill" component={BillList} />
 
     <Route exact path="/pay" component={PaymentList} />
+    <Route exact path="/admin_info" component={AdminData} />
   </div>
 );
 

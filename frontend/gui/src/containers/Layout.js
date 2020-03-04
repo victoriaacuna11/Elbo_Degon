@@ -54,6 +54,9 @@ const ProductLayout = props => {
           <Menu.Item key="13">
             <Link to="/memp">Empleados del Mes</Link>
           </Menu.Item>
+          <Menu.Item key="14">
+            <Link to="/client">Clientes</Link>
+          </Menu.Item>
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px" }}>
