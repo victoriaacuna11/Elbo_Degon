@@ -27,6 +27,8 @@ import BatchDetail from "./containers/BatchViews/BatchDetailView";
 import PickupDetail from "./containers/pickupViews/PickupDetailView";
 import ClientList from "./containers/clientViews/clientListView";
 import ClientDetail from "./containers/clientViews/clientDetailView";
+import TaxList from "./containers/taxViews/taxListView";
+import TaxDetail from "./containers/taxViews/taxDetailView";
 
 const BaseRouter = () => (
   <div>
@@ -58,6 +60,8 @@ const BaseRouter = () => (
     <Route exact path="/memp/:employeeID" component={MEDetail} />
     <Route exact path="/client" component={ClientList} />
     <Route exact path="/client/:clientID" component={ClientDetail} />
+    <Route exact path="/tax" component={TaxList} />
+    <Route exact path="/tax/:taxID" component={TaxDetail} />
 
     <Route exact path="/bill" component={BillList} />
 
