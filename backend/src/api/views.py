@@ -1154,6 +1154,35 @@ def dates_top(request,start,end):
 
     return JsonResponse(data)
 
+def qwill2(request):
+
+    ids=[]
+    ci=[]
+    name=[]
+    last=[]
+    zone=[]
+
+
+    q=Membership.objects.values('client__ci','client__name', 'client__last_name', 'client__zone__name','id').filter(availible=True,client__availible=True)
+
+    for x in q:
+        ids.append(x['id'])
+        ci.append(x['client__ci'])
+        name.append(x['client__name'])
+        last.append(x['client__last_name'])
+        zone.append(x['client__zone__name'])
+    
+    data_c=[]
+    for x in range(len(ids)):
+        k={'id':ids[x], 'ci':ci[x] ,'name':name[x],'last':last[x],'zone':zone[x]  }
+        data_c.append(k)
+
+    data={
+        'data':data_c
+    }
+
+    return JsonResponse(data)
+
 
 
 

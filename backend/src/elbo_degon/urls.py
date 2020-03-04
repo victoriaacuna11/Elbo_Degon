@@ -37,5 +37,6 @@ urlpatterns = [
     path('rest/name/<name>', prod_name),
     path('rest/date/<start>/<end>', dates_top),
     path('rest/wilfredo', query_wilfredo),
+    path('rest/qwill2', qwill2),
     
 ]
