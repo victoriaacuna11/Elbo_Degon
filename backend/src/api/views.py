@@ -1005,4 +1005,48 @@ def query_Bill_Client(request):
 
     return JsonResponse(data)
 
+
+# def query_Bill(request):
+
+#     clients=[]
+#     products=[]
+#     batch=[]
+
+
+#     clientData=Clients.objects.value('id', 'ci')
+#     productData=Products.objects.value('id', 'nombre', 'ProductBatch_id').filter(id=)
+
+
+#     ced=[]
+#     billid=[]
+#     tot=[]
+#     # print(payment)
+
+#     q=Bill.objects.values('client__ci', 'id', 'subtotal' )
+#     tax=Tax.objects.values('tax').filter(is_Active=True)
+
+#     t=(tax[0]['tax'])
+
+
+#     for x in q:
+        
+#         ced.append(x['client__ci'])
+#         billid.append(x['id'])
+#         tot.append(x['subtotal'])
+    
+#     j=[]
+
+#     for x in range(len(ced)):
+#         q=(tot[x]*t)+tot[x]
+#         k={'cedula': ced[x], 'id': billid[x], 'total': q}
+#         j.append(k)
+
+
+#     data={
+
+#         'data':j
+#     }
+
+#     return JsonResponse(data)
+
     

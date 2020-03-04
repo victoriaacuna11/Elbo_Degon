@@ -60,20 +60,3 @@ class Bills extends React.Component {
     
     export default Bills;
 
-
-    // // console.log()
-    // // const id = this.props.data.client;
-    // // console.log(id);
-    // axios.get('http://127.0.0.1:8000/rest/client/').then(res => {
-    //   this.setState({
-    //     client: res.data
-    //   });
-    //   // console.log(this.state.client)
-    // });
-
-    // axios.get('http://127.0.0.1:8000/rest/tax/').then(res => {
-    //   this.setState({
-    //     tax: res.data
-    //   });
-    //   // console.log(this.state.tax)
-    // });
