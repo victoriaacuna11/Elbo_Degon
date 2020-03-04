@@ -18,20 +18,18 @@ class PaymentList extends React.Component {
         ...this.state,
         payments: res.data
       });
-    }
+    });
   }
 
-    render() {
-      return (
-        <>
-          <Payments data={this.state.payments}/>
-          <br />
-          <h2>Crear un pago</h2>
-          <CreatePaymentForm requestType="post" buttonText="Crear" />
-        </>
-      );
-    }
+  render() {
+    return (
+      <>
+        <Payments data={this.state.payments} />
+        <br />
+        <h2>Crear un pago</h2>
+        <CreatePaymentForm requestType="post" buttonText="Crear" />
+      </>
+    );
   }
-
-
+}
 export default PaymentList;
