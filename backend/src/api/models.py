@@ -118,6 +118,7 @@ class Payment(models.Model):
     currency=models.CharField(max_length=60,choices=CURRENCIES)
     amount=models.FloatField()
     account_n=models.BigIntegerField()
+    account_holder=models.CharField(max_length=50)
 
     # atributo de si se toma en cuenta en la base de datos
     availible=models.BooleanField(default=True)

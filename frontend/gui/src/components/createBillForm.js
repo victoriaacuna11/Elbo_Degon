@@ -1,26 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import { Form, Input, Button, Select, InputNumber, TimePicker} from "antd";
 import moment from 'moment';
 import axios from "axios";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import FormItem from "antd/lib/form/FormItem";
-
-
-function onChange(value) {
-  console.log(`selected ${value}`);
-}
-
-function onBlur() {
-  console.log('blur');
-}
-
-function onFocus() {
-  console.log('focus');
-}
-
-function onSearch(val) {
-  console.log('search:', val);
-}
 
 const layout = {
   labelCol: {
@@ -47,29 +29,19 @@ const formItemLayoutWithOutLabel = {
 
 const format = 'HH:mm';
 
-const tailLayout = {
-  wrapperCol: {
-    offset: 0,
-    span: 0
-  }
-};
+// const tailLayout = {
+//   wrapperCol: {
+//     offset: 0,
+//     span: 0
+//   }
+// };
 
 
 
 const { Option } = Select;
 
-// function onChange(value) {
-//   console.log("changed", value);
-// }
-
-
-
 class CreateBillForm extends React.Component {
   formRef = React.createRef();
-
-  // onFinish = values => {
-  //   console.log(values);
-  // };
 
   onReset = () => {
     this.formRef.current.resetFields();
@@ -82,7 +54,6 @@ class CreateBillForm extends React.Component {
       products: [],
       productBatchs: [],
       categories: [],
-      // productsByCategory: [],
       hasDelivery: false,
       zones: [],
       locals: [],
@@ -156,7 +127,15 @@ class CreateBillForm extends React.Component {
       productsSelected: this.state.productsSelected
     })
   }
+  
+  handleQuantityAdd = (value, index) => {
+    this.state.quantitiesSelected[index] = value;
 
+    this.setState({
+      ...this.state,
+      quantitiesSelected: this.state.quantitiesSelected
+    })
+  }
   handleRemove(index){
     this.state.productsSelected.splice(index,1);
     this.state.quantitiesSelected.splice(index,1);
@@ -167,14 +146,6 @@ class CreateBillForm extends React.Component {
     })
   }
 
-  handleQuantityAdd = (value, index) => {
-    this.state.quantitiesSelected[index] = value;
-
-    this.setState({
-      ...this.state,
-      quantitiesSelected: this.state.quantitiesSelected
-    })
-  }
 
 
   handleFormSubmit = (event) => {
@@ -224,9 +195,9 @@ class CreateBillForm extends React.Component {
       
   }
 
-  onFinish = values => {
-    console.log('Received values of form:', values);
-  }; 
+  // onFinish = values => {
+  //   console.log('Received values of form:', values);
+  // }; 
 
   handleDelivery = value => {
     //  console.log(value);
@@ -243,13 +214,6 @@ class CreateBillForm extends React.Component {
       }
       
    }
-
-  // handleAddProduct = value => {
-  //   this.setState({
-  //     ...this.setState.actualProd = 
-  //   })
-  // }
-  
   
   render() {
     return (
@@ -258,7 +222,6 @@ class CreateBillForm extends React.Component {
       ref={this.formRef}
       name="form"
       onFinish={this.handleFormSubmit}
-      // onFinish={this.onFinish}
         >
         <Form.Item
           name="clientCI"
@@ -288,20 +251,16 @@ class CreateBillForm extends React.Component {
                     label={index === 0 ? '':''}
                     required={true}
                     key={'product.'+field.key}
-                    // name={'product.'+field.key}
                   >
                     <Select 
                       onChange={(value) => this.handleProductAdd(value,index)}
                       style={{width:200}}
                       placeholder="Seleccione su producto"
-                      // name="productName"
                       optionFilterProp="children"
-                      onSearch={onSearch}
                       showSearch
                       filterOption={(input, option) =>
                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                       }
-                      // key={'product.'+field.key}
                       >
                       {this.state.productsByCategory.map(prod => (
                         <Option value={prod.id} key={prod.id}>
@@ -315,15 +274,12 @@ class CreateBillForm extends React.Component {
                       label={index === 0 ? '':''}
                       required={true}
                       key={'quantity.'+field.key}
-                      // name={'quantity.'+field.key}
                       >
                       <InputNumber
-                        // name="quantity"
                         placeholder="Cantidad del producto"
                         style={{width:200}}
                         min={1} max={10}
                         onChange={(value) => this.handleQuantityAdd(value,index)}
-                        // key={'quantity.'+field.key}
                       />
                     </Form.Item>
                     {fields.length > 1 ? (

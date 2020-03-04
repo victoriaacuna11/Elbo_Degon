@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Payments from "../components/payments";
+import CreatePaymentForm from "../components/createPaymentForm";
 
 
 class PaymentList extends React.Component {
@@ -30,8 +31,8 @@ class PaymentList extends React.Component {
         <>
           <Payments data={this.state.payments}/>
           <br />
-          {/* <h2>Crear un producto</h2>
-          <PForm requestType="post" productID={null} buttonText="Crear" /> */}
+          <h2>Crear un pago</h2>
+          <CreatePaymentForm requestType="post" buttonText="Crear" />
         </>
       );
     }
