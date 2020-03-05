@@ -11,6 +11,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from api.views import *
+from api.views import get_data, data_2,top5,prod_mes,best_clients,topzonas,topdel,festividades,top_genero,top_miembros,top_prov,top_miem,top_emp,top_meses, query_pay_tot_ci, query_Bill_Client
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,12 +31,16 @@ urlpatterns = [
     path('rest/fest', festividades),
     path('rest/topp', top_prov),
     path('rest/top_meses', top_meses),
-    path('rest/query_vic', query_vic),
+    # path('rest/query_vic', query_vic),
     path('rest/vista_delivery', vista_delivery),
     path('rest/vista_lotes', vista_lotes),
     path('rest/vista_pickup', vista_pickup),
     path('rest/cate/<cate>', prod_cat),
     path('rest/name/<name>', prod_name),
     path('rest/date/<start>/<end>', dates_top),
+    path('rest/wilfredo', query_wilfredo),
+    path('rest/qwill2', qwill2),
     
+    path('rest/query_pay_tot_ci/', query_pay_tot_ci),
+    path('rest/query_Bill_Client/', query_Bill_Client),
 ]
