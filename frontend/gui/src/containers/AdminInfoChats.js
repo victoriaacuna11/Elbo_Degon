@@ -256,7 +256,7 @@ class Charts extends React.Component{
             labels:lab,
             datasets:[{
 
-                label:'Productos mas Vendidos',
+                label:'Productos mas Vendidos por mes',
                 data:dat,
                 backgroundColor:'#4AEEBF',
                         

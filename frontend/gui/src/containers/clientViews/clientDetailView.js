@@ -46,7 +46,7 @@ class ClientDetail extends React.Component {
         >
           <p>C.I.: {this.state.client.ci}</p>
           <p>Zona asociada: {this.state.zone.name}</p>
-          <p>Es miembro: {this.isAvailable(this.state.client.is_member)}</p>
+          <p>Es miembro: {this.isAvailable(this.state.client.is_meber)}</p>
           <p>Habilitado: {this.isAvailable(this.state.client.availible)}</p>
         </Card>
         <br />
