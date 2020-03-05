@@ -12,6 +12,10 @@ import ListaTopDelivery from "./querys/best_del";
 import ListaTopFestividades from "./querys/top_fest";
 import ListaTopProveedores from "./querys/top_prov";
 import ListaTopVentasxMes from "./querys/month_cant";
+import SearchCategoryForm from "./querys/search_cat";
+import SearchNameForm from "./querys/search_name";
+import DateRangeForm from "./querys/date_range";
+import MaxCantSold from "./querys/max_cant";
 
 
 
@@ -23,6 +27,8 @@ class AdminData extends React.Component{
     state={
 
         top_5:[],
+
+        mas10:[],
 
 
 
@@ -95,6 +101,7 @@ class AdminData extends React.Component{
      
 
      });
+   
 
      axios.get("http://127.0.0.1:8000/rest/pm").then(res => {
       this.setState({
@@ -250,52 +257,66 @@ class AdminData extends React.Component{
 
             
             <>
-
+            <h2>TOP 5 PRODUCTOS VENDIDOS:</h2>
             <ListaTopP data={this.state.top_5} />
-            
+            <br></br>
+            <br></br>
+          <MaxCantSold/>
+
+
+            <br></br>
 
             <TopMeses data={this.state.enero}/>
+            <br></br>
             <TopMeses data={this.state.febrero}/>
+            <br></br>
             <TopMeses data={this.state.marzo}/>
-            <TopMeses data={this.state.abril}/>
-            <TopMeses data={this.state.mayo}/>
-            <TopMeses data={this.state.junio}/>
-            <TopMeses data={this.state.julio}/>
-            <TopMeses data={this.state.agosto}/>
-            <TopMeses data={this.state.septiembre}/>
-            <TopMeses data={this.state.octubre}/>
-            <TopMeses data={this.state.noviembre}/>
-            <TopMeses data={this.state.diciembre}/>
+            <br></br>
+            <TopMeses data={this.state.abril}/><br></br>
+            <TopMeses data={this.state.mayo}/><br></br>
+            <TopMeses data={this.state.junio}/><br></br>
+            <TopMeses data={this.state.julio}/><br></br>
+            <TopMeses data={this.state.agosto}/><br></br>
+            <TopMeses data={this.state.septiembre}/><br></br>
+            <TopMeses data={this.state.octubre}/><br></br>
+            <TopMeses data={this.state.noviembre}/><br></br>
+            <TopMeses data={this.state.diciembre}/><br></br>
 
-            <ListaTopPM data={this.state.top_prod_miembros} />
+            <ListaTopPM data={this.state.top_prod_miembros} /><br></br>
 
-            <ListaTopGenero data={this.state.hombres} />
-            <ListaTopGenero data={this.state.mujeres} />
-            <ListaTopGenero data={this.state.otros} />
+            <ListaTopGenero data={this.state.hombres} /><br></br>
+            <ListaTopGenero data={this.state.mujeres} /><br></br>
+            <ListaTopGenero data={this.state.otros} /><br></br>
 
-            <ListaTopEmp data={this.state.top_emp.algo} />
+            <ListaTopEmp data={this.state.top_emp.algo} /><br></br>
 
-            <ListaTopMiem data={this.state.top_miem.algo} />
+            <ListaTopMiem data={this.state.top_miem.algo} /><br></br>
             
-            <ListaTopClients data={this.state.best_cl} />
+            <ListaTopClients data={this.state.best_cl} /><br></br>
             
-            <ListaTopZones data={this.state.best_zones} />
+            <ListaTopZones data={this.state.best_zones} /><br></br>
             
-            <ListaTopDelivery data={this.state.best_del} />
+            <ListaTopDelivery data={this.state.best_del} /><br></br>
 
-            <ListaTopFestividades data={this.state.navidad} />
-            <ListaTopFestividades data={this.state.hall} />
-            <ListaTopFestividades data={this.state.sval} />
+            <ListaTopFestividades data={this.state.navidad} /><br></br>
+            <ListaTopFestividades data={this.state.hall} /><br></br>
+            <ListaTopFestividades data={this.state.sval} /><br></br>
 
 
-            <ListaTopProveedores data={this.state.prov} />
+            <ListaTopProveedores data={this.state.prov} /><br></br>
 
             <ListaTopVentasxMes data={this.state.mes} />
           
 
-
-
-           
+            <br></br>
+            <br></br>
+            <SearchCategoryForm  />
+            <br></br>
+            <br></br>
+            <SearchNameForm />
+            <br></br>
+            <br></br>
+           <DateRangeForm/>
             </>
         )
     }

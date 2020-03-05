@@ -38,8 +38,18 @@ urlpatterns = [
     path('rest/cate/<cate>', prod_cat),
     path('rest/name/<name>', prod_name),
     path('rest/date/<start>/<end>', dates_top),
+<<<<<<< HEAD
     path('rest/wilfredo', query_wilfredo),
     path('rest/qwill2', qwill2),
+=======
+    path('rest/query_vic2', query_vic2),
+    #especial graficas
+    path('rest/cant_bills_fest', cant_bills_fest),
+    path('rest/cant_bill_genero', cant_bill_genero),
+    path('rest/ofertas', ofertas),
+    path('rest/sold/<cant>', prod_cant),
+
+>>>>>>> romel2
     
     path('rest/query_pay_tot_ci/', query_pay_tot_ci),
     path('rest/query_Bill_Client/', query_Bill_Client),
