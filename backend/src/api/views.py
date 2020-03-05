@@ -1362,25 +1362,6 @@ def query_Bill_Client(request):
 #         'data':j
 #     }
 
-    for x in q:
-        ids.append(x['id'])
-        price.append(x['price'])
-        product.append(x['product'])
-        quan.append(x['actual_quantity'])
-        disc.append(x['discount'])
-        exp.append(x['expiration_date'])
-    
-    data_p=[]
-
-    for x in range(len(ids)):
-        k={'id':ids[x],'product':product[x],'price':price[x],'quan':quan[x],'sold':disc[x], 'exp':exp[x] }
-        data_p.append(k)
-    
-    data={
-        'data':data_p
-    }
-
-    return JsonResponse(data)
 
 def ofertas(request):
 
@@ -1435,3 +1416,36 @@ def prod_cant(request,cant):
 
 
     return JsonResponse(data)
+
+
+def query_vic(request):
+
+    ids=[]
+    ced=[]
+    tot=[]
+
+    q=Payment.objects.values( 'id','payment_bill__bill__client__ci', 'payment_bill__bill__subtotal' )
+    tax=Tax.objects.values('tax').filter(is_Active=True)
+    
+    t=(tax[0]['tax'])
+
+    for x in q:
+        ids.append(x['id'])
+        ced.append(x['payment_bill__bill__client__ci'])
+        tot.append(x['payment_bill__bill__subtotal'])
+
+    j=[]
+
+    for x in range(len(ced)):
+        q=tot[x]*t+tot[x]
+
+        k={'id':ids[x], 'cedula':ced[x],'total':q}
+        j.append(k)
+
+    data={
+
+        'data':j
+    }
+
+    return JsonResponse(data)
+

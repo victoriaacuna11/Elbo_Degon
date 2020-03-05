@@ -7,7 +7,7 @@ const Offer = props => {
   return (
     <div className="demo-infinite-container">
       <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>
-        <h2>Productos:</h2>
+        <h2>Productos en Oferta:</h2>
         <List
           dataSource={props.data}
           renderItem={item => (
