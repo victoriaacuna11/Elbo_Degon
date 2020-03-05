@@ -5,7 +5,6 @@ import ProductDetail from "./containers/productViews/ProductDetailView";
 import ProviderList from "./containers/providerViews/ProviderListView";
 import ProviderDetail from "./containers/providerViews/ProviderDetailView";
 import BillList from "./containers/BillListView";
-<<<<<<< HEAD
 import MonthEmployeeList from "./containers/monthEmpViews/MonthEmployeeListView";
 import MEDetail from "./containers/monthEmpViews/MonthEmployeeDetailView";
 import EmployeeList from "./containers/employeesViews/EmployeesListView";
@@ -33,7 +32,6 @@ import TaxDetail from "./containers/taxViews/taxDetailView";
 import MemList from "./containers/membershipViews/memListView";
 import MemFormView from "./containers/membershipViews/memFormView";
 import MemDetail from "./containers/membershipViews/memDetailView";
-=======
 import MonthEmployeeList from './containers/MonthEmployeeListView';
 import EmployeeList from './containers/EmployeesListView';
 import LocalList from './containers/LocalListView';
@@ -53,7 +51,6 @@ import Charts from "./containers/AdminInfoChats";
 import Ofertas from "./containers/OfertsList"
 import MaxSoldList from "./containers/ProductMaxSold"
 
->>>>>>> romel2
 
 const BaseRouter = () => (
   <div>
@@ -61,8 +58,6 @@ const BaseRouter = () => (
     <Route exact path="/prov/:providerID" component={ProviderDetail} />
     <Route exact path="/prod" component={ProductList} />
     <Route exact path="/prod/:productID" component={ProductDetail} />
-<<<<<<< HEAD
-=======
     <Route exact path="/prov/:providerID" component={ProviderDetail} />
     <Route exact path="/bill" component={BillList}/>
     <Route exact path="/memp" component={MonthEmployeeList}/>
@@ -77,7 +72,6 @@ const BaseRouter = () => (
 
 
     
->>>>>>> romel2
     <Route exact path="/delivery" component={DeliveryListView} />
     <Route exact path="/delivery/:deliveryID" component={DeliveryDetail} />
     <Route exact path="/pickup" component={PickupListView} />
@@ -110,13 +104,11 @@ const BaseRouter = () => (
 
     <Route exact path="/bill" component={BillList} />
 
-<<<<<<< HEAD
     <Route exact path="/pay" component={PaymentList} />
     <Route exact path="/admin_info" component={AdminData} />
-=======
 
 
-    <Route exact path="/admin_info" component={AdminData} />
+    
     
     <Route exact path="/admin_info/cate/:category" component={SearchCatList} />
     <Route exact path="/admin_info/name/:name" component={SearchNameList} />
@@ -140,7 +132,6 @@ const BaseRouter = () => (
 
 
     
->>>>>>> romel2
   </div>
 );
 

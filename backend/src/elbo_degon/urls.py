@@ -11,7 +11,6 @@
 from django.contrib import admin
 from django.urls import path, include
 from api.views import *
-from api.views import get_data, data_2,top5,prod_mes,best_clients,topzonas,topdel,festividades,top_genero,top_miembros,top_prov,top_miem,top_emp,top_meses, query_pay_tot_ci, query_Bill_Client
 
 
 urlpatterns = [
@@ -38,10 +37,8 @@ urlpatterns = [
     path('rest/cate/<cate>', prod_cat),
     path('rest/name/<name>', prod_name),
     path('rest/date/<start>/<end>', dates_top),
-<<<<<<< HEAD
     path('rest/wilfredo', query_wilfredo),
     path('rest/qwill2', qwill2),
-=======
     path('rest/query_vic2', query_vic2),
     #especial graficas
     path('rest/cant_bills_fest', cant_bills_fest),
@@ -49,7 +46,6 @@ urlpatterns = [
     path('rest/ofertas', ofertas),
     path('rest/sold/<cant>', prod_cant),
 
->>>>>>> romel2
     
     path('rest/query_pay_tot_ci/', query_pay_tot_ci),
     path('rest/query_Bill_Client/', query_Bill_Client),

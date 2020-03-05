@@ -228,12 +228,7 @@ def top5(request):
     l = []
     s = []
 
-<<<<<<< HEAD
-    q = BillProduct.objects.values('batch__product__product_name').annotate(
-        j=Sum('quantity')).order_by('-j')[0:5]
-=======
     q=BillProduct.objects.values('batch__product__product_name').filter(availible=True, batch__product__availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).filter(j__gt=0).order_by('-j')[0:5]
->>>>>>> romel2
 
     for x in q:
         l.append(x['batch__product__product_name'])
@@ -258,59 +253,6 @@ def top5(request):
 
 def prod_mes(request):
 
-<<<<<<< HEAD
-    enero_n = []
-    febrero_n = []
-    marzo_n = []
-    abril_n = []
-    mayo_n = []
-    junio_n = []
-    julio_n = []
-    agosto_n = []
-    septiembre_n = []
-    octubre_n = []
-    noviembre_n = []
-    diciembre_n = []
-
-    # productos
-    p_enero = []
-    p_febrero = []
-    p_marzo = []
-    p_abril = []
-    p_mayo = []
-    p_junio = []
-    p_julio = []
-    p_agosto = []
-    p_septiembre = []
-    p_octubre = []
-    p_noviembre = []
-    p_diciembre = []
-
-    enero = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='01').annotate(e=Sum('quantity')).order_by('-e')[0:5]
-    febrero = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='02').annotate(f=Sum('quantity')).order_by('-f')[0:5]
-    marzo = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='03').annotate(m=Sum('quantity')).order_by('-m')[0:5]
-    abril = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='04').annotate(a=Sum('quantity')).order_by('-a')[0:5]
-    mayo = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='05').annotate(ma=Sum('quantity')).order_by('-ma')[0:5]
-    junio = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='06').annotate(jun=Sum('quantity')).order_by('-jun')[0:5]
-    julio = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='07').annotate(jul=Sum('quantity')).order_by('-jul')[0:5]
-    agosto = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='08').annotate(ag=Sum('quantity')).order_by('-ag')[0:5]
-    septiembre = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='09').annotate(s=Sum('quantity')).order_by('-s')[0:5]
-    octubre = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='10').annotate(o=Sum('quantity')).order_by('-o')[0:5]
-    noviembre = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='11').annotate(n=Sum('quantity')).order_by('-n')[0:5]
-    diciembre = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__month='12').annotate(d=Sum('quantity')).order_by('-d')[0:5]
-=======
 
     enero_n=[]
     febrero_n=[]
@@ -351,7 +293,6 @@ def prod_mes(request):
     octubre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='10', bill_id__availible=True,availible=True).annotate(o=Sum('quantity')).filter(o__gt=0).order_by('-o')[0:5]
     noviembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='11', bill_id__availible=True,availible=True).annotate(n=Sum('quantity')).filter(n__gt=0).order_by('-n')[0:5]
     diciembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='12', bill_id__availible=True,availible=True).annotate(d=Sum('quantity')).filter(d__gt=0).order_by('-d')[0:5]
->>>>>>> romel2
 
     for x in enero:
         enero_n.append(x['batch__product__product_name'])
@@ -568,12 +509,7 @@ def top_miembros(request):
 
     cant_p = []
 
-<<<<<<< HEAD
-    miembros = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__client__is_meber=True).annotate(j=Sum('quantity')).order_by('-j')[0:5]
-=======
     miembros=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__availible=True, availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).filter(j__gt=0).order_by('-j')[0:5]
->>>>>>> romel2
 
     for x in miembros:
         p_miembros.append(x['batch__product__product_name'])
@@ -598,23 +534,6 @@ def top_miembros(request):
 
 def top_genero(request):
 
-<<<<<<< HEAD
-    hombres_p = []
-    hombres_cant = []
-    mujeres_p = []
-    mujeres_cant = []
-    otros_p = []
-    otros_cant = []
-
-    h = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__client__is_meber=True, bill_id__client__membership__gender="Hombre").annotate(r=Sum('quantity')).order_by('-r')[0:3]
-    m = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__client__is_meber=True, bill_id__client__membership__gender="Mujer").annotate(t=Sum('quantity')).order_by('-t')[0:3]
-    o = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__client__is_meber=True, bill_id__client__membership__gender="Otro").annotate(s=Sum('quantity')).order_by('-s')[0:3]
-
-    # hombre
-=======
     hombres_p=[]
     hombres_cant=[]
     mujeres_p=[]
@@ -631,7 +550,6 @@ def top_genero(request):
 
 
     #hombre
->>>>>>> romel2
     for x in h:
         hombres_p.append(x['batch__product__product_name'])
         hombres_cant.append(x['r'])
@@ -713,14 +631,12 @@ def cant_bill_genero(request):
 
 def top_emp(request):
 
-<<<<<<< HEAD
-    emp_n = []
-    emp_l = []
-    emp_e = []
-    emp_p = []
-=======
+    emp_n=[]
+    emp_l=[]
+    emp_e=[]
+    emp_p=[]
+
     q=Employee.objects.values('name','last_name','email','points').filter(availible=True).order_by('-points')[0:5]
->>>>>>> romel2
 
     q = Employee.objects.values(
         'name', 'last_name', 'email', 'points').order_by('-points')[0:5]
@@ -756,12 +672,7 @@ def top_miem(request):
     member_e = []
     member_p = []
 
-<<<<<<< HEAD
-    q = Membership.objects.values(
-        'client__name', 'client__last_name', 'email', 'points').order_by('-points')[0:5]
-=======
     q=Membership.objects.values('client__name','client__last_name','email', 'points').filter(availible=True,client__availible=True).order_by('-points')[0:5]
->>>>>>> romel2
 
     # revisa para ver sis e puede devilver el nombre del cliente
     for x in q:
@@ -789,15 +700,10 @@ def top_miem(request):
 
 def best_clients(request):
 
-<<<<<<< HEAD
-    client = []
-    cant = []
-=======
     client=[]
     cant=[]
 
     q=Bill.objects.values('client__name').filter(availible=True,client__availible=True).annotate(j=Count('client')).filter(j__gt=0).order_by('-j')[0:5]
->>>>>>> romel2
 
     q = Bill.objects.values('client__name').annotate(
         j=Count('client')).order_by('-j')[0:5]
@@ -824,15 +730,10 @@ def best_clients(request):
 
 def topzonas(request):
 
-<<<<<<< HEAD
-    zonas = []
-    cant = []
+    zonas=[]
+    cant=[]
 
-    q = Bill.objects.values('client__zone__name').annotate(
-        j=Count('client__zone'))[0:5]
-=======
     q=Bill.objects.values('client__zone__name').filter(availible=True,client__zone__availible=True).annotate(j=Count('client__zone')).filter(j__gt=0)[0:5]
->>>>>>> romel2
 
     for x in q:
         zonas.append(x['client__zone__name'])
@@ -860,11 +761,7 @@ def topdel(request):
     zonas = []
     cant = []
 
-<<<<<<< HEAD
-    q = Delivery.objects.values('zone__name').annotate(j=Count('zone'))[0:5]
-=======
     q=Delivery.objects.values('zone__name').filter(availible=True,zone__availible=True).annotate(j=Count('zone')).filter(j__gt=0)[0:5]
->>>>>>> romel2
 
     for x in q:
         zonas.append(x['zone__name'])
@@ -887,30 +784,24 @@ def topdel(request):
 
     return JsonResponse(data)
 
-<<<<<<< HEAD
-=======
 def festividades(request):
     
     navidad=[]
     s_valentin=[]
     halloween=[]
->>>>>>> romel2
 
 def festividades(request):
 
     navidad = []
     s_valentin = []
     halloween = []
+    cantn=[]
+    cantsv=[]
+    canth=[]
 
-<<<<<<< HEAD
-    cantn = []
-    cantsv = []
-    canth = []
-=======
     nav=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='12', bill_id__date_time__day='24' ,availible=True, batch__product__availible=True, bill_id__availible=True).annotate(d=Sum('quantity')).filter(d__gt=0).order_by('-d')[0:5]
     sval=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='02', bill_id__date_time__day='14' ,availible=True, batch__product__availible=True, bill_id__availible=True).annotate(f=Sum('quantity')).filter(f__gt=0).order_by('-f')[0:5]
     hal=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='10', bill_id__date_time__day='31',availible=True, batch__product__availible=True, bill_id__availible=True ).annotate(g=Sum('quantity')).filter(g__gt=0).order_by('-g')[0:5]
->>>>>>> romel2
 
     nav = BillProduct.objects.values('batch__product__product_name').filter(
         bill_id__date_time__month='12', bill_id__date_time__day='24').annotate(d=Sum('quantity')).order_by('-d')[0:5]
@@ -978,8 +869,9 @@ def festividades(request):
 def cant_bills_fest(request):
 
     
-
-
+    nav=[]
+    sval=[]
+    hal=[]
 
     nav=BillProduct.objects.all().filter(bill_id__date_time__month='12', bill_id__date_time__day='24' ,availible=True, batch__product__availible=True, bill_id__availible=True).count()
     sval=BillProduct.objects.all().filter(bill_id__date_time__month='02', bill_id__date_time__day='14' ,availible=True, batch__product__availible=True, bill_id__availible=True).count()
@@ -1001,12 +893,10 @@ def cant_bills_fest(request):
 
 def top_prov(request):
 
-<<<<<<< HEAD
-    proveedores = []
-    unidades_vendidas = []
-=======
+    proveedores=[]
+    unidades_vendidas=[]
+
     q=BillProduct.objects.values('batch__product__provider__name').filter(availible=True,batch__product__availible=True,batch__product__provider__availible=True).annotate(j=Sum('quantity')).filter(j__gt=0).order_by('-j')[0:5]
->>>>>>> romel2
 
     q = BillProduct.objects.values('batch__product__provider__name').annotate(
         j=Sum('quantity')).order_by('-j')[0:5]
@@ -1034,34 +924,6 @@ def top_prov(request):
 
 def top_meses(request):
 
-<<<<<<< HEAD
-    enero = Bill.objects.all().filter(date_time__month='01').count()
-    e = {'mes': 'ENERO', 'cant': enero}
-    febrero = Bill.objects.all().filter(date_time__month='02').count()
-    f = {'mes': 'FEBRERO', 'cant': febrero}
-    marzo = Bill.objects.all().filter(date_time__month='03').count()
-    mar = {'mes': 'MARZO', 'cant': marzo}
-    abril = Bill.objects.all().filter(date_time__month='04').count()
-    ab = {'mes': 'ABRIL', 'cant': abril}
-    mayo = Bill.objects.all().filter(date_time__month='05').count()
-    may = {'mes': 'MAYO', 'cant': mayo}
-    junio = Bill.objects.all().filter(date_time__month='06').count()
-    jun = {'mes': 'JUNIO', 'cant': junio}
-    julio = Bill.objects.all().filter(date_time__month='07').count()
-    jul = {'mes': 'JULIO', 'cant': julio}
-    agosto = Bill.objects.all().filter(date_time__month='08').count()
-    ag = {'mes': 'AGOSTO', 'cant': agosto}
-    septiembre = Bill.objects.all().filter(date_time__month='09').count()
-    s = {'mes': 'SEPTIEMBRE', 'cant': septiembre}
-    octubre = Bill.objects.all().filter(date_time__month='10').count()
-    o = {'mes': 'OCTUBRE', 'cant': octubre}
-    noviembre = Bill.objects.all().filter(date_time__month='11').count()
-    n = {'mes': 'NOVIEMBRE', 'cant': noviembre}
-    diciembre = Bill.objects.all().filter(date_time__month='12').count()
-    d = {'mes': 'DICIEMBRE', 'cant': diciembre}
-
-    data_mes = []
-=======
 
     enero=Bill.objects.all().filter(date_time__month='01',availible=True).count()
     e={'mes':'ENERO','cant':enero}
@@ -1089,7 +951,6 @@ def top_meses(request):
     d={'mes':'DICIEMBRE','cant':diciembre}
 
     data_mes=[]
->>>>>>> romel2
     data_mes.append(e)
     data_mes.append(f)
     data_mes.append(mar)
@@ -1288,20 +1149,11 @@ def vista_lotes(request):
     return JsonResponse(data)
 
 
-<<<<<<< HEAD
-def prod_cat(request, cate):
-
-    ids = []
-    prod = []
-    q = Product.objects.values('id', 'product_name').filter(
-        category__name__icontains=cate)
-=======
 def prod_cat(request,cate):
     
     ids=[]
     prod=[]
     q=Product.objects.values('id','product_name').filter(category__name__icontains=cate,availible=True)
->>>>>>> romel2
 
     for x in q:
         prod.append(x['product_name'])
@@ -1319,18 +1171,10 @@ def prod_cat(request,cate):
     return JsonResponse(data)
 
 
-<<<<<<< HEAD
-def prod_name(request, name):
-
-    prod = []
-    q = Product.objects.values('id', 'product_name').filter(
-        product_name__icontains=name)
-=======
 def prod_name(request,name):
     ids=[]
     prod=[]
     q=Product.objects.values('id','product_name').filter(product_name__icontains=name,availible=True)
->>>>>>> romel2
 
     for x in q:
         prod.append(x['product_name'])
@@ -1355,12 +1199,7 @@ def dates_top(request, start, end):
     prod = []
     cant = []
 
-<<<<<<< HEAD
-    q = BillProduct.objects.values('batch__product__product_name').filter(
-        bill_id__date_time__range=[start, end]).annotate(e=Sum('quantity')).order_by('-e')[0:5]
-=======
     q=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__range=[start,end],availible=True,batch__product__availible=True,bill_id__availible=True).annotate(e=Sum('quantity')).filter(e__gt=0).order_by('-e')[0:5]
->>>>>>> romel2
 
     for x in q:
         prod.append(x['batch__product__product_name'])
@@ -1369,11 +1208,7 @@ def dates_top(request, start, end):
     data_p = []
 
     for x in range(len(prod)):
-<<<<<<< HEAD
-        k = {'product': prod[x], 'cant': cant[x]}
-=======
         k={ 'id':x+1, 'product':prod[x],'cant':cant[x]}
->>>>>>> romel2
         data_p.append(k)
     data = {
         'data': data_p
@@ -1393,7 +1228,6 @@ def query_vic2(request):
 
     date=datetime.date.today()
 
-<<<<<<< HEAD
 def qwill2(request):
     cl = []
     ids = []
@@ -1500,16 +1334,10 @@ def query_Bill_Client(request):
 
 
 #     data={
-=======
-    q=ProductBatch.objects.values('id','price','product','actual_quantity','discount','expiration_date').filter(availible=True, product__availible=True, expiration_date__gt=date)
->>>>>>> romel2
 
 #         'data':j
 #     }
 
-<<<<<<< HEAD
-#     return JsonResponse(data)
-=======
     for x in q:
         ids.append(x['id'])
         price.append(x['price'])
@@ -1583,4 +1411,3 @@ def prod_cant(request,cant):
 
 
     return JsonResponse(data)
->>>>>>> romel2
