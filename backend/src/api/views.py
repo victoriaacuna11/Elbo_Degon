@@ -1321,28 +1321,45 @@ def query_Bill_Client(request):
     return JsonResponse(data)
 
 
-# def query_Bill(request):
+def query_AddProductsToABill(request):
 
-#     clients=[]
-#     products=[]
-#     batch=[]
-
-
-#     clientData=Clients.objects.value('id', 'ci')
-#     productData=Products.objects.value('id', 'nombre', 'ProductBatch_id').filter(id=)
-
-
-#     ced=[]
-#     billid=[]
-#     tot=[]
-#     # print(payment)
-
-#     q=Bill.objects.values('client__ci', 'id', 'subtotal' )
-#     tax=Tax.objects.values('tax').filter(is_Active=True)
-
-#     t=(tax[0]['tax'])
+    ids=[]
+    price=[]
+    product=[]
+    quan=[]
+    disc=[]
+    exp=[]
+    loc=[]
 
 
+    date=datetime.date.today()
+
+    q=ProductBatch.objects.values('id','price','product','actual_quantity','discount','expiration_date', 'local').filter(availible=True, product__availible=True, expiration_date__gt=date).order_by('expiration_date')
+
+
+    for x in q:
+        ids.append(x['id'])
+        price.append(x['price'])
+        product.append(x['product'])
+        quan.append(x['actual_quantity'])
+        disc.append(x['discount'])
+        exp.append(x['expiration_date'])
+        loc.append(x['local'])
+    
+    data_p=[]
+
+    for x in range(len(ids)):
+        k={'id':ids[x],'product':product[x],'price':price[x],'quan':quan[x],'sold':disc[x], 'exp':exp[x], 'local':loc[x] }
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+
+<<<<<<< HEAD
 #     for x in q:
 
 #         ced.append(x['client__ci'])
@@ -1350,19 +1367,99 @@ def query_Bill_Client(request):
 #         tot.append(x['subtotal'])
 
 #     j=[]
+=======
+def productos_disp(request):
 
-#     for x in range(len(ced)):
-#         q=(tot[x]*t)+tot[x]
-#         k={'cedula': ced[x], 'id': billid[x], 'total': q}
-#         j.append(k)
+    date=datetime.date.today()
+
+    ids_p=[]
+    name=[]
+
+    id_b=[]
+    cant=[]
+    pr=[]
+    price=[]
+    disc=[]
+
+    q1=Product.objects.values('id','product_name').filter(availible=True)
+
+    q2=ProductBatch.objects.values('id','product', 'actual_quantity', 'discount','price').filter(availible=True, expiration_date__gt=date)
 
 
-#     data={
+    for x in q1:
+        ids_p.append(x['id'])
+        name.append(x['product_name'])
 
-#         'data':j
-#     }
+    for x in q2:
+        id_b.append(x['id'])
+        cant.append(x['actual_quantity'])
+        pr.append(x['product'])
+        price.append(x['price'])
+        disc.append(x['discount'])
+    
+
+    batches=[]
+    for x in range(len(id_b)):
+        b={'id':id_b[x], 'cant':cant[x] ,'produ':pr[x], 'price':price[x], 'discount':disc[x] }
+        batches.append(b)
+    
+    data_p=[]
+
+    for x in range(len(ids_p)):
+        j=ids_p[x]
+        arr=[]
+
+        for y in range(len(batches)):
+            if j==batches[y]['produ']:
+>>>>>>> listsViews-vic2
+
+                arr.append(batches[y])
+            
+        k={'id':ids_p[x],'nombre':name[x],'lote':arr}
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
 
 
+def qvic3(request):
+
+    ids=[]
+
+    q=Employee.objects.values('id').filter(availible=True, job_id='Repartidor')
+
+    for x in q:
+        ids.append(x['id'])
+
+
+    data={
+        'data':ids
+    }
+
+    return JsonResponse(data)
+
+def taxAvailable(request):
+
+
+    tax=[]
+    q=Tax.objects.values('tax').filter(is_Active=True)
+
+    for x in q:
+        tax.append(x['tax'])
+
+    data={
+        'data': tax
+    }
+
+    return JsonResponse(data)
+
+
+
+
+<<<<<<< HEAD
 def ofertas(request):
 
     name=[]
@@ -1449,3 +1546,5 @@ def query_vic(request):
 
     return JsonResponse(data)
 
+=======
+>>>>>>> listsViews-vic2
