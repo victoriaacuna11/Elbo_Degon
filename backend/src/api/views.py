@@ -1362,60 +1362,7 @@ def query_AddProductsToABill(request):
 #         tot.append(x['subtotal'])
 
 #     j=[]
-def productos_disp(request):
 
-    date=datetime.date.today()
-
-    ids_p=[]
-    name=[]
-
-    id_b=[]
-    cant=[]
-    pr=[]
-    price=[]
-    disc=[]
-
-    q1=Product.objects.values('id','product_name').filter(availible=True)
-
-    q2=ProductBatch.objects.values('id','product', 'actual_quantity', 'discount','price').filter(availible=True, expiration_date__gt=date)
-
-
-    for x in q1:
-        ids_p.append(x['id'])
-        name.append(x['product_name'])
-
-    for x in q2:
-        id_b.append(x['id'])
-        cant.append(x['actual_quantity'])
-        pr.append(x['product'])
-        price.append(x['price'])
-        disc.append(x['discount'])
-    
-
-    batches=[]
-    for x in range(len(id_b)):
-        b={'id':id_b[x], 'cant':cant[x] ,'produ':pr[x], 'price':price[x], 'discount':disc[x] }
-        batches.append(b)
-    
-    data_p=[]
-
-    for x in range(len(ids_p)):
-        j=ids_p[x]
-        arr=[]
-
-        for y in range(len(batches)):
-            if j==batches[y]['produ']:
-
-                arr.append(batches[y])
-            
-        k={'id':ids_p[x],'nombre':name[x],'lote':arr}
-        data_p.append(k)
-    
-    data={
-        'data':data_p
-    }
-
-    return JsonResponse(data)
 
 
 def qvic3(request):
@@ -1537,4 +1484,124 @@ def query_vic(request):
     }
 
     return JsonResponse(data)
+
+def productos_disp(request):
+
+    date=datetime.date.today()
+
+    ids_p=[]
+    name=[]
+
+    id_b=[]
+    cant=[]
+    pr=[]
+    price=[]
+    disc=[]
+
+    q1=Product.objects.values('id','product_name').filter(availible=True)
+
+    q2=ProductBatch.objects.values('id','product', 'actual_quantity', 'discount','price').filter(availible=True, expiration_date__gt=date)
+
+
+    for x in q1:
+        ids_p.append(x['id'])
+        name.append(x['product_name'])
+
+    for x in q2:
+        id_b.append(x['id'])
+        cant.append(x['actual_quantity'])
+        pr.append(x['product'])
+        price.append(x['price'])
+        disc.append(x['discount'])
+    
+
+    batches=[]
+    for x in range(len(id_b)):
+        b={'id':id_b[x], 'cant':cant[x] ,'produ':pr[x], 'price':price[x], 'discount':disc[x] }
+        batches.append(b)
+    
+    data_p=[]
+
+    for x in range(len(ids_p)):
+        j=ids_p[x]
+        arr=[]
+
+        for y in range(len(batches)):
+            if j==batches[y]['produ']:
+
+                arr.append(batches[y])
+            
+        k={'id':ids_p[x],'nombre':name[x],'lote':arr}
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+def detalle_fac(request, fact ):
+
+    ids=[]
+    ci=[]
+    name=[]
+    ln=[]
+    subtotal=[]
+
+    pname=[]
+    quan=[]
+    bid=[]
+
+
+
+    q1=Bill.objects.values( 'id' ,'client__ci','client__name','client__last_name', 'subtotal').filter(id=fact)
+    q2=BillProduct.objects.values('batch__product__product_name','quantity', 'bill_id' ).filter(bill_id=fact)
+    tax=Tax.objects.values('tax').filter(is_Active=True)
+    
+    t=(tax[0]['tax'])
+
+
+    for x in q1:
+        ids.append(x['id'])
+        ci.append(x['client__ci'])
+        name.append(x['client__name'])
+        ln.append(x['client__last_name'])
+        subtotal.append(x['subtotal'])
+
+    for x in q2:
+        pname.append(x['batch__product__product_name'])
+        quan.append(x['quantity'])
+        bid.append(x['bill_id'])
+
+    bp=[]
+
+    for x in range(len(quan)):
+
+        j={'name':pname[x], 'quantity':quan[x], 'bill':bid[x]}
+        bp.append(j)
+    
+    data_p=[]
+
+    for x in range(len(ids)):
+
+        r=ids[x]
+        arr=[]
+
+        for y in range(len(bp)):
+            if r==bp[y]['bill']:
+                arr.append(bp[y])
+
+        p=subtotal[x]*t+subtotal[x]
+
+        k={'id':ids[x], 'ci':ci[x], 'name':name[x], 'ln':ln[x], 'subtotal':p , 'products':arr}
+        data_p.append(k)
+
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+
+    
 

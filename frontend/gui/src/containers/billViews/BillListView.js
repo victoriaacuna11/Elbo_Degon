@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import Bills from "../components/bills";
-import CreateBillForm from "../components/createBillForm";
+import Bills from "../../components/billComponents/bills";
+import CreateBillForm from "../../components/billComponents/createBillForm";
 
 class BillList extends React.Component {
     state = {

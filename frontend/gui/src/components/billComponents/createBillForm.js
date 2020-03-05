@@ -3,7 +3,7 @@ import { Form, Input, Button, Select, InputNumber, TimePicker, List} from "antd"
 import moment from 'moment';
 import axios from "axios";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import CreatePaymentForm from './createPaymentForm';
+import CreatePaymentForm from '../createPaymentForm';
 import { Redirect } from 'react-router-dom'; 
 
 const layout = {

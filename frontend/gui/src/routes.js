@@ -4,7 +4,7 @@ import ProductList from "./containers/productViews/ProductListView";
 import ProductDetail from "./containers/productViews/ProductDetailView";
 import ProviderList from "./containers/providerViews/ProviderListView";
 import ProviderDetail from "./containers/providerViews/ProviderDetailView";
-import BillList from "./containers/BillListView";
+import BillList from "./containers/billViews/BillListView";
 import MonthEmployeeList from "./containers/monthEmpViews/MonthEmployeeListView";
 import MEDetail from "./containers/monthEmpViews/MonthEmployeeDetailView";
 import EmployeeList from "./containers/employeesViews/EmployeesListView";
@@ -50,6 +50,7 @@ import RangeDateList from "./containers/RangeDateList";
 import Charts from "./containers/AdminInfoChats";
 import Ofertas from "./containers/OfertsList"
 import MaxSoldList from "./containers/ProductMaxSold"
+import BillDetail from "./containers/billViews/BillDetailView";
 
 
 const BaseRouter = () => (
@@ -60,6 +61,7 @@ const BaseRouter = () => (
     <Route exact path="/prod/:productID" component={ProductDetail} />
     {/* <Route exact path="/prov/:providerID" component={ProviderDetail} /> */}
     <Route exact path="/bill" component={BillList}/>
+    <Route exact path="/bill/:billID" component={BillDetail}/>
     {/* <Route exact path="/memp" component={MonthEmployeeList}/> */}
     {/* <Route exact path="/emp" component={EmployeeList}/> */}
     {/* <Route exact path="/local" component={LocalList}/> */}

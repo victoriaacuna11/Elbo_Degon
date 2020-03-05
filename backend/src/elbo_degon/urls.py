@@ -53,6 +53,7 @@ urlpatterns = [
     path('rest/query_productos_disp',productos_disp),
     path('rest/empleados_disp',qvic3),
     path('rest/taxAvailable',taxAvailable),
+    path('rest/detalle_fac/<fact>',detalle_fac),
 
 
 ]
