@@ -67,7 +67,6 @@ class CreateBillForm extends React.Component {
     this.handleDelivery = this.handleDelivery.bind(this);
   }
   
-
   componentDidMount() {
     
     axios.get("http://127.0.0.1:8000/rest/client/").then(res => {
@@ -77,18 +76,17 @@ class CreateBillForm extends React.Component {
         });
         // console.log(this.state.clients);
     });
-    axios.get("http://127.0.0.1:8000/rest/prod/").then(res => {
+    axios.get("http://127.0.0.1:8000/rest/query_productos_disp").then(res => {
       this.setState({
           ...this.state.props,
-          products: res.data,
-          productsByCategory: res.data,
+          products: res.data.data,
         });
-        // console.log(this.state.products);
+        console.log(this.state.products);
     });
-    axios.get("http://127.0.0.1:8000/rest/pbatch/").then(res => {
+    axios.get("http://127.0.0.1:8000/rest/query_AddProductsToABill").then(res => {
       this.setState({
           ...this.state.props,
-          productBatchs: res.data
+          productBatchs: res.data.data
         });
         // console.log(this.state.productBatchs);
     });
@@ -146,58 +144,18 @@ class CreateBillForm extends React.Component {
     })
   }
 
-
-
-  handleFormSubmit = (event) => {
-      // event.preventDefault();
-    var found = false; 
-    const ci = JSON.stringify(event.clientCI);
-    var i = 0;
-    var clientID;
-    while(i<this.state.clients.length && found==false){
-      
-      if(ci == JSON.stringify(this.state.clients[i].ci)){
-        found=true;
-        clientID = this.state.clients[i].id;
-      }
-      i = (i + 1);
+  isDisabled = (prod) => {
+    var qty = 0;
+    prod.lote.forEach( l => {
+      qty= (qty+l.cant)
+    })
+    // console.log(qty)
+    if(qty>0){
+      return false
+    } else {
+      return true
     }
-    
-    if(this.state.hasProducts){
-      if(found){
-        const time = moment(event.time).format("HH:mm");
-        const delivery = event.hasDelivery;
-        // console.log(clientID);
-        // console.log(this.state.hasDelivery)
-        // console.log(time);
-        // console.log(delivery);
-        if(delivery){
-          const zoneID = event.zone;
-          const addressID = event.address;
-          const products = this.state.productsSelected;
-          const quantities = this.state.quantitiesSelected;
-          console.log(products); 
-          console.log(quantities);
-          // console.log('DELIVERY')
-          // console.log(zoneID)
-          // console.log(addressID)
-        } else {
-          const localID = event.local;
-          // console.log('LOCAL')
-          // console.log(localID)
-        }
-      } else {
-        alert('La cédula que introdujo no está registrada. Por favor, regístrese primero como cliente.')
-      }
-  }else {
-    alert('No ha agregado ningún producto.')
   }
-      
-  }
-
-  // onFinish = values => {
-  //   console.log('Received values of form:', values);
-  // }; 
 
   handleDelivery = value => {
     //  console.log(value);
@@ -214,6 +172,219 @@ class CreateBillForm extends React.Component {
       }
       
    }
+
+  isAvailable = (prodID, qty, stateProd) => {
+    
+    let batches = -1;
+    var i=0;
+    while(batches==-1){
+      if(stateProd[i].id===prodID){
+        batches=i;
+      }
+      i=i+1;
+    }
+    if(stateProd[batches].lote.length>0){
+      if(qty>stateProd[batches].lote[0].cant){
+        return false
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+
+  }
+
+  getProductName=(id)=>{
+    // console.log(id)
+    let found = false;
+    let indexP = -1;
+    let i =0;
+    while(found==false){
+      if(id==this.state.products[i].id){
+        indexP = i;
+        found = true;
+      }
+      i=i+1;
+    }
+    return this.state.products[indexP].nombre
+  }
+
+  isAvailableAtLocal = (idLocal, idProd) =>{
+    var productBatches = []
+    this.state.productBatchs.forEach(batch => {
+      if(batch.product==idProd){
+        productBatches.push(batch);
+      }
+    })
+    console.log(productBatches)
+    var productBatchesAtLocal = []
+    productBatches.forEach( batch => {
+      if(batch.local==idLocal){
+        productBatchesAtLocal.push(batch)
+      }
+    })
+    console.log(productBatchesAtLocal)
+    return productBatchesAtLocal; 
+  }
+
+  isQuantityAvailableAtLocal = (batchesAtLocal, qty, idProd) => {
+    let found = false;
+    let i = 0;
+    while(found==false){
+      if(batchesAtLocal[i][0].product==idProd){
+        found=true;
+        i=i-1;
+      }
+      i=i+1;
+    }
+
+    let prodName = this.getProductName(batchesAtLocal[i][0].product);
+    if(batchesAtLocal[i][0].quan>=qty){
+      return true;
+    } else {
+      alert('Solo tenemos ' +batchesAtLocal[i][0].quan+' '+ prodName +' disponibles en el local seleccionado. Lo sentimos.');
+      return false;
+    }
+    
+  }
+
+  isThisProductMissing = (idProd, batchesAtLocal) => {
+      let i = 0;
+      let found = false;
+
+      console.log('lenght: ' + batchesAtLocal.length)
+      while(i<batchesAtLocal.length && found==false){
+          if(batchesAtLocal[i][0].product==idProd){
+            found=true;
+          }
+         i= i+1;
+      }
+
+      if(found==false){
+        alert('No se encuentra disponible el/la ' + this.getProductName(idProd) + ' en el local elegido')
+        return true;
+      } else {
+        return false;
+      }
+      
+  }
+
+  handleFormSubmit = (event) => {
+      // event.preventDefault();
+    var found = false; 
+    const ci = JSON.stringify(event.clientCI);
+    var i = 0;
+    var clientID;
+    while(i<this.state.clients.length && found==false){
+      
+      if(ci == JSON.stringify(this.state.clients[i].ci)){
+        found=true;
+        clientID = this.state.clients[i].id;
+      }
+      i = (i + 1);
+    }
+    // Valida que haya productos en la factura.
+    if(this.state.hasProducts){
+      // Valida que el cliente se registró.
+      if(found){
+        const time = moment(event.time).format("HH:mm");
+        const delivery = event.hasDelivery;
+        const products = this.state.productsSelected;
+        const quantities = this.state.quantitiesSelected;
+        // Valida si tiene o no delivery. 
+        if(delivery){
+          const zoneID = event.zone;
+          const addressID = event.address;
+          var goToPayments = true;
+          var j = 0;
+          while(j<products.length && goToPayments==true){
+            if(this.isAvailable(products[j], quantities[j], this.state.products)==false){
+                goToPayments=false;
+            }
+            j = (j+1)
+          }
+          // Valida si tiene la cantidad disponible.
+          if(goToPayments){
+
+
+
+          } else {
+            var k = 0;
+            var indexProdNotAvailable = -1;
+            goToPayments=true;
+            while(k<products.length && goToPayments==true){
+              if(this.isAvailable(products[k], quantities[k], this.state.products)==false){
+                  goToPayments=false;
+                  indexProdNotAvailable = (k);
+              }
+              k = (k+1)
+            }
+            alert('No tenemos disponibles ' + quantities[indexProdNotAvailable] + ' ' + this.getProductName(products[indexProdNotAvailable]))
+          }
+
+        } else {
+          // Para el caso de pickUp...
+          const localID = event.local;
+          var batchesAtLocal = [] 
+          // var isThereBatchesAtLocal = false;
+          products.forEach(prod => {
+            var batches = this.isAvailableAtLocal(localID, prod)
+            if(batches.length>0){
+              batchesAtLocal.push(batches);
+              // isThereBatchesAtLocal=true;
+            }
+          })
+          console.log('BATCHES AT LOCAL')
+          console.log(batchesAtLocal)
+          if(batchesAtLocal.length==products.length){
+            console.log('ESTA EN EL LOCAL')
+            let availableAtLocal = true;
+            var l = 0;
+            while(l<batchesAtLocal.length && availableAtLocal==true){
+              let av = this.isQuantityAvailableAtLocal(batchesAtLocal,quantities[l],products[l]);
+              if(av==false){
+                availableAtLocal=false;
+              }
+              l=l+1;
+            }
+            // Si todo está disponible en el local.
+            if(availableAtLocal){
+              console.log('ALL GOOD')
+            }
+          } else {
+            console.log('NO ESTA EN EL LOCAL')
+            let m = 0;
+            found = false;
+
+            while(found==false){
+              if(products.length==1){
+                let name = this.getProductName(products[0])
+                found=true;
+                alert('No está disponible el/la '+ name +' en el local electo.')
+              } else {
+                console.log('entro else')
+                if(this.isThisProductMissing(products[m], batchesAtLocal)){
+                  found=true;
+                }
+              }
+              m=m+1;
+            }
+          }
+          // Verifica que tenga todos los productos en en local pedido.
+          
+        }
+      } else {
+        alert('La cédula que introdujo no está registrada. Por favor, regístrese primero como cliente.')
+      }
+  }else {
+    alert('No ha agregado ningún producto.')
+  }
+  
+  }
+
+ 
+
   
   render() {
     return (
@@ -262,9 +433,9 @@ class CreateBillForm extends React.Component {
                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                       }
                       >
-                      {this.state.productsByCategory.map(prod => (
-                        <Option value={prod.id} key={prod.id}>
-                          {prod.product_name} (Precio)$
+                      {this.state.products.map(prod => (
+                        <Option value={prod.id} key={prod.id} disabled={this.isDisabled(prod)}>
+                          {prod.nombre}
                         </Option>
                       ))}
                     </Select>

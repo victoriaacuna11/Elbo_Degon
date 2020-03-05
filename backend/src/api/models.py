@@ -26,9 +26,9 @@ class ProductBatch(models.Model):
     actual_quantity=models.BigIntegerField()
     quantity_sold=models.BigIntegerField(default=0)
     cost=models.FloatField()
-    discount=models.IntegerField()
+    discount=models.FloatField()
     price=models.FloatField()
-    point_cost=models.IntegerField() #funcion de dolar por punto y eso
+    point_cost=models.FloatField() #funcion de dolar por punto y eso
     local=models.ForeignKey('Local', on_delete=models.CASCADE, default=1)
 
     # atributo de si se toma en cuenta en la base de datos
@@ -42,7 +42,7 @@ class ProductBatch(models.Model):
 #-----------------------------------------------------------------------------
 
 class Category(models.Model):
-    name=models.CharField(max_length=60)
+    name=models.CharField(max_length=60, unique=True)
 
     # atributo de si se toma en cuenta en la base de datos
     availible=models.BooleanField(default=True)
@@ -54,7 +54,7 @@ class Category(models.Model):
 class CurrencyExchange(models.Model):
     bs_exchange = models.FloatField()
     euro_exchange = models.FloatField()
-    date = models.DateField(default=date.today)
+    date = models.DateField(default=date.today, unique=True)
     is_Active = models.BooleanField(default=True)
 
 
@@ -117,8 +117,8 @@ class Payment(models.Model):
     payment_method=models.CharField(max_length=60, choices=METHOD)
     currency=models.CharField(max_length=60,choices=CURRENCIES)
     amount=models.FloatField()
-    account_n=models.BigIntegerField()
-    account_holder=models.CharField(max_length=50)
+    account_n=models.BigIntegerField(blank=True, null=True)
+    account_holder=models.CharField(max_length=50, default='Jane Doe', blank=True, null=True)
 
     # atributo de si se toma en cuenta en la base de datos
     availible=models.BooleanField(default=True)
@@ -178,7 +178,7 @@ class Delivery(models.Model):
 
 
 class Client(models.Model):
-    ci=models.CharField(max_length=60)
+    ci=models.CharField(max_length=60, unique=True)
     name=models.CharField(max_length=60)
     last_name=models.CharField(max_length=60)
     is_meber=models.BooleanField()
@@ -245,7 +245,7 @@ class Employee(models.Model):
         ('Cajero','Cajero'),
     ]
 
-    ci=models.CharField(max_length=60)
+    ci=models.CharField(max_length=60, unique=True)
     name=models.CharField(max_length=60)
     last_name=models.CharField(max_length=60)
     phone= models.CharField(max_length=20)
@@ -256,6 +256,7 @@ class Employee(models.Model):
     job_id=models.CharField(max_length=60,choices=JOBS)
     email=models.EmailField(default='')
     date_hired=models.DateField(default='1999-03-12')
+    salary=models.FloatField(default=200)
     # atributo de si se toma en cuenta en la base de datos
     availible=models.BooleanField(default=True)
 
@@ -296,7 +297,7 @@ class MonthEmployee(models.Model):
 
 
 class Zone(models.Model):
-    name=models.CharField(max_length=60)
+    name=models.CharField(max_length=60, unique=True)
     cost=models.FloatField()
     # atributo de si se toma en cuenta en la base de datos
     availible=models.BooleanField(default=True)
@@ -309,7 +310,7 @@ class Zone(models.Model):
 
 class Tax(models.Model):
     tax = models.FloatField()
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True, unique=True)
     is_Active = models.BooleanField(default=True)
     available = models.BooleanField(default=True)
 

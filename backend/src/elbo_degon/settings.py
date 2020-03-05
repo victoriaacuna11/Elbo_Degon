@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'elbo_degon.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Elbo_Degon_DB',
+        'NAME': 'elbo_degon_db',
         'USER': 'root',
         # PASSWORD VICS:
         'PASSWORD': 'Coiverde1.',

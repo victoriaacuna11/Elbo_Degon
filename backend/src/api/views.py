@@ -8,6 +8,7 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
 from django.views.generic import View
 from django.db.models import Sum, Count
+import datetime
 
 
 from .models import  (Employee,
@@ -1006,47 +1007,100 @@ def query_Bill_Client(request):
     return JsonResponse(data)
 
 
-# def query_Bill(request):
+def query_AddProductsToABill(request):
 
-#     clients=[]
-#     products=[]
-#     batch=[]
-
-
-#     clientData=Clients.objects.value('id', 'ci')
-#     productData=Products.objects.value('id', 'nombre', 'ProductBatch_id').filter(id=)
-
-
-#     ced=[]
-#     billid=[]
-#     tot=[]
-#     # print(payment)
-
-#     q=Bill.objects.values('client__ci', 'id', 'subtotal' )
-#     tax=Tax.objects.values('tax').filter(is_Active=True)
-
-#     t=(tax[0]['tax'])
+    ids=[]
+    price=[]
+    product=[]
+    quan=[]
+    disc=[]
+    exp=[]
+    loc=[]
 
 
-#     for x in q:
-        
-#         ced.append(x['client__ci'])
-#         billid.append(x['id'])
-#         tot.append(x['subtotal'])
+    date=datetime.date.today()
+
+    q=ProductBatch.objects.values('id','price','product','actual_quantity','discount','expiration_date', 'local').filter(availible=True, product__availible=True, expiration_date__gt=date).order_by('expiration_date')
+
+
+    for x in q:
+        ids.append(x['id'])
+        price.append(x['price'])
+        product.append(x['product'])
+        quan.append(x['actual_quantity'])
+        disc.append(x['discount'])
+        exp.append(x['expiration_date'])
+        loc.append(x['local'])
     
-#     j=[]
+    data_p=[]
 
-#     for x in range(len(ced)):
-#         q=(tot[x]*t)+tot[x]
-#         k={'cedula': ced[x], 'id': billid[x], 'total': q}
-#         j.append(k)
-
-
-#     data={
-
-#         'data':j
-#     }
-
-#     return JsonResponse(data)
-
+    for x in range(len(ids)):
+        k={'id':ids[x],'product':product[x],'price':price[x],'quan':quan[x],'sold':disc[x], 'exp':exp[x], 'local':loc[x] }
+        data_p.append(k)
     
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+
+def productos_disp(request):
+
+    date=datetime.date.today()
+
+    ids_p=[]
+    name=[]
+
+    id_b=[]
+    cant=[]
+    pr=[]
+
+    q1=Product.objects.values('id','product_name').filter(availible=True)
+
+    q2=ProductBatch.objects.values('id','product', 'actual_quantity').filter(availible=True, expiration_date__gt=date)
+
+
+    for x in q1:
+        ids_p.append(x['id'])
+        name.append(x['product_name'])
+
+    for x in q2:
+        id_b.append(x['id'])
+        cant.append(x['actual_quantity'])
+        pr.append(x['product'])
+    
+
+    batches=[]
+    for x in range(len(id_b)):
+        b={'id':id_b[x], 'cant':cant[x] ,'produ':pr[x]}
+        batches.append(b)
+    
+    data_p=[]
+
+    for x in range(len(ids_p)):
+        j=ids_p[x]
+        arr=[]
+
+        for y in range(len(batches)):
+            if j==batches[y]['produ']:
+
+                arr.append(batches[y])
+            
+        k={'id':ids_p[x],'nombre':name[x],'lote':arr}
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
+
+
+
+
+
+
+
+
