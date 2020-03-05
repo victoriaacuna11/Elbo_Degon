@@ -58,8 +58,8 @@ class DateRangeForm extends React.Component {
     const start = moment(event.start).format("YYYY-MM-DD");
     const end = moment(event.end).format("YYYY-MM-DD");
 
-    console.log(start)
-    console.log(end)
+   // console.log(start)
+    //console.log(end)
     
 
     this.setState({redirect:`/admin_info/dates/${start}/${end}`})

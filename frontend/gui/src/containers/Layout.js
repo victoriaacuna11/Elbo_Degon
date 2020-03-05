@@ -28,6 +28,9 @@ const ProductLayout = props => {
           <Menu.Item key="11"><Link to="/local">Locales</Link></Menu.Item>
           <Menu.Item key="12"><Link to="/emp">Empleados</Link></Menu.Item>
           <Menu.Item key="13"><Link to="/memp">Empleados del Mes</Link></Menu.Item>
+          <Menu.Item key="14"><Link to="/admin_info">Informacion Administrador</Link></Menu.Item>
+          <Menu.Item key="15"><Link to="/admin_info/charts">Charts</Link></Menu.Item>
+          <Menu.Item key="16"><Link to="/offers">Ofertas de Productos</Link></Menu.Item>
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px" }}>

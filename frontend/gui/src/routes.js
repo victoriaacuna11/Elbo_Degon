@@ -39,7 +39,10 @@ const BaseRouter = () => (
     <Route exact path="/zone" component={ZoneList}/>
     <Route exact path="/pay" component={PaymentList}/>
     
-    <Route exact path="/admin_info" component={AdminData} />
+
+
+
+    
     <Route exact path="/delivery" component={DeliveryListView} />
     <Route exact path="/pickup" component={PickupListView} />
     <Route exact path="/lotes" component={BatchListView} />
@@ -47,7 +50,8 @@ const BaseRouter = () => (
 
 
 
-
+    <Route exact path="/admin_info" component={AdminData} />
+    
     <Route exact path="/admin_info/cate/:category" component={SearchCatList} />
     <Route exact path="/admin_info/name/:name" component={SearchNameList} />
     <Route exact path="/admin_info/dates/:start/:end" component={RangeDateList} />
