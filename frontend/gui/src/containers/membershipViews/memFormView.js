@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Membership from "../../components/membershipComponents/membership";
+import MemberForm from "../../components/membershipComponents/memForm";
 
-class MemList extends React.Component {
+class MemFormView extends React.Component {
   state = {
     data: [],
     clientss: [],
@@ -33,10 +33,11 @@ class MemList extends React.Component {
   render() {
     return (
       <>
-        <Membership data={this.state.data} />
+        <h2 style={{ marginLeft: 650 }}>Crear un miembro</h2>
+        <MemberForm memID={this.state.w} />
       </>
     );
   }
 }
 
-export default MemList;
+export default MemFormView;

@@ -29,6 +29,9 @@ import ClientList from "./containers/clientViews/clientListView";
 import ClientDetail from "./containers/clientViews/clientDetailView";
 import TaxList from "./containers/taxViews/taxListView";
 import TaxDetail from "./containers/taxViews/taxDetailView";
+import MemList from "./containers/membershipViews/memListView";
+import MemFormView from "./containers/membershipViews/memFormView";
+import MemDetail from "./containers/membershipViews/memDetailView";
 
 const BaseRouter = () => (
   <div>
@@ -62,6 +65,9 @@ const BaseRouter = () => (
     <Route exact path="/client/:clientID" component={ClientDetail} />
     <Route exact path="/tax" component={TaxList} />
     <Route exact path="/tax/:taxID" component={TaxDetail} />
+    <Route exact path="/mem" component={MemList} />
+    <Route exact path="/memForm" component={MemFormView} />
+    <Route exact path="/mem/:memID" component={MemDetail} />
 
     <Route exact path="/bill" component={BillList} />
 

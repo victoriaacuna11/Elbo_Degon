@@ -34,14 +34,14 @@ class Membership extends React.Component {
   //Busca si esta habilitado ese obj o no y regresa eso
   showMessage = id => {
     const stateCurrentObject = this.props.data.filter(x => x.id == id)[0]
-      .availible;
+      .avalible;
     return stateCurrentObject === true ? "Habilitado" : "Deshabilitado";
   };
 
   //Busca si esta habilitado ese obj o no y regresa el color correspondiente
   colorStatus = id => {
     const stateCurrentObject = this.props.data.filter(x => x.id == id)[0]
-      .availible;
+      .avalible;
     return stateCurrentObject === true
       ? "rgba(11,226,8,0.5)"
       : "rgba(233,5,5,0.5)";
@@ -65,7 +65,9 @@ class Membership extends React.Component {
                 <List.Item key={item.id}>
                   <List.Item.Meta
                     title={
-                      <a href={`membership/${item.id}`}>{item.product_name}</a>
+                      <a href={`mem/${item.id}`}>
+                        {item.name + " " + item.last}
+                      </a>
                     }
                   />
                   <p

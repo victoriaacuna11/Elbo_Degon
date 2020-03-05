@@ -60,6 +60,9 @@ const ProductLayout = props => {
           <Menu.Item key="15">
             <Link to="/tax">Impuestos</Link>
           </Menu.Item>
+          <Menu.Item key="16">
+            <Link to="/mem">Miembro</Link>
+          </Menu.Item>
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px" }}>
