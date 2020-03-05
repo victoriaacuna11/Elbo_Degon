@@ -1055,10 +1055,12 @@ def productos_disp(request):
     id_b=[]
     cant=[]
     pr=[]
+    price=[]
+    disc=[]
 
     q1=Product.objects.values('id','product_name').filter(availible=True)
 
-    q2=ProductBatch.objects.values('id','product', 'actual_quantity').filter(availible=True, expiration_date__gt=date)
+    q2=ProductBatch.objects.values('id','product', 'actual_quantity', 'discount','price').filter(availible=True, expiration_date__gt=date)
 
 
     for x in q1:
@@ -1069,11 +1071,13 @@ def productos_disp(request):
         id_b.append(x['id'])
         cant.append(x['actual_quantity'])
         pr.append(x['product'])
+        price.append(x['price'])
+        disc.append(x['discount'])
     
 
     batches=[]
     for x in range(len(id_b)):
-        b={'id':id_b[x], 'cant':cant[x] ,'produ':pr[x]}
+        b={'id':id_b[x], 'cant':cant[x] ,'produ':pr[x], 'price':price[x], 'discount':disc[x] }
         batches.append(b)
     
     data_p=[]
@@ -1097,9 +1101,36 @@ def productos_disp(request):
     return JsonResponse(data)
 
 
+def qvic3(request):
+
+    ids=[]
+
+    q=Employee.objects.values('id').filter(availible=True, job_id='Repartidor')
+
+    for x in q:
+        ids.append(x['id'])
 
 
+    data={
+        'data':ids
+    }
 
+    return JsonResponse(data)
+
+def taxAvailable(request):
+
+
+    tax=[]
+    q=Tax.objects.values('tax').filter(is_Active=True)
+
+    for x in q:
+        tax.append(x['tax'])
+
+    data={
+        'data': tax
+    }
+
+    return JsonResponse(data)
 
 
 

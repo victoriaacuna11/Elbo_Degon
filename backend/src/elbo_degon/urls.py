@@ -10,7 +10,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from api.views import get_data, data_2,top5,prod_mes,best_clients,topzonas,topdel,festividades,top_genero,top_miembros,top_prov,top_miem,top_emp,top_meses, query_pay_tot_ci, query_Bill_Client, query_AddProductsToABill, productos_disp
+from api.views import qvic3, get_data, data_2,top5,prod_mes,best_clients,topzonas,topdel,festividades,top_genero,top_miembros,top_prov,top_miem,top_emp,top_meses, query_pay_tot_ci, query_Bill_Client, query_AddProductsToABill, productos_disp,taxAvailable
 
 
 urlpatterns = [
@@ -34,4 +34,8 @@ urlpatterns = [
     path('rest/query_Bill_Client/', query_Bill_Client),
     path('rest/query_AddProductsToABill', query_AddProductsToABill), 
     path('rest/query_productos_disp',productos_disp),
+    path('rest/empleados_disp',qvic3),
+    path('rest/taxAvailable',taxAvailable),
+
+
 ]
