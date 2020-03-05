@@ -15,6 +15,7 @@ import ListaTopVentasxMes from "./querys/month_cant";
 import SearchCategoryForm from "./querys/search_cat";
 import SearchNameForm from "./querys/search_name";
 import DateRangeForm from "./querys/date_range";
+import MaxCantSold from "./querys/max_cant";
 
 
 
@@ -100,18 +101,7 @@ class AdminData extends React.Component{
      
 
      });
-    axios.get("http://127.0.0.1:8000/rest/pmas10").then(res => {
-      this.setState({
-
-        mas10:res.data.thing
-        
-      });
-
-       //console.log(this.state.top_5)
-       //console.log(res.data.thing)
-     
-
-     });
+   
 
      axios.get("http://127.0.0.1:8000/rest/pm").then(res => {
       this.setState({
@@ -270,8 +260,10 @@ class AdminData extends React.Component{
             <h2>TOP 5 PRODUCTOS VENDIDOS:</h2>
             <ListaTopP data={this.state.top_5} />
             <br></br>
-            <h2>PRODUCTOS QUE HAN VENDIDO MAS DE 10 UNIDADES</h2>
-            <ListaTopP data={this.state.mas10} />
+            <br></br>
+          <MaxCantSold/>
+
+
             <br></br>
 
             <TopMeses data={this.state.enero}/>

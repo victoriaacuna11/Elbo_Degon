@@ -41,9 +41,10 @@ class SearchNameList extends React.Component{
     render(){
 
         return(
-
+            <>
+            <h2>TOP 5 PRODUCTOS FILTRADOS POR NOMBRE:</h2>
                 <P_S_N data={this.state.data}/>
-
+                </>
         )
 
 

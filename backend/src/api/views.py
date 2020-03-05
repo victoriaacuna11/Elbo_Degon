@@ -1222,12 +1222,12 @@ def ofertas(request):
     }
     return JsonResponse(data)
 
-def prod_mas_10(request):
+def prod_cant(request,cant):
     
     l=[]
     s=[]
 
-    q=BillProduct.objects.values('batch__product__product_name').filter(availible=True, batch__product__availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).filter(j__gt=10).order_by('-j')[0:5]
+    q=BillProduct.objects.values('batch__product__product_name').filter(availible=True, batch__product__availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).filter(j__gte=cant).order_by('-j')[0:5]
 
     for x in q:
         l.append(x['batch__product__product_name'])
@@ -1238,7 +1238,7 @@ def prod_mas_10(request):
     for x in range(len(l)):
         print(x)
 
-        k={ 'id':x+1 ,'name':l[x], 'cant':s[x] }
+        k={ 'name':l[x], 'cant':s[x] }
         #print(k)
         r.append(k)
         #print(r)

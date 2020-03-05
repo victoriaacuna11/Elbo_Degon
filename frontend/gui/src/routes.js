@@ -22,6 +22,7 @@ import SearchNameList from "./containers/SearchNameList";
 import RangeDateList from "./containers/RangeDateList";
 import Charts from "./containers/AdminInfoChats";
 import Ofertas from "./containers/OfertsList"
+import MaxSoldList from "./containers/ProductMaxSold"
 
 
 const BaseRouter = () => (
@@ -55,6 +56,7 @@ const BaseRouter = () => (
     <Route exact path="/admin_info/cate/:category" component={SearchCatList} />
     <Route exact path="/admin_info/name/:name" component={SearchNameList} />
     <Route exact path="/admin_info/dates/:start/:end" component={RangeDateList} />
+    <Route exact path="/admin_info/max/:cant" component={MaxSoldList} />
 
 
 
