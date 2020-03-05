@@ -9,7 +9,7 @@ const ListaTopP = props => {
   return (
     <div className="demo-infinite-container">
       <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>
-        <h2>TOP 5 PRODUCTOS VENDIDOS:</h2>
+        
         <List
           dataSource={props.data}
           renderItem={item => (
