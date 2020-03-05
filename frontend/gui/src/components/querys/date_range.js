@@ -1,8 +1,10 @@
 import React from "react";
-import { Form, Input, Button, Select, InputNumber, Radio } from "antd";
+import { Form, Input, Button, Select, InputNumber, Radio ,DatePicker} from "antd";
 import axios from "axios";
 import { Route, Link ,Redirect} from "react-router-dom";
 import PaymentList from "../../containers/PaymentListView"
+import Calendar from "react-calendar"
+import moment from "moment"
 
 
 const { Option } = Select;
@@ -53,10 +55,11 @@ class DateRangeForm extends React.Component {
     //event.preventDefault();
 
 
-    const start = event.start;
-    const end = event.end;
+    const start = moment(event.start).format("YYYY-MM-DD");
+    const end = moment(event.end).format("YYYY-MM-DD");
 
-    console.log(start,'----------', end)
+    console.log(start)
+    console.log(end)
     
 
     this.setState({redirect:`/admin_info/dates/${start}/${end}`})
@@ -115,44 +118,16 @@ class DateRangeForm extends React.Component {
           )
         }
       >
-        <Form.Item
-          name="start"
-          rules={[
-            {
-              required: true
-            }
-          ]}
-          label="Fecha inicio"
-          key={this.state.currProd.product_name}
-        >
-          <Input
-            name="start"
-            defaultValue={this.state.currProd.product_name}
-            onChange={this.onChange()}
-            placeholder="yyyy-mm-dd"
-          />
+         <Form.Item label="DatePickerstart" name="start">
+          <DatePicker />
         </Form.Item>
 
 
         <br />
         
 
-        <Form.Item
-          name="end"
-          rules={[
-            {
-              required: true
-            }
-          ]}
-          label="Fecha fin"
-          key={this.state.currProd.product_name}
-        >
-          <Input
-            name="end"
-            defaultValue={this.state.currProd.product_name}
-            onChange={this.onChange()}
-            placeholder="yyyy-mm-dd"
-          />
+        <Form.Item label="DatePickerend" name="end">
+          <DatePicker />
         </Form.Item>
 
 

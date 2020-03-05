@@ -40,5 +40,8 @@ urlpatterns = [
     #especial graficas
     path('rest/cant_bills_fest', cant_bills_fest),
     path('rest/cant_bill_genero', cant_bill_genero),
+    path('rest/ofertas', ofertas),
+    path('rest/pmas10', prod_mas_10),
+
     
 ]

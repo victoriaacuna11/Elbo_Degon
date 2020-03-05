@@ -2,21 +2,18 @@ import React from "react";
 import { List } from "antd";
 import InfiniteScroll from "react-infinite-scroller";
 
-const P_S_N = props => {
-    
-    //console.log(props.data);
-
+const Offer = props => {
+  console.log(props.data);
   return (
     <div className="demo-infinite-container">
       <InfiniteScroll initialLoad={false} pageStart={0} useWindow={false}>
-        <h2>TOP 5 PRODUCTOS FILTRADOS POR NOMBRE:</h2>
+        <h2>Productos:</h2>
         <List
-          dataSource={props.data.data}
+          dataSource={props.data}
           renderItem={item => (
             <List.Item key={item.id}>
               <List.Item.Meta
-                title= {<p> {item.product} </p>  }
-               
+                title={<p>  {item.name}----- Descuento:  {item.discount} </p>} 
               />
             </List.Item>
           )}
@@ -25,4 +22,4 @@ const P_S_N = props => {
     </div>
   );
 };
-export default P_S_N;
+export default Offer;

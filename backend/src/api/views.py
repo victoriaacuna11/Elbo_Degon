@@ -211,7 +211,7 @@ def top5(request):
     l=[]
     s=[]
 
-    q=BillProduct.objects.values('batch__product__product_name').filter(availible=True, batch__product__availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).order_by('-j')[0:5]
+    q=BillProduct.objects.values('batch__product__product_name').filter(availible=True, batch__product__availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).filter(j__gt=0).order_by('-j')[0:5]
 
     for x in q:
         l.append(x['batch__product__product_name'])
@@ -268,18 +268,18 @@ def prod_mes(request):
     p_noviembre=[]
     p_diciembre=[]
 
-    enero=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='01', bill_id__availible=True,availible=True).annotate(e=Sum('quantity')).order_by('-e')[0:5]
-    febrero=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='02', bill_id__availible=True,availible=True).annotate(f=Sum('quantity')).order_by('-f')[0:5]
-    marzo=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='03', bill_id__availible=True,availible=True).annotate(m=Sum('quantity')).order_by('-m')[0:5]
-    abril=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='04', bill_id__availible=True,availible=True).annotate(a=Sum('quantity')).order_by('-a')[0:5]
-    mayo=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='05', bill_id__availible=True,availible=True).annotate(ma=Sum('quantity')).order_by('-ma')[0:5]
-    junio=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='06', bill_id__availible=True,availible=True).annotate(jun=Sum('quantity')).order_by('-jun')[0:5]
-    julio=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='07', bill_id__availible=True,availible=True).annotate(jul=Sum('quantity')).order_by('-jul')[0:5]
-    agosto=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='08', bill_id__availible=True,availible=True).annotate(ag=Sum('quantity')).order_by('-ag')[0:5]
-    septiembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='09', bill_id__availible=True,availible=True).annotate(s=Sum('quantity')).order_by('-s')[0:5]
-    octubre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='10', bill_id__availible=True,availible=True).annotate(o=Sum('quantity')).order_by('-o')[0:5]
-    noviembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='11', bill_id__availible=True,availible=True).annotate(n=Sum('quantity')).order_by('-n')[0:5]
-    diciembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='12', bill_id__availible=True,availible=True).annotate(d=Sum('quantity')).order_by('-d')[0:5]
+    enero=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='01', bill_id__availible=True,availible=True).annotate(e=Sum('quantity')).filter(e__gt=0).order_by('-e')[0:5]
+    febrero=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='02', bill_id__availible=True,availible=True).annotate(f=Sum('quantity')).filter(f__gt=0).order_by('-f')[0:5]
+    marzo=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='03', bill_id__availible=True,availible=True).annotate(m=Sum('quantity')).filter(m__gt=0).order_by('-m')[0:5]
+    abril=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='04', bill_id__availible=True,availible=True).annotate(a=Sum('quantity')).filter(a__gt=0).order_by('-a')[0:5]
+    mayo=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='05', bill_id__availible=True,availible=True).annotate(ma=Sum('quantity')).filter(ma__gt=0).order_by('-ma')[0:5]
+    junio=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='06', bill_id__availible=True,availible=True).annotate(jun=Sum('quantity')).filter(jun__gt=0).order_by('-jun')[0:5]
+    julio=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='07', bill_id__availible=True,availible=True).annotate(jul=Sum('quantity')).filter(jul__gt=0).order_by('-jul')[0:5]
+    agosto=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='08', bill_id__availible=True,availible=True).annotate(ag=Sum('quantity')).filter(ag__gt=0).order_by('-ag')[0:5]
+    septiembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='09', bill_id__availible=True,availible=True).annotate(s=Sum('quantity')).filter(s__gt=0).order_by('-s')[0:5]
+    octubre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='10', bill_id__availible=True,availible=True).annotate(o=Sum('quantity')).filter(o__gt=0).order_by('-o')[0:5]
+    noviembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='11', bill_id__availible=True,availible=True).annotate(n=Sum('quantity')).filter(n__gt=0).order_by('-n')[0:5]
+    diciembre=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='12', bill_id__availible=True,availible=True).annotate(d=Sum('quantity')).filter(d__gt=0).order_by('-d')[0:5]
 
     for x in enero:
         enero_n.append(x['batch__product__product_name'])
@@ -509,7 +509,7 @@ def top_miembros(request):
     
 
 
-    miembros=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__availible=True, availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).order_by('-j')[0:5]
+    miembros=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__availible=True, availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).filter(j__gt=0).order_by('-j')[0:5]
 
     for x in miembros:
         p_miembros.append(x['batch__product__product_name'])
@@ -546,9 +546,9 @@ def top_genero(request):
 
     
 
-    h=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Hombre", bill_id__client__availible=True,  bill_id__availible=True, availible=True).annotate(r=Sum('quantity')).order_by('-r')[0:3]
-    m=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Mujer", bill_id__client__availible=True,  bill_id__availible=True, availible=True).annotate(t=Sum('quantity')).order_by('-t')[0:3]
-    o=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Otro", bill_id__client__availible=True,  bill_id__availible=True, availible=True).annotate(s=Sum('quantity')).order_by('-s')[0:3]
+    h=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Hombre", bill_id__client__availible=True,  bill_id__availible=True, availible=True).annotate(r=Sum('quantity')).filter(r__gt=0).order_by('-r')[0:3]
+    m=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Mujer", bill_id__client__availible=True,  bill_id__availible=True, availible=True).annotate(t=Sum('quantity')).filter(t__gt=0).order_by('-t')[0:3]
+    o=BillProduct.objects.values('batch__product__product_name').filter(bill_id__client__is_meber=True, bill_id__client__membership__gender="Otro", bill_id__client__availible=True,  bill_id__availible=True, availible=True).annotate(s=Sum('quantity')).filter(s__gt=0).order_by('-s')[0:3]
 
 
 
@@ -724,7 +724,7 @@ def best_clients(request):
     client=[]
     cant=[]
 
-    q=Bill.objects.values('client__name').filter(availible=True,client__availible=True).annotate(j=Count('client')).order_by('-j')[0:5]
+    q=Bill.objects.values('client__name').filter(availible=True,client__availible=True).annotate(j=Count('client')).filter(j__gt=0).order_by('-j')[0:5]
 
 
     for x in q:
@@ -752,7 +752,7 @@ def topzonas(request):
     zonas=[]
     cant=[]
 
-    q=Bill.objects.values('client__zone__name').filter(availible=True,client__zone__availible=True).annotate(j=Count('client__zone'))[0:5]
+    q=Bill.objects.values('client__zone__name').filter(availible=True,client__zone__availible=True).annotate(j=Count('client__zone')).filter(j__gt=0)[0:5]
 
     for x in q:
         zonas.append(x['client__zone__name'])
@@ -779,7 +779,7 @@ def topdel(request):
     zonas=[]
     cant=[]
 
-    q=Delivery.objects.values('zone__name').filter(availible=True,zone__availible=True).annotate(j=Count('zone'))[0:5]
+    q=Delivery.objects.values('zone__name').filter(availible=True,zone__availible=True).annotate(j=Count('zone')).filter(j__gt=0)[0:5]
 
     for x in q:
         zonas.append(x['zone__name'])
@@ -814,9 +814,9 @@ def festividades(request):
     canth=[]
 
 
-    nav=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='12', bill_id__date_time__day='24' ,availible=True, batch__product__availible=True, bill_id__availible=True).annotate(d=Sum('quantity')).order_by('-d')[0:5]
-    sval=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='02', bill_id__date_time__day='14' ,availible=True, batch__product__availible=True, bill_id__availible=True).annotate(f=Sum('quantity')).order_by('-f')[0:5]
-    hal=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='10', bill_id__date_time__day='31',availible=True, batch__product__availible=True, bill_id__availible=True ).annotate(g=Sum('quantity')).order_by('-g')[0:5]
+    nav=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='12', bill_id__date_time__day='24' ,availible=True, batch__product__availible=True, bill_id__availible=True).annotate(d=Sum('quantity')).filter(d__gt=0).order_by('-d')[0:5]
+    sval=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='02', bill_id__date_time__day='14' ,availible=True, batch__product__availible=True, bill_id__availible=True).annotate(f=Sum('quantity')).filter(f__gt=0).order_by('-f')[0:5]
+    hal=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__month='10', bill_id__date_time__day='31',availible=True, batch__product__availible=True, bill_id__availible=True ).annotate(g=Sum('quantity')).filter(g__gt=0).order_by('-g')[0:5]
 
 
     for x in nav:
@@ -905,7 +905,7 @@ def top_prov(request):
     unidades_vendidas=[]
 
 
-    q=BillProduct.objects.values('batch__product__provider__name').filter(availible=True,batch__product__availible=True,batch__product__provider__availible=True).annotate(j=Sum('quantity')).order_by('-j')[0:5]
+    q=BillProduct.objects.values('batch__product__provider__name').filter(availible=True,batch__product__availible=True,batch__product__provider__availible=True).annotate(j=Sum('quantity')).filter(j__gt=0).order_by('-j')[0:5]
 
 
     for x in q:
@@ -1146,7 +1146,7 @@ def dates_top(request,start,end):
     prod=[]
     cant=[]
 
-    q=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__range=[start,end],availible=True,batch__product__availible=True,bill_id__availible=True).annotate(e=Sum('quantity')).order_by('-e')[0:5]
+    q=BillProduct.objects.values('batch__product__product_name').filter(bill_id__date_time__range=[start,end],availible=True,batch__product__availible=True,bill_id__availible=True).annotate(e=Sum('quantity')).filter(e__gt=0).order_by('-e')[0:5]
 
     for x in q:
         prod.append(x['batch__product__product_name'])
@@ -1198,4 +1198,56 @@ def query_vic2(request):
 
     return JsonResponse(data)
 
+def ofertas(request):
 
+    name=[]
+    disc=[]
+
+    q=ProductBatch.objects.values('product__product_name','discount').filter(availible=True, product__availible=True, discount__gt=0, actual_quantity__gt=0)
+
+    for x in q:
+        name.append(x['product__product_name'])
+        disc.append(x['discount'])
+
+
+    data_p=[]
+
+    for x in range(len(name)):
+        k={'name':name[x], 'discount':disc[x]}
+        data_p.append(k)
+    
+
+    data={
+        'data':data_p
+    }
+    return JsonResponse(data)
+
+def prod_mas_10(request):
+    
+    l=[]
+    s=[]
+
+    q=BillProduct.objects.values('batch__product__product_name').filter(availible=True, batch__product__availible=True, bill_id__availible=True).annotate(j=Sum('quantity')).filter(j__gt=10).order_by('-j')[0:5]
+
+    for x in q:
+        l.append(x['batch__product__product_name'])
+        s.append(x['j'])
+
+    r=[]
+
+    for x in range(len(l)):
+        print(x)
+
+        k={ 'id':x+1 ,'name':l[x], 'cant':s[x] }
+        #print(k)
+        r.append(k)
+        #print(r)
+
+
+
+    data={
+        'thing':r
+    }
+
+
+    return JsonResponse(data)
