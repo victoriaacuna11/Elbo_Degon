@@ -1217,7 +1217,7 @@ def dates_top(request, start, end):
     return JsonResponse(data)
 
 def query_vic2(request):
-
+    
     ids=[]
     price=[]
     product=[]
@@ -1227,6 +1227,30 @@ def query_vic2(request):
 
 
     date=datetime.date.today()
+
+    q=ProductBatch.objects.values('id','price','product','actual_quantity','discount','expiration_date').filter(availible=True, product__availible=True, expiration_date__gt=date)
+
+
+    for x in q:
+        ids.append(x['id'])
+        price.append(x['price'])
+        product.append(x['product'])
+        quan.append(x['actual_quantity'])
+        disc.append(x['discount'])
+        exp.append(x['expiration_date'])
+    
+    data_p=[]
+
+    for x in range(len(ids)):
+        k={'id':ids[x],'product':product[x],'price':price[x],'quan':quan[x],'sold':disc[x], 'exp':exp[x] }
+        data_p.append(k)
+    
+    data={
+        'data':data_p
+    }
+
+    return JsonResponse(data)
+
 
 def qwill2(request):
     cl = []

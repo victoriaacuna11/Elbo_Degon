@@ -30,7 +30,7 @@ urlpatterns = [
     path('rest/fest', festividades),
     path('rest/topp', top_prov),
     path('rest/top_meses', top_meses),
-    # path('rest/query_vic', query_vic),
+    path('rest/query_vic', query_vic),
     path('rest/vista_delivery', vista_delivery),
     path('rest/vista_lotes', vista_lotes),
     path('rest/vista_pickup', vista_pickup),
