@@ -58,7 +58,7 @@ class CreatePaymentForm extends React.Component {
   }
   
 
-  // Métodos para tomar los valores del form iterativo.
+  // Métodos para tomar los valores del form iterativo de pagos.
   handleAmountCash = (value, index) => {
     this.state.amountCash[index] = value;
 

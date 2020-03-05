@@ -23,7 +23,7 @@ class BillList extends React.Component {
           data={this.state.bills}
           />
           <br />
-          <h2>Crear una factura</h2>
+          
           <CreateBillForm requestType="post" productID={null} buttonText="Crear" />
         </>
       );
