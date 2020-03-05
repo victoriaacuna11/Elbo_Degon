@@ -23,7 +23,6 @@ class BillList extends React.Component {
           data={this.state.bills}
           />
           <br />
-          
           <CreateBillForm requestType="post" productID={null} buttonText="Crear" />
         </>
       );

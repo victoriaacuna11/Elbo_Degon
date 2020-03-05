@@ -784,11 +784,7 @@ def topdel(request):
 
     return JsonResponse(data)
 
-def festividades(request):
-    
-    navidad=[]
-    s_valentin=[]
-    halloween=[]
+
 
 def festividades(request):
 
@@ -1359,7 +1355,6 @@ def query_AddProductsToABill(request):
     return JsonResponse(data)
 
 
-<<<<<<< HEAD
 #     for x in q:
 
 #         ced.append(x['client__ci'])
@@ -1367,7 +1362,6 @@ def query_AddProductsToABill(request):
 #         tot.append(x['subtotal'])
 
 #     j=[]
-=======
 def productos_disp(request):
 
     date=datetime.date.today()
@@ -1411,7 +1405,6 @@ def productos_disp(request):
 
         for y in range(len(batches)):
             if j==batches[y]['produ']:
->>>>>>> listsViews-vic2
 
                 arr.append(batches[y])
             
@@ -1459,7 +1452,6 @@ def taxAvailable(request):
 
 
 
-<<<<<<< HEAD
 def ofertas(request):
 
     name=[]
@@ -1546,5 +1538,3 @@ def query_vic(request):
 
     return JsonResponse(data)
 
-=======
->>>>>>> listsViews-vic2

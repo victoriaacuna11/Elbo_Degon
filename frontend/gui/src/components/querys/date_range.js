@@ -2,9 +2,9 @@ import React from "react";
 import { Form, Input, Button, Select, InputNumber, Radio ,DatePicker} from "antd";
 import axios from "axios";
 import { Route, Link ,Redirect} from "react-router-dom";
-import PaymentList from "../../containers/PaymentListView"
-import Calendar from "react-calendar"
-import moment from "moment"
+import PaymentList from "../../containers/PaymentListView";
+//import Calendar from "react-calendar";
+import moment from "moment";
 
 
 const { Option } = Select;

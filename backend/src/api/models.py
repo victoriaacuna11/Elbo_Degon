@@ -21,18 +21,6 @@ class Product(models.Model):
 
 
 class ProductBatch(models.Model):
-<<<<<<< HEAD
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    expiration_date = models.DateField(default=date.today)
-    elaboration_date = models.DateField(default=date.today)
-    actual_quantity = models.BigIntegerField()
-    quantity_sold = models.BigIntegerField(default=0)
-    cost = models.FloatField()
-    discount = models.IntegerField()
-    price = models.FloatField()
-    point_cost = models.IntegerField()  # funcion de dolar por punto y eso
-    local = models.ForeignKey('Local', on_delete=models.CASCADE, default=1)
-=======
     product=models.ForeignKey('Product', on_delete=models.CASCADE)
     expiration_date=models.DateField(default=date.today)
     elaboration_date=models.DateField(default=date.today)
@@ -43,7 +31,6 @@ class ProductBatch(models.Model):
     price=models.FloatField()
     point_cost=models.FloatField() #funcion de dolar por punto y eso
     local=models.ForeignKey('Local', on_delete=models.CASCADE, default=1)
->>>>>>> listsViews-vic2
 
     # atributo de si se toma en cuenta en la base de datos
     availible = models.BooleanField(default=True)
@@ -55,11 +42,7 @@ class ProductBatch(models.Model):
 # -----------------------------------------------------------------------------
 
 class Category(models.Model):
-<<<<<<< HEAD
-    name = models.CharField(max_length=60)
-=======
     name=models.CharField(max_length=60, unique=True)
->>>>>>> listsViews-vic2
 
     # atributo de si se toma en cuenta en la base de datos
     availible = models.BooleanField(default=True)
@@ -129,19 +112,11 @@ class Payment(models.Model):
         ('Euros', 'Euros'),
     )
 
-<<<<<<< HEAD
-    payment_method = models.CharField(max_length=60, choices=METHOD)
-    currency = models.CharField(max_length=60, choices=CURRENCIES)
-    amount = models.FloatField()
-    account_n = models.BigIntegerField()
-    account_holder = models.CharField(max_length=50)
-=======
     payment_method=models.CharField(max_length=60, choices=METHOD)
     currency=models.CharField(max_length=60,choices=CURRENCIES)
     amount=models.FloatField()
     account_n=models.BigIntegerField(blank=True, null=True)
     account_holder=models.CharField(max_length=50, default='Jane Doe', blank=True, null=True)
->>>>>>> listsViews-vic2
 
     # atributo de si se toma en cuenta en la base de datos
     availible = models.BooleanField(default=True)
@@ -205,19 +180,11 @@ class Delivery(models.Model):
 
 
 class Client(models.Model):
-<<<<<<< HEAD
-    ci = models.CharField(max_length=60)
-    name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
-    is_meber = models.BooleanField()
-    zone = models.ForeignKey('Zone', on_delete=models.CASCADE, default=1)
-=======
     ci=models.CharField(max_length=60, unique=True)
     name=models.CharField(max_length=60)
     last_name=models.CharField(max_length=60)
     is_meber=models.BooleanField()
     zone=models.ForeignKey('Zone',on_delete=models.CASCADE, default=1 )
->>>>>>> listsViews-vic2
     # atributo de si se toma en cuenta en la base de datos
     availible = models.BooleanField(default=True)
 
@@ -282,19 +249,6 @@ class Employee(models.Model):
         ('Cajero', 'Cajero'),
     ]
 
-<<<<<<< HEAD
-    ci = models.CharField(max_length=60)
-    name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
-    phone = models.CharField(max_length=20)
-    points = models.IntegerField()
-    adress = models.CharField(max_length=200)
-    gender = models.CharField(max_length=60, choices=GENDERS)
-    birth_date = models.DateField()
-    job_id = models.CharField(max_length=60, choices=JOBS)
-    email = models.EmailField(default='')
-    date_hired = models.DateField(default='1999-03-12')
-=======
     ci=models.CharField(max_length=60, unique=True)
     name=models.CharField(max_length=60)
     last_name=models.CharField(max_length=60)
@@ -307,7 +261,6 @@ class Employee(models.Model):
     email=models.EmailField(default='')
     date_hired=models.DateField(default='1999-03-12')
     salary=models.FloatField(default=200)
->>>>>>> listsViews-vic2
     # atributo de si se toma en cuenta en la base de datos
     availible = models.BooleanField(default=True)
 
@@ -347,13 +300,8 @@ class MonthEmployee(models.Model):
 
 
 class Zone(models.Model):
-<<<<<<< HEAD
-    name = models.CharField(max_length=60)
-    cost = models.FloatField()
-=======
     name=models.CharField(max_length=60, unique=True)
     cost=models.FloatField()
->>>>>>> listsViews-vic2
     # atributo de si se toma en cuenta en la base de datos
     availible = models.BooleanField(default=True)
 

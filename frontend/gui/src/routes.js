@@ -58,15 +58,15 @@ const BaseRouter = () => (
     <Route exact path="/prov/:providerID" component={ProviderDetail} />
     <Route exact path="/prod" component={ProductList} />
     <Route exact path="/prod/:productID" component={ProductDetail} />
-    <Route exact path="/prov/:providerID" component={ProviderDetail} />
+    {/* <Route exact path="/prov/:providerID" component={ProviderDetail} /> */}
     <Route exact path="/bill" component={BillList}/>
-    <Route exact path="/memp" component={MonthEmployeeList}/>
-    <Route exact path="/emp" component={EmployeeList}/>
-    <Route exact path="/local" component={LocalList}/>
-    <Route exact path="/currency" component={CurrencyExchangeList}/>
-    <Route exact path="/category" component={CategoryList}/>
-    <Route exact path="/zone" component={ZoneList}/>
-    <Route exact path="/pay" component={PaymentList}/>
+    {/* <Route exact path="/memp" component={MonthEmployeeList}/> */}
+    {/* <Route exact path="/emp" component={EmployeeList}/> */}
+    {/* <Route exact path="/local" component={LocalList}/> */}
+    {/* <Route exact path="/currency" component={CurrencyExchangeList}/> */}
+    {/* <Route exact path="/category" component={CategoryList}/> */}
+    {/* <Route exact path="/zone" component={ZoneList}/> */}
+    {/* <Route exact path="/pay" component={PaymentList}/> */}
     
 
 
@@ -102,7 +102,6 @@ const BaseRouter = () => (
     <Route exact path="/memForm" component={MemFormView} />
     <Route exact path="/mem/:memID" component={MemDetail} />
 
-    <Route exact path="/bill" component={BillList} />
 
     <Route exact path="/pay" component={PaymentList} />
     <Route exact path="/admin_info" component={AdminData} />
