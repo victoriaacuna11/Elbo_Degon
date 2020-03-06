@@ -26,8 +26,8 @@ class PaymentList extends React.Component {
       <>
         <Payments data={this.state.payments} />
         <br />
-        <h2>Crear un pago</h2>
-        <CreatePaymentForm requestType="post" buttonText="Crear" />
+        {/* <h2>Crear un pago</h2>
+        <CreatePaymentForm requestType="post" buttonText="Crear" /> */}
       </>
     );
   }

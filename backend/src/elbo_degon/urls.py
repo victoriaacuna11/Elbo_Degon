@@ -55,5 +55,11 @@ urlpatterns = [
     path('rest/taxAvailable',taxAvailable),
     path('rest/detalle_fac/<fact>',detalle_fac),
 
+    path('rest/vic_paymentid/<data>',qvicfinal),
+    path('rest/vic_clientid/<data>',qvicfinal2),
+        path('rest/vic_clientci/<data>',qvicfinal3),
+
+
+
 
 ]

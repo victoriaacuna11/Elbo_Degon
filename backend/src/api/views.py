@@ -1206,6 +1206,7 @@ def dates_top(request, start, end):
     for x in range(len(prod)):
         k={ 'id':x+1, 'product':prod[x],'cant':cant[x]}
         data_p.append(k)
+        
     data = {
         'data': data_p
     }
@@ -1602,6 +1603,48 @@ def detalle_fac(request, fact ):
 
     return JsonResponse(data)
 
+def qvicfinal(request, data):
 
-    
+    ids=[]
+
+    q=Payment_Bill.objects.values('bill').filter(payment=data)
+
+    for x in q:
+        ids.append(x['bill'])
+
+    data={
+        'data':ids
+    }
+
+    return JsonResponse(data)
+
+def qvicfinal2(request, data):
+
+    ids=[]
+
+    q=Bill.objects.values('client').filter(id=data)
+
+    for x in q:
+        ids.append(x['client'])
+
+    data={
+        'data':ids
+    }
+
+    return JsonResponse(data)
+
+def qvicfinal3(request, data):
+
+    ci=[]
+
+    q=Client.objects.values('ci').filter(id=data)
+
+    for x in q:
+        ci.append(x['ci'])
+
+    data={
+        'data':ci
+    }
+
+    return JsonResponse(data)
 

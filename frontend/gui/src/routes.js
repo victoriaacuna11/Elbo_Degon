@@ -51,6 +51,7 @@ import Charts from "./containers/AdminInfoChats";
 import Ofertas from "./containers/OfertsList"
 import MaxSoldList from "./containers/ProductMaxSold"
 import BillDetail from "./containers/billViews/BillDetailView";
+import paymentDetail from "./containers/PaymentDetailView";
 
 
 const BaseRouter = () => (
@@ -106,6 +107,7 @@ const BaseRouter = () => (
 
 
     <Route exact path="/pay" component={PaymentList} />
+    <Route exact path="/pay/:paymentID" component={paymentDetail} />
     <Route exact path="/admin_info" component={AdminData} />
 
 

@@ -99,7 +99,7 @@ class PForm extends React.Component {
           >
             {this.getTheAvailables(this.state.providers).map(provs => (
               <Option value={provs.id} key={provs.name}>
-                {provs.name} ({this.props.id})
+                {provs.name} ({provs.id})
               </Option>
             ))}
           </Select>
@@ -117,7 +117,7 @@ class PForm extends React.Component {
           >
             {this.getTheAvailables(this.state.category).map(cats => (
               <Option value={cats.id} key={cats.name}>
-                {cats.name}
+                {cats.name} ({cats.id})
               </Option>
             ))}
           </Select>

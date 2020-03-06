@@ -12,8 +12,8 @@ class MonthEmployees extends React.Component {
     employees: []
   };
 
-  getCI = (employees, employeeID) => {
-    return employees.filter(e => e.id == employeeID)[0].ci;
+  getCI = (employeeID) => {
+    return this.state.employees.filter(e => e.id == employeeID)[0].ci;
   };
 
   componentDidMount() {
@@ -50,6 +50,7 @@ class MonthEmployees extends React.Component {
   showMessage = id => {
     const stateCurrentObject = this.props.data.filter(x => x.id == id)[0]
       .availible;
+      console.log(stateCurrentObject)
     return stateCurrentObject === true ? "Habilitado" : "Deshabilitado";
   };
 
@@ -82,7 +83,7 @@ class MonthEmployees extends React.Component {
                     title={
                       <a href={`memp/${item.id}`}>
                         C.I. Empleado:{" "}
-                        {this.getCI(this.state.employees, item.employee)} (
+                        {this.getCI(item.employee)} (
                         {item.month}-{item.year})
                       </a>
                     }

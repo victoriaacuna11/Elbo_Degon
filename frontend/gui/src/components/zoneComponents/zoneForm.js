@@ -49,7 +49,7 @@ class ZForm extends React.Component {
         onFinish={event => this.handleFormSubmit(event)}
       >
         <Form.Item name="Nombre" rules={[{ required: true }]} label="Nombre">
-          <Input name="name" placeholder="Nombre del producto" />
+          <Input name="name" placeholder="Nombre de la zona" />
         </Form.Item>
 
         <Form.Item
