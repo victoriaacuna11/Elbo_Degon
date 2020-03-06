@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,14 +80,14 @@ WSGI_APPLICATION = 'elbo_degon.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Elbo_Degon_DB',
+        'NAME': 'elbo_degon_db',
         'USER': 'root',
         # PASSWORD VICS:
         'PASSWORD': 'Coiverde1.',
         # PASSWORD ROMEL:
-        # 'PASSWORD': 'paprika011209',
-        # PASSWORD WIL:
-        # 'PASSWORD': 'Buepinene-0022',
+        #'PASSWORD': 'paprika011209',
+        # PASSWORD WIL:    
+        #'PASSWORD': 'Buepinene-0022',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -134,6 +136,8 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.AllowAny'
     ]
 }
+
+CORS_ORIGIN_ALLOW_ALL=True
