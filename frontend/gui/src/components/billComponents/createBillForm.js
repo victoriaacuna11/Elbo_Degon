@@ -72,6 +72,14 @@ class CreateBillForm extends React.Component {
       isMember : false,
       pointsToUse : 0,
       pointsMember:0,
+      //Variables de control para poder refrescar la página.
+      // createBill: false,
+      createDelivery: false,
+      createPBatch: false,
+      updateBatches: false,
+      createPayOnline: false,
+      createPayCash: false,
+      updateMember: false,
 
    };
     this.handleDelivery = this.handleDelivery.bind(this);
@@ -827,7 +835,6 @@ class CreateBillForm extends React.Component {
               })
               const currentBillID = lastBill.id;
               const currentBillClient =lastBill.client;
-
               // POSTEAR DELIVERY O PICK UP.
               if(this.state.billData.bill.is_delivery){
                 // DELIVERY
@@ -840,7 +847,13 @@ class CreateBillForm extends React.Component {
                   zone: this.state.billData.delivery.zone,
                   availible: this.state.billData.delivery.availible
                 })
-                .then(res => console.log(res))
+                .then(res => {
+                  console.log(res);
+                  this.setState({
+                    ...this.state,
+                    createDelivery: true,
+                  })
+                })
                 .catch(error => console.error(error));
 
               } else {
@@ -852,59 +865,93 @@ class CreateBillForm extends React.Component {
                   delivered: this.state.billData.pickUp.delivered,
                   availible: this.state.billData.pickUp.availible
                 })
-                .then(res => console.log(res))
-                .catch(error => console.err(error));
+                .then(res => {{
+                  console.log(res);
+                  this.setState({
+                    ...this.state,
+                    createDelivery: true,
+                  })
+                }})
+                .catch(error => console.error(error));
               }
               
               // RELACION LOTE PRODUCTOS
-              // axios.get("http://127.0.0.1:8000/rest/pbatch").then(res => {
-              //   const allBatches = res.data;
                 var desiredQty;
-                this.state.billData.batches.forEach( batch => {
-                desiredQty = batch.qty;
-                // ACTUALIZA RELACION LOTE - FACTURA.
-                axios.post("http://127.0.0.1:8000/rest/billp/", {
-                  bill_id: currentBillID,
-                  batch: batch.batchID,
-                  quantity: batch.qty,
-                  discount: batch.batchDiscount,
-                  availible: true,
-                })
-                .then(res => console.log(res))
-                .catch(error => console.error(error));
-                  
-                let batchID = batch.batchID;
-                let particularBatch = {};
-                axios.get(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`).then(res => {
-                  particularBatch = res.data;
-                  let av = true;
-                  var actual_quantity = (particularBatch.actual_quantity - desiredQty);
-                  if(actual_quantity==0){
-                    av=false;
-                  }
-
-                  axios.put(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`, {
-                    expiration_date : particularBatch.expiration_date,
-                    elaboration_date : particularBatch.elaboration_date,
-                    actual_quantity : actual_quantity,
-                    quantity_sold : (particularBatch.quantity_sold+desiredQty),
-                    cost : particularBatch.cost,
-                    discount : particularBatch.discount,
-                    price : particularBatch.price,
-                    point_cost : particularBatch.point_cost,
-                    availible: av,
-                    product: particularBatch.product,
-                    local: particularBatch.local
+                this.state.billData.batches.forEach( (batch, index) => {
+                  desiredQty = batch.qty;
+                  // ACTUALIZA RELACION LOTE - FACTURA.
+                  axios.post("http://127.0.0.1:8000/rest/billp/", {
+                    bill_id: currentBillID,
+                    batch: batch.batchID,
+                    quantity: batch.qty,
+                    discount: batch.batchDiscount,
+                    availible: true,
                   })
-                  .then(res => console.log(res))
+                  .then(res => {
+                    console.log(res);
+                    if(index==(this.state.billData.batches.length-1)){
+                      this.setState({
+                        ...this.state,
+                        createPBatch: true,
+                      })
+                    }
+                  })
                   .catch(error => console.error(error));
-                  
-                });
+                    
+                  let batchID = batch.batchID;
+                  let particularBatch = {};
+                  axios.get(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`).then(res => {
+                    particularBatch = res.data;
+                    let av = true;
+                    var actual_quantity = (particularBatch.actual_quantity - desiredQty);
+                    if(actual_quantity==0){
+                      av=false;
+                    }
+
+                    axios.put(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`, {
+                      expiration_date : particularBatch.expiration_date,
+                      elaboration_date : particularBatch.elaboration_date,
+                      actual_quantity : actual_quantity,
+                      quantity_sold : (particularBatch.quantity_sold+desiredQty),
+                      cost : particularBatch.cost,
+                      discount : particularBatch.discount,
+                      price : particularBatch.price,
+                      point_cost : particularBatch.point_cost,
+                      availible: av,
+                      product: particularBatch.product,
+                      local: particularBatch.local
+                    })
+                    .then(res => {
+                      console.log(res);
+                      if(index==(this.state.billData.batches.length-1)){
+                        this.setState({
+                          ...this.state,
+                          updateBatches: true,
+                        })
+                      }
+                    })
+                    .catch(error => console.error(error));
+                    
+                  });
               })
 
               // POSTEAR PAGOS.
               // TRANSFERENCIAS ONLINE
-              paymentsOnline.forEach(pay => {
+              if(paymentsCash.length==0){
+                this.setState({
+                  ...this.state,
+                  createPayCash: true,
+                })
+              }
+
+              if(paymentsOnline.length==0){
+                this.setState({
+                  ...this.state,
+                  createPayOnline:true,
+                })
+              }
+
+              paymentsOnline.forEach((pay,index) => {
 
                 axios.post("http://127.0.0.1:8000/rest/pay/", {
                   payment_method: pay.payment_method,
@@ -920,6 +967,13 @@ class CreateBillForm extends React.Component {
                     bill: currentBillID,
                     payment: payID,
                     availible: true,
+                  }, () => {
+                    if(index==(paymentsOnline.length-1)){
+                      this.setState({
+                        ...this.state,
+                        createPaymentOnline: true,
+                      })
+                    }
                   })
                 })
                 .catch(error => console.error(error));
@@ -927,7 +981,7 @@ class CreateBillForm extends React.Component {
             })
 
               //EFECTIVO
-              paymentsCash.forEach(pay => {
+              paymentsCash.forEach((pay, index) => {
 
                 axios.post("http://127.0.0.1:8000/rest/pay/", {
                   payment_method: pay.payment_method,
@@ -943,6 +997,11 @@ class CreateBillForm extends React.Component {
                     bill: currentBillID,
                     payment: payID,
                     availible: true,
+                  }, () => {
+                    this.setState({
+                      ...this.state,
+                      createPayCash: true,
+                    })
                   })
 
                 })
@@ -975,12 +1034,32 @@ class CreateBillForm extends React.Component {
                       })
                       .then(res => {
                         console.log(res);
+                        this.setState({
+                          ...this.state,
+                          updateMember: true,
+                        })
                       })
                     }).catch(error => console.error(error));
+                  } else {
+                    this.setState({
+                      ...this.state,
+                      updateMember: true,
+                    })
                   }
               });
 
-              // return window.location.reload(false);
+              // var act = false;
+              // while(act==false){
+              //   if(this.state.createDelivery==true && this.state.createPBatch==true && this.state.updateBatches==true 
+              //     && this.createPayCash==true && this.createPayOnline==true && this.updateMember==true){
+              //       alert('Su factura se creó con éxito.');
+              //       act=true;
+              //   }
+              // }
+              
+              alert('Su factura se creó con éxito.');
+              
+              
             },
             );
           })
