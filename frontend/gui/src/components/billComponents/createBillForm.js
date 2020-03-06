@@ -5,6 +5,7 @@ import axios from "axios";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import CreatePaymentForm from '../createPaymentForm';
 import { Redirect } from 'react-router-dom'; 
+import FormItem from "antd/lib/form/FormItem";
 
 const layout = {
   labelCol: {
@@ -68,6 +69,9 @@ class CreateBillForm extends React.Component {
       billData: [],
       tax: [],
       members: [],
+      isMember : false,
+      pointsToUse : 0,
+      pointsMember:0,
 
    };
     this.handleDelivery = this.handleDelivery.bind(this);
@@ -152,7 +156,6 @@ class CreateBillForm extends React.Component {
       productsSelected: this.state.productsSelected
     })
   }
-  
   handleQuantityAdd = (value, index) => {
     this.state.quantitiesSelected[index] = value;
 
@@ -170,7 +173,6 @@ class CreateBillForm extends React.Component {
       productsSelected: this.state.productsSelected
     })
   }
-
   isDisabled = (prod) => {
     var qty = 0;
     prod.lote.forEach( l => {
@@ -183,7 +185,6 @@ class CreateBillForm extends React.Component {
       return true
     }
   }
-
   handleDelivery = value => {
     //  console.log(value);
       if(value){
@@ -199,7 +200,6 @@ class CreateBillForm extends React.Component {
       }
       
    }
-
   isAvailable = (prodID, qty, stateProd) => {
     
     let batches = -1;
@@ -221,7 +221,6 @@ class CreateBillForm extends React.Component {
     }
 
   }
-
   getProductName=(id)=>{
     // console.log(id)
     let found = false;
@@ -236,7 +235,6 @@ class CreateBillForm extends React.Component {
     }
     return this.state.products[indexP].nombre
   }
-
   isAvailableAtLocal = (idLocal, idProd) =>{
     var productBatches = []
     this.state.productBatchs.forEach(batch => {
@@ -254,7 +252,6 @@ class CreateBillForm extends React.Component {
     console.log(productBatchesAtLocal)
     return productBatchesAtLocal; 
   }
-
   isQuantityAvailableAtLocal = (batchesAtLocal, qty, idProd) => {
     let found = false;
     let i = 0;
@@ -277,7 +274,6 @@ class CreateBillForm extends React.Component {
     }
     
   }
-
   isThisProductMissing = (idProd, batchesAtLocal) => {
       let i = 0;
       let found = false;
@@ -298,7 +294,6 @@ class CreateBillForm extends React.Component {
       }
       
   }
-
   isThereAnyProductSelectedMoreThanOnce = (products) => {
       let isThere = false;
       let i =0;
@@ -534,7 +529,6 @@ class CreateBillForm extends React.Component {
       amountCash: this.state.amountCash
     })
   }
-
   handleRemoveOnline(index){
     this.state.currencyOnline.splice(index,1);
     this.state.amountOnline.splice(index,1);
@@ -548,20 +542,50 @@ class CreateBillForm extends React.Component {
       accountNumber: this.state.accountNumber,
     })
   }
+  handlePointsAdd = (value) => {
+    this.setState({
+      ...this.state,
+      pointsToUse: value
+    })
+  }
 
+  // VALIDACIONES PARA CREAR LA FACTURA.
   handleFormSubmit = (event) => {
       // event.preventDefault();
     var found = false; 
     const ci = JSON.stringify(event.clientCI);
     var i = 0;
     var clientID;
+    var isMember=false;
+    var idMember = 0;
+    var pointsMember = 0;
     while(i<this.state.clients.length && found==false){
       
       if(ci == JSON.stringify(this.state.clients[i].ci)){
         found=true;
         clientID = this.state.clients[i].id;
+        isMember = this.state.clients[i].is_meber;
+        idMember = this.findIDMember(this.state.clients[i].id);
       }
       i = (i + 1);
+    }
+
+    // Si es miembro, setea el state.
+    if(isMember){
+      let i = 0;
+      let found = false;
+      while(found==false && i<this.state.members.length){
+        if(idMember==this.state.members[i].id){
+          found=true;
+          pointsMember=this.state.members[i].points;
+        }
+        i=i+1;
+      }
+      this.setState({
+        ...this.state,
+        isMember: true,
+        pointsMember: pointsMember
+      })
     }
     // Valida que haya productos en la factura.
     if(this.state.hasProducts){
@@ -596,7 +620,7 @@ class CreateBillForm extends React.Component {
                 const subtotal = this.generateSubtotal(batches, delivery.zone);
                 const total = this.generateTotal(subtotal, this.state.tax);
                 const billText = this.generateBatchPriceText(batches, delivery.zone);
-                const bill = this.generateBill(clientID, true, subtotal)
+                const bill = this.generateBill(clientID, true, subtotal);
                 const billdata = {
                   delivery: delivery,
                   pickUp: pickUp,
@@ -605,6 +629,7 @@ class CreateBillForm extends React.Component {
                   total: total,
                   billText: billText,
                   bill: bill,
+                  isMember: isMember,
                 }
                 this.setState({
                   ...this.state,
@@ -679,6 +704,7 @@ class CreateBillForm extends React.Component {
                   total: total,
                   billText: billText,
                   bill: bill,
+                  isMember: isMember,
                 }
                 this.setState({
                   ...this.state,
@@ -689,7 +715,6 @@ class CreateBillForm extends React.Component {
                     create: true
                   })
                   console.log(this.state.billData)
-                  //return window.location.reload(false);
                 }
                 )
 
@@ -732,13 +757,18 @@ class CreateBillForm extends React.Component {
   showStyle = () => {
     return this.state.create === true? "none" : "block";
   }
-
   showPayments = () => {
     return this.state.create === true? "block" : "none";
   }
+  showPoints = () => {
+    return this.state.isMember === true? "block" : "none";
+  }
 
   handlePayments = (event) =>{
+    var pointsToUse = this.state.pointsToUse;
+    var paidWithMoney = 0;
     var paymentsCash = [];
+
       // Construye el objeto payment y lo agrega al vector de payments de efectivo.
       this.state.currencyCash.forEach((item, index) => {
           const payment = {
@@ -749,6 +779,7 @@ class CreateBillForm extends React.Component {
             account_holder: null,
             availible: true,
           }
+          paidWithMoney = paidWithMoney + this.state.amountCash[index];
           paymentsCash.push(payment);
       })
       console.log('CASH')
@@ -764,15 +795,16 @@ class CreateBillForm extends React.Component {
           account_holder: this.state.accountHolder[index],
           availible: true,
         }
+        paidWithMoney = paidWithMoney + this.state.amountOnline[index];
         paymentsOnline.push(payment);
       
     })
     console.log('Online')
     console.log(paymentsOnline)
-    if(paymentsCash.length==0 && paymentsOnline==0){
+    if(paymentsCash.length==0 && paymentsOnline==0 && pointsToUse==0){
       alert('Tiene que añadir un pago.')
     } else {
-        if(this.state.billData.total==this.getTotalPaid(paymentsOnline, paymentsCash)){
+        if(this.state.billData.total==this.getTotalPaid(paymentsOnline, paymentsCash, pointsToUse)){
           // POSTEO
           // Se crea primero la factura. Todo lo demás depende de su id.
           axios.post("http://127.0.0.1:8000/rest/bill/", {
@@ -928,7 +960,7 @@ class CreateBillForm extends React.Component {
                     let member;
                     axios.get(`http://127.0.0.1:8000/rest/mem/${idMember}/`).then(res => {
                       member = res.data;
-                      const newPoints = this.getNewPoints(this.state.billData.bill.subtotal, member.points);
+                      const newPoints = (this.getNewPoints(paidWithMoney, member.points)-pointsToUse);
                       axios.put(`http://127.0.0.1:8000/rest/mem/${idMember}/`, {
                         points: newPoints,
                         phone: member.phone,
@@ -974,8 +1006,10 @@ class CreateBillForm extends React.Component {
     }
     return idMember;
   }
-  getTotalPaid = (paymentsOnline,paymentsCash) => {
+  getTotalPaid = (paymentsOnline,paymentsCash, pointsToUse) => {
       let paid = 0;
+      paid = Number(this.getAmountUsingPoints(pointsToUse));
+      
       paymentsOnline.forEach(pay => {
         paid = paid + pay.amount
       })
@@ -983,12 +1017,20 @@ class CreateBillForm extends React.Component {
         paid = paid + pay.amount;
       })
       console.log('Paid ' + paid);
-      return paid.toFixed(2);
+      paid = paid.toFixed(2);
+      return paid;
   }
   getNewPoints = (total, points) => {
-    let newPoints = ((total/(0.1))+points)
+    let newPoints = (((total*(1-this.state.tax))/((0.1))+points));
     newPoints = newPoints.toFixed(0);
     return newPoints;
+  }
+
+  getAmountUsingPoints = (points) => {
+    let amount = (0.05*points)
+    amount = amount.toFixed(2)
+    return amount;
+
   }
 
   render() {
@@ -1210,6 +1252,27 @@ class CreateBillForm extends React.Component {
             ref={this.formRef}
             name="formCash"
             >
+            {/* SI ES MIEMBRO SE MUESTRA ESTE ITEM */}
+            <div style={{display: this.showPoints()}}>
+            <h4>Puntos disponibles</h4>
+            <h4>{this.state.pointsMember}</h4>
+            <FormItem 
+                name="points"
+                // rules={[{required: true}]}
+                label="Utilizar puntos"
+                key={this.state.currentBill.client} >
+            <InputNumber
+              min={0} max={this.state.pointsMember}
+              name="points"
+              defaultValue={0}
+              placeholder="Cantidad del producto"
+              style={{width:200}}
+              onChange={(value) => this.handlePointsAdd(value)}
+              >
+            </InputNumber>
+            </FormItem>
+            <h5>Lo utilizado corresponde a {this.getAmountUsingPoints(this.state.pointsToUse)}$</h5>
+            </div>
             <Form.List name="formPaymentsCash" >
             { (fields, { add, remove }) => {
                 return (
@@ -1335,6 +1398,7 @@ class CreateBillForm extends React.Component {
                                     placeholder="Monto a cancelar"
                                     style={{width:200}}
                                     min={1} 
+                                    step={0.01}
                                     onChange={(value) => this.handleAmountOnline(value,index)}
                                 />
                                 </div>
