@@ -83,11 +83,17 @@ DATABASES = {
         'NAME': 'elbo_degon_db',
         'USER': 'root',
         # PASSWORD VICS:
-        'PASSWORD': 'Coiverde1.',
+        #'PASSWORD': 'Coiverde1.',
         # PASSWORD ROMEL:
+<<<<<<< HEAD
         #'PASSWORD': 'paprika011209',
         # PASSWORD WIL:    
         #'PASSWORD': 'Buepinene-0022',
+=======
+        # 'PASSWORD': 'paprika011209',
+        # PASSWORD WIL:
+        'PASSWORD': 'Buepinene-0022',
+>>>>>>> bb8dd30dd735f14ab182cf61a0dd4630e1a4e51c
         'HOST': 'localhost',
         'PORT': '3306',
     }
