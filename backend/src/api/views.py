@@ -672,7 +672,7 @@ def top_miem(request):
     member_e = []
     member_p = []
 
-    q=Membership.objects.values('client__name','client__last_name','email', 'points').filter(availible=True,client__availible=True).order_by('-points')[0:5]
+    q=Membership.objects.values('client__name','client__last_name','email', 'points').filter(availible=True,client__availible=True, points__gt=0).order_by('-points')[0:5]
 
     # revisa para ver sis e puede devilver el nombre del cliente
     for x in q:

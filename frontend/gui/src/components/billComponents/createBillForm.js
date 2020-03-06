@@ -67,6 +67,7 @@ class CreateBillForm extends React.Component {
       create: false,
       billData: [],
       tax: [],
+      members: [],
 
    };
     this.handleDelivery = this.handleDelivery.bind(this);
@@ -133,6 +134,13 @@ class CreateBillForm extends React.Component {
           tax: res.data.data[0]
         });
         console.log(this.state.tax);
+    });
+    axios.get("http://127.0.0.1:8000/rest/mem/").then(res => {
+      this.setState({
+          ...this.state.props,
+          members: res.data
+        });
+        console.log(this.state.members);
     });
   }
 
@@ -259,6 +267,8 @@ class CreateBillForm extends React.Component {
     }
 
     let prodName = this.getProductName(batchesAtLocal[i][0].product);
+    console.log(batchesAtLocal[i][0])
+    console.log("cant disp: " +batchesAtLocal[i][0].quan + "cant deseada " + qty)
     if(batchesAtLocal[i][0].quan>=qty){
       return true;
     } else {
@@ -605,6 +615,7 @@ class CreateBillForm extends React.Component {
                     create: true
                   })
                   console.log(this.state.billData)
+                  //return window.location.reload(false);
                 }
                 )
               }else{
@@ -678,6 +689,7 @@ class CreateBillForm extends React.Component {
                     create: true
                   })
                   console.log(this.state.billData)
+                  //return window.location.reload(false);
                 }
                 )
 
@@ -760,170 +772,209 @@ class CreateBillForm extends React.Component {
     if(paymentsCash.length==0 && paymentsOnline==0){
       alert('Tiene que añadir un pago.')
     } else {
-      if(this.state.billData.total==this.getTotalPaid(paymentsOnline, paymentsCash)){
-        // POSTEO
-        axios.post("http://127.0.0.1:8000/rest/bill/", {
-          client: this.state.billData.bill.client,
-          is_delivery: this.state.billData.bill.is_delivery,
-          date_time: this.state.billData.bill.date_time,
-          subtotal: this.state.billData.bill.subtotal,
-          availible: this.state.billData.bill.availible,
-        })
-        .then(res => {
-          // Busco la factura que inserté.
-          var bills = []
-          var lastBill;
-          axios.get("http://127.0.0.1:8000/rest/bill/").then(res => {
-            bills = res.data;
-            bills.forEach((bill,index)=>{
-              if(index==(bills.length-1)){
-                lastBill = bill;
+        if(this.state.billData.total==this.getTotalPaid(paymentsOnline, paymentsCash)){
+          // POSTEO
+          // Se crea primero la factura. Todo lo demás depende de su id.
+          axios.post("http://127.0.0.1:8000/rest/bill/", {
+            client: this.state.billData.bill.client,
+            is_delivery: this.state.billData.bill.is_delivery,
+            date_time: this.state.billData.bill.date_time,
+            subtotal: this.state.billData.bill.subtotal,
+            availible: this.state.billData.bill.availible,
+          })
+          .then(res => {
+            // Busco la factura que inserté.
+            var bills = []
+            var lastBill;
+            axios.get("http://127.0.0.1:8000/rest/bill/").then(res => {
+              bills = res.data;
+              bills.forEach((bill,index)=>{
+                if(index==(bills.length-1)){
+                  lastBill = bill;
+                }
+              })
+              const currentBillID = lastBill.id;
+              const currentBillClient =lastBill.client;
+
+              // POSTEAR DELIVERY O PICK UP.
+              if(this.state.billData.bill.is_delivery){
+                // DELIVERY
+                axios.post("http://127.0.0.1:8000/rest/delivery/", {
+                  bill_id: currentBillID,
+                  address: this.state.billData.delivery.address,
+                  min_time: this.state.billData.delivery.min_time,
+                  delivery_boy: this.state.billData.delivery.delivery_boy,
+                  delivered: this.state.billData.delivery.delivered,
+                  zone: this.state.billData.delivery.zone,
+                  availible: this.state.billData.delivery.availible
+                })
+                .then(res => console.log(res))
+                .catch(error => console.error(error));
+
+              } else {
+                // PICK UP
+                axios.post("http://127.0.0.1:8000/rest/pickup/", {
+                  bill_id: currentBillID,
+                  local: this.state.billData.pickUp.local,
+                  pick_up_time: this.state.billData.pickUp.pick_up_time,
+                  delivered: this.state.billData.pickUp.delivered,
+                  availible: this.state.billData.pickUp.availible
+                })
+                .then(res => console.log(res))
+                .catch(error => console.err(error));
               }
-            })
-            const currentBillID = lastBill.id;
-            if(this.state.billData.bill.is_delivery){
-              // Postear delivery o pickup
-              axios.post("http://127.0.0.1:8000/rest/delivery/", {
-                bill_id: currentBillID,
-                address: this.state.billData.delivery.address,
-                min_time: this.state.billData.delivery.min_time,
-                delivery_boy: this.state.billData.delivery.delivery_boy,
-                delivered: this.state.billData.delivery.delivered,
-                zone: this.state.billData.delivery.zone,
-                availible: this.state.billData.delivery.availible
-              })
-              .then(res => console.log(res))
-              .catch(error => console.err(error));
-            } else {
-              axios.post("http://127.0.0.1:8000/rest/pickup/", {
-                bill_id: currentBillID,
-                local: this.state.billData.pickUp.local,
-                pick_up_time: this.state.billData.pickUp.pick_up_time,
-                delivered: this.state.billData.pickUp.delivered,
-                availible: this.state.billData.pickUp.availible
-              })
-              .then(res => console.log(res))
-              .catch(error => console.err(error));
-            }
-            
-            // Relación con lotes de productos
-            axios.get("http://127.0.0.1:8000/rest/pbatch").then(res => {
-              const allBatches = res.data;
-              var desiredQty;
-              this.state.billData.batches.forEach( batch => {
-                  desiredQty = batch.qty;
-                  // Actualiza relación lote - producto.
-                  axios.post("http://127.0.0.1:8000/rest/billp/", {
-                    bill_id: currentBillID,
-                    batch: batch.batchID,
-                    quantity: batch.qty,
-                    discount: batch.batchDiscount,
-                    availible: true,
+              
+              // RELACION LOTE PRODUCTOS
+              // axios.get("http://127.0.0.1:8000/rest/pbatch").then(res => {
+              //   const allBatches = res.data;
+                var desiredQty;
+                this.state.billData.batches.forEach( batch => {
+                desiredQty = batch.qty;
+                // ACTUALIZA RELACION LOTE - FACTURA.
+                axios.post("http://127.0.0.1:8000/rest/billp/", {
+                  bill_id: currentBillID,
+                  batch: batch.batchID,
+                  quantity: batch.qty,
+                  discount: batch.batchDiscount,
+                  availible: true,
+                })
+                .then(res => console.log(res))
+                .catch(error => console.error(error));
+                  
+                let batchID = batch.batchID;
+                let particularBatch = {};
+                axios.get(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`).then(res => {
+                  particularBatch = res.data;
+                  let av = true;
+                  var actual_quantity = (particularBatch.actual_quantity - desiredQty);
+                  if(actual_quantity==0){
+                    av=false;
+                  }
+
+                  axios.put(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`, {
+                    expiration_date : particularBatch.expiration_date,
+                    elaboration_date : particularBatch.elaboration_date,
+                    actual_quantity : actual_quantity,
+                    quantity_sold : (particularBatch.quantity_sold+desiredQty),
+                    cost : particularBatch.cost,
+                    discount : particularBatch.discount,
+                    price : particularBatch.price,
+                    point_cost : particularBatch.point_cost,
+                    availible: av,
+                    product: particularBatch.product,
+                    local: particularBatch.local
                   })
                   .then(res => console.log(res))
-                  .catch(error => console.err(error));
-                 
-                  let batchID = batch.batchID;
-                  let particularBatch = {};
-                  axios.get(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`).then(res => {
-                    particularBatch = res.data;
-                    let av = true;
-                    var actual_quantity = (particularBatch.actual_quantity - desiredQty);
-                    if(actual_quantity==0){
-                      av=false;
-                    }
+                  .catch(error => console.error(error));
+                  
+                });
+              })
 
-                    axios.put(`http://127.0.0.1:8000/rest/pbatch/${batchID}/`, {
-                      expiration_date : particularBatch.expiration_date,
-                      elaboration_date : particularBatch.elaboration_date,
-                      actual_quantity : actual_quantity,
-                      quantity_sold : particularBatch.quantity_sold,
-                      cost : particularBatch.cost,
-                      discount : particularBatch.discount,
-                      price : particularBatch.price,
-                      point_cost : particularBatch.point_cost,
-                      availible: av,
-                      product: particularBatch.product,
-                      local: particularBatch.local
-                    })
-                    .then(res => console.log(res))
-                    .catch(error => console.err(error));
+              // POSTEAR PAGOS.
+              // TRANSFERENCIAS ONLINE
+              paymentsOnline.forEach(pay => {
 
+                axios.post("http://127.0.0.1:8000/rest/pay/", {
+                  payment_method: pay.payment_method,
+                  currency: pay.currency,
+                  amount: pay.amount,
+                  availible: pay.availible,
+                  account_n: pay.account_n,
+                  account_holder: pay.account_holder,
+                })
+                .then(res => {
+                  let payID = res.data.id;
+                  axios.post("http://127.0.0.1:8000/rest/paybill/", {
+                    bill: currentBillID,
+                    payment: payID,
+                    availible: true,
+                  })
+                })
+                .catch(error => console.error(error));
 
-                    
-                  },{ 
-                        
-                  //       
-                  // }
+            })
+
+              //EFECTIVO
+              paymentsCash.forEach(pay => {
+
+                axios.post("http://127.0.0.1:8000/rest/pay/", {
+                  payment_method: pay.payment_method,
+                  currency: pay.currency,
+                  amount: pay.amount,
+                  availible: pay.availible,
+                  account_n: pay.account_n,
+                  account_holder: pay.account_holder,
+                })
+                .then(res => {
+                  let payID = res.data.id;
+                  axios.post("http://127.0.0.1:8000/rest/paybill/", {
+                    bill: currentBillID,
+                    payment: payID,
+                    availible: true,
+                  })
+
+                })
+                .catch(error => console.error(error));
+
+            })
+              
+              // ACTUALIZAR PUNTOS DEL MIEMBRO, EN DADO CASO.
+              let isMember = false;
+              console.log(currentBillClient);
+              axios.get(`http://127.0.0.1:8000/rest/client/${currentBillClient}/`).then(res => {
+                  isMember = res.data.is_meber;
+                  if(isMember==true){
+                    const idMember = this.findIDMember(currentBillClient);
+                    let member;
+                    axios.get(`http://127.0.0.1:8000/rest/mem/${idMember}/`).then(res => {
+                      member = res.data;
+                      const newPoints = this.getNewPoints(this.state.billData.bill.subtotal, member.points);
+                      axios.put(`http://127.0.0.1:8000/rest/mem/${idMember}/`, {
+                        points: newPoints,
+                        phone: member.phone,
+                        gender: member.gender,
+                        availible: member.availible,
+                        address: member.address,
+                        birth_date: member.birth_date,
+                        email: member.email,
+                        client: member.client,
+                        date_registered: member.date_registered,
+                        password: member.password,
+                      })
+                      .then(res => {
+                        console.log(res);
+                      })
+                    }).catch(error => console.error(error));
                   }
-                );
+              });
 
-
-              })
-
-            });
-            
-            // Añadir pagos.
-            // Online
-            paymentsOnline.forEach(pay => {
-
-              axios.post("http://127.0.0.1:8000/rest/pay/", {
-                payment_method: pay.payment_method,
-                currency: pay.currency,
-                amount: pay.amount,
-                availible: pay.availible,
-                account_n: pay.account_n,
-                account_holder: pay.account_holder,
-              })
-              .then(res => {
-                let payID = res.data.id;
-                axios.post("http://127.0.0.1:8000/rest/paybill/", {
-                  bill: currentBillID,
-                  payment: payID,
-                  availible: true,
-                })
-
-              })
-              .catch(error => console.err(error));
-
-            })
-            //Efectivo
-            paymentsCash.forEach(pay => {
-
-              axios.post("http://127.0.0.1:8000/rest/pay/", {
-                payment_method: pay.payment_method,
-                currency: pay.currency,
-                amount: pay.amount,
-                availible: pay.availible,
-                account_n: pay.account_n,
-                account_holder: pay.account_holder,
-              })
-              .then(res => {
-                let payID = res.data.id;
-                axios.post("http://127.0.0.1:8000/rest/paybill/", {
-                  bill: currentBillID,
-                  payment: payID,
-                  availible: true,
-                })
-
-              })
-              .catch(error => console.err(error));
-
-            })
-            
-
-          },
-          );
-        })
-        .catch(error => console.error(error));
+              // return window.location.reload(false);
+            },
+            );
+          })
+          .catch(error => console.error(error));
         
       } else {
         alert('El monto que introdujo no coincide con lo que ha de pagar')
       }
+
     }
   } 
 
-  getTotalPaid = (paymentsOnline,paymentsCash, total) => {
+  findIDMember = (idClient) => {
+    let i = 0;
+    let found = false;
+    let idMember = 0;
+    while (found==false && i<this.state.members.length) {
+      if(this.state.members[i].client==idClient){
+        idMember =this.state.members[i].id;
+        found=true;
+      }
+      i=i+1;
+    }
+    return idMember;
+  }
+  getTotalPaid = (paymentsOnline,paymentsCash) => {
       let paid = 0;
       paymentsOnline.forEach(pay => {
         paid = paid + pay.amount
@@ -933,6 +984,11 @@ class CreateBillForm extends React.Component {
       })
       console.log('Paid ' + paid);
       return paid.toFixed(2);
+  }
+  getNewPoints = (total, points) => {
+    let newPoints = ((total/(0.1))+points)
+    newPoints = newPoints.toFixed(0);
+    return newPoints;
   }
 
   render() {
